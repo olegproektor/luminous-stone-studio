@@ -31,7 +31,7 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(({
   const isDark = variant === "dark";
 
   return (
-    <section id={id} className={`section-padding ${bgMap[variant]} ${className}`}>
+    <section ref={ref} id={id} className={`section-padding ${bgMap[variant]} ${className}`}>
       <div className="container-brand">
         {(eyebrow || title || subtitle) && (
           <div className="mb-12 md:mb-16 max-w-2xl">
