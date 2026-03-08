@@ -121,7 +121,7 @@ const RequestProjectForm = () => {
   const handleNext = () => {
     // Basic validation for required fields
     const missing = currentStep.fields
-      .filter((f) => f.required && !(stepData[f.name] || "").trim())
+      .filter((f) => "required" in f && f.required && !(stepData[f.name] || "").trim())
       .map((f) => f.name);
 
     if (missing.length > 0) return;
