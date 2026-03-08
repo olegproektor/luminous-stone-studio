@@ -295,9 +295,9 @@ const Header = () => {
       >
         <div
           className={cn(
-            "container-brand flex items-center justify-between px-6 md:px-12 lg:px-24",
-            "transition-[height,padding] duration-[420ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
-            scrolled ? "h-12 md:h-[56px]" : "h-[68px] md:h-[88px]"
+            "container-brand flex items-center px-6 md:px-12 lg:px-24",
+            "transition-[height,padding,justify-content] duration-[420ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+            scrolled ? "h-12 md:h-[56px] justify-end gap-6" : "h-[68px] md:h-[88px] justify-between"
           )}
         >
           {/* Logo */}
@@ -305,8 +305,8 @@ const Header = () => {
             to="/"
             className={cn(
               "font-display font-medium tracking-[0.10em] origin-left",
-              "transition-[font-size,color,transform] duration-[420ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
-              scrolled ? "text-[16px] md:text-[18px] scale-100" : "text-[19px] md:text-[22px] scale-100",
+              "transition-[font-size,color,margin] duration-[420ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+              scrolled ? "text-[16px] md:text-[18px] mr-auto" : "text-[19px] md:text-[22px]",
               isTransparent ? "text-white" : "text-foreground"
             )}
           >
@@ -317,8 +317,8 @@ const Header = () => {
           <nav
             className={cn(
               "hidden lg:flex items-center",
-              "transition-[gap] duration-[420ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
-              scrolled ? "gap-4 xl:gap-6" : "gap-5 xl:gap-8"
+              "transition-[gap,transform] duration-[420ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+              scrolled ? "gap-3 xl:gap-5 translate-x-0" : "gap-5 xl:gap-8 translate-x-0"
             )}
           >
             {navItems.map((item) => {
