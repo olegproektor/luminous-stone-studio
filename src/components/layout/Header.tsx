@@ -315,7 +315,7 @@ const Header = () => {
 
           {/* Spacer — animates width to push nav right on scroll */}
           <div
-            className="hidden lg:block transition-[width] duration-[2500ms] ease-[cubic-bezier(0.7,0,1,0.5)]"
+            className="hidden lg:block transition-[width] duration-[4000ms] ease-[cubic-bezier(0.7,0,1,0.5)]"
             style={{ width: scrolled ? '100%' : '0px' }}
           />
 
