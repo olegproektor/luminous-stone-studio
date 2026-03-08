@@ -260,6 +260,7 @@ const LeadForm = React.forwardRef<HTMLFormElement, LeadFormProps>(({
         {status === "submitting" ? "Отправка..." : submitLabel}
       </button>
     </form>
+  );
 });
 
 LeadForm.displayName = "LeadForm";
