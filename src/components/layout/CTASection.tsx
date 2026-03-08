@@ -7,9 +7,6 @@ interface CTASectionProps {
   variant?: "default" | "dark";
 }
 
-/**
- * Reusable call-to-action section for page bottoms.
- */
 const CTASection = ({
   eyebrow,
   title,
@@ -22,20 +19,20 @@ const CTASection = ({
 
   return (
     <section
-      className={`section-padding ${isDark ? "bg-primary" : "bg-background"}`}
+      className={`section-padding ${isDark ? "bg-primary grain-overlay" : "bg-background"}`}
     >
-      <div className="container-brand text-center">
+      <div className="container-brand text-center relative z-10">
         {eyebrow && (
           <p
-            className={`text-sm font-body font-medium tracking-[0.15em] uppercase mb-4 ${
-              isDark ? "text-primary-foreground/60" : "text-muted-foreground"
+            className={`text-xs font-body font-medium tracking-brand-wide uppercase mb-4 ${
+              isDark ? "text-primary-foreground/40" : "text-muted-foreground"
             }`}
           >
             {eyebrow}
           </p>
         )}
         <h2
-          className={`font-display text-3xl md:text-5xl font-light max-w-2xl mx-auto mb-6 ${
+          className={`font-display text-3xl md:text-5xl font-light max-w-2xl mx-auto mb-6 leading-tight ${
             isDark ? "text-primary-foreground" : "text-foreground"
           }`}
         >
@@ -43,8 +40,8 @@ const CTASection = ({
         </h2>
         {subtitle && (
           <p
-            className={`font-body text-base max-w-lg mx-auto mb-10 ${
-              isDark ? "text-primary-foreground/70" : "text-muted-foreground"
+            className={`font-body text-sm max-w-md mx-auto mb-10 ${
+              isDark ? "text-primary-foreground/50" : "text-muted-foreground"
             }`}
           >
             {subtitle}
@@ -53,7 +50,7 @@ const CTASection = ({
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href={primaryCta.href}
-            className={`inline-flex items-center justify-center text-sm font-body font-medium tracking-wide px-10 py-4 transition-colors duration-200 ${
+            className={`inline-flex items-center justify-center text-xs font-body font-medium tracking-brand uppercase px-10 py-4 transition-colors duration-300 ${
               isDark
                 ? "bg-primary-foreground text-primary hover:bg-primary-foreground/90"
                 : "bg-primary text-primary-foreground hover:bg-charcoal-light"
@@ -64,9 +61,9 @@ const CTASection = ({
           {secondaryCta && (
             <a
               href={secondaryCta.href}
-              className={`inline-flex items-center justify-center text-sm font-body font-medium tracking-wide px-10 py-4 border transition-colors duration-200 ${
+              className={`inline-flex items-center justify-center text-xs font-body font-medium tracking-brand uppercase px-10 py-4 border transition-colors duration-300 ${
                 isDark
-                  ? "border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+                  ? "border-primary-foreground/20 text-primary-foreground/70 hover:text-primary-foreground hover:border-primary-foreground/40"
                   : "border-border text-foreground hover:bg-secondary"
               }`}
             >
