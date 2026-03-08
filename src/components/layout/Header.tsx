@@ -41,12 +41,21 @@ const Header = () => {
           ))}
         </nav>
 
-        <Link
-          to="/request-project"
-          className="hidden lg:inline-flex text-sm font-body font-medium tracking-wide text-primary-foreground bg-primary px-6 py-2.5 hover:bg-charcoal-light transition-colors duration-200"
-        >
-          Запросить проект
-        </Link>
+        <div className="hidden lg:flex items-center gap-4">
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Переключить тему"
+          >
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+          <Link
+            to="/request-project"
+            className="inline-flex text-sm font-body font-medium tracking-wide text-primary-foreground bg-primary px-6 py-2.5 hover:bg-charcoal-light transition-colors duration-200"
+          >
+            Запросить проект
+          </Link>
+        </div>
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
