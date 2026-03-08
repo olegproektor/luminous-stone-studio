@@ -313,12 +313,10 @@ const Header = () => {
             STŌN
           </Link>
 
-          {/* Spacer that shrinks on scroll to push nav right */}
+          {/* Spacer — animates width to push nav right on scroll */}
           <div
-            className={cn(
-              "hidden lg:block transition-[flex-grow] duration-[7000ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
-              scrolled ? "grow" : "grow-0"
-            )}
+            className="hidden lg:block transition-[width] duration-[7000ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+            style={{ width: scrolled ? '100%' : '0px' }}
           />
 
           {/* Desktop Nav */}
