@@ -287,7 +287,7 @@ const Header = () => {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50",
-          "transition-[background-color,backdrop-filter,box-shadow,border-color] duration-[420ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+          "transition-[background-color,backdrop-filter,box-shadow,border-color] duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
           isTransparent
             ? "bg-transparent border-b border-transparent"
             : "bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-[0_1px_24px_-8px_hsl(var(--foreground)/0.08)]"
@@ -296,7 +296,7 @@ const Header = () => {
         <div
           className={cn(
             "container-brand flex items-center px-6 md:px-12 lg:px-24",
-            "transition-[height,padding,justify-content] duration-[420ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+            "transition-[height,padding,justify-content] duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
             scrolled ? "h-12 md:h-[56px] justify-end gap-6" : "h-[68px] md:h-[88px] justify-between"
           )}
         >
@@ -305,7 +305,7 @@ const Header = () => {
             to="/"
             className={cn(
               "font-display font-medium tracking-[0.10em] origin-left",
-              "transition-[font-size,color,margin] duration-[420ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+              "transition-[font-size,color,margin] duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
               scrolled ? "text-[16px] md:text-[18px] mr-auto" : "text-[19px] md:text-[22px]",
               isTransparent ? "text-white" : "text-foreground"
             )}
@@ -317,7 +317,7 @@ const Header = () => {
           <nav
             className={cn(
               "hidden lg:flex items-center",
-              "transition-[gap,transform] duration-[420ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+              "transition-[gap,transform] duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
               scrolled ? "gap-3 xl:gap-5 translate-x-0" : "gap-5 xl:gap-8 translate-x-0"
             )}
           >
@@ -371,7 +371,7 @@ const Header = () => {
             <Link
               to="/request-project"
               className={cn(
-                "text-[11px] font-body font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-[420ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+                "text-[11px] font-body font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
                 scrolled
                   ? "opacity-0 max-w-0 overflow-hidden px-0 py-0 pointer-events-none"
                   : "opacity-100 max-w-[200px] px-5 xl:px-7 py-2.5",
