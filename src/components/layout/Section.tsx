@@ -16,9 +16,6 @@ const bgMap = {
   dark: "bg-primary text-primary-foreground",
 };
 
-/**
- * Reusable content section with optional eyebrow, title, subtitle.
- */
 const Section = React.forwardRef<HTMLElement, SectionProps>(({
   children,
   eyebrow,
@@ -34,11 +31,11 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(({
     <section ref={ref} id={id} className={`section-padding ${bgMap[variant]} ${className}`}>
       <div className="container-brand">
         {(eyebrow || title || subtitle) && (
-          <div className="mb-12 md:mb-16 max-w-2xl">
+          <div className="mb-14 md:mb-20 max-w-2xl">
             {eyebrow && (
               <p
-                className={`text-sm font-body font-medium tracking-[0.15em] uppercase mb-4 ${
-                  isDark ? "text-primary-foreground/60" : "text-muted-foreground"
+                className={`text-xs font-body font-medium tracking-brand-wide uppercase mb-4 ${
+                  isDark ? "text-primary-foreground/40" : "text-muted-foreground"
                 }`}
               >
                 {eyebrow}
@@ -55,8 +52,8 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(({
             )}
             {subtitle && (
               <p
-                className={`font-body text-base md:text-lg leading-relaxed mt-4 max-w-lg ${
-                  isDark ? "text-primary-foreground/70" : "text-muted-foreground"
+                className={`font-body text-sm leading-relaxed mt-4 max-w-lg ${
+                  isDark ? "text-primary-foreground/50" : "text-muted-foreground"
                 }`}
               >
                 {subtitle}
