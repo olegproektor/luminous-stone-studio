@@ -324,7 +324,7 @@ const Header = () => {
             className="hidden lg:flex items-center shrink-0"
             style={{
               gap: scrolled ? '12px' : '32px',
-              transition: 'gap 7000ms cubic-bezier(0.16, 1, 0.3, 1)',
+              transition: 'gap 7000ms cubic-bezier(0.7, 0, 1, 0.5)',
             }}
           >
             {navItems.map((item) => {
