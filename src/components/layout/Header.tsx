@@ -372,7 +372,9 @@ const Header = () => {
               to="/request-project"
               className={cn(
                 "text-[11px] font-body font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-[420ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
-                scrolled ? "px-4 xl:px-5 py-2" : "px-5 xl:px-7 py-2.5",
+                scrolled
+                  ? "opacity-0 max-w-0 overflow-hidden px-0 py-0 pointer-events-none"
+                  : "opacity-100 max-w-[200px] px-5 xl:px-7 py-2.5",
                 isTransparent
                   ? "text-white border border-white/25 hover:bg-white/8 hover:border-white/40"
                   : "text-primary-foreground bg-primary hover:bg-charcoal-light"
