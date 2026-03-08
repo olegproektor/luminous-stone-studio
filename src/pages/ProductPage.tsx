@@ -27,7 +27,8 @@ const ProductPage = () => {
 
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [activeImage, setActiveImage] = useState(0);
-  const [darkBg, setDarkBg] = useState(false);
+  const [nightMode, setNightMode] = useState(false);
+  const [hovering, setHovering] = useState(false);
 
   if (!product) {
     return (
@@ -46,6 +47,9 @@ const ProductPage = () => {
 
   const related = getRelatedProducts(product);
   const allImages = [...product.images, ...product.environmentImages];
+  const allNightImages = product.nightImages.length > 0 ? [...product.nightImages, ...product.environmentImages] : allImages;
+  const showNight = nightMode || hovering;
+  const displayImages = showNight ? allNightImages : allImages;
   const priceFrom = Math.min(...product.variants.map((v) => v.price ?? Infinity));
   const uniqueColors = Array.from(
     new Map(product.variants.map((v) => [v.color, v])).values()
@@ -73,27 +77,45 @@ const ProductPage = () => {
             {/* Gallery */}
             <div>
               <div className="relative">
-                <div className={`aspect-square overflow-hidden mb-4 transition-colors duration-300 ${darkBg ? "bg-foreground" : "bg-secondary"}`}>
+                <div
+                  className={`relative aspect-square overflow-hidden mb-4 transition-colors duration-500 ${showNight ? "bg-foreground" : "bg-secondary"}`}
+                  onMouseEnter={() => setHovering(true)}
+                  onMouseLeave={() => setHovering(false)}
+                >
+                  {/* Day image */}
                   <img
                     src={allImages[activeImage]?.src || "/placeholder.svg"}
                     alt={allImages[activeImage]?.alt || product.name}
-                    className="w-full h-full object-cover"
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${showNight ? "opacity-0" : "opacity-100"}`}
+                  />
+                  {/* Night image */}
+                  <img
+                    src={allNightImages[activeImage]?.src || "/placeholder.svg"}
+                    alt={allNightImages[activeImage]?.alt || product.name}
+                    className={`w-full h-full object-cover transition-opacity duration-500 ${showNight ? "opacity-100" : "opacity-0"}`}
                   />
                 </div>
-                {/* Background toggle */}
-                <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5 bg-background/80 backdrop-blur-sm border border-border rounded-full px-2 py-1">
+                {/* Day / Night toggle */}
+                <div className="absolute top-3 right-3 z-10 flex items-center gap-2 bg-background/80 backdrop-blur-sm border border-border rounded-full px-3 py-1.5">
                   <button
                     type="button"
-                    onClick={() => setDarkBg(false)}
-                    className={`w-5 h-5 rounded-full border transition-all ${!darkBg ? "border-foreground ring-1 ring-foreground/30 bg-[#F5F0EB]" : "border-border bg-[#F5F0EB] opacity-60 hover:opacity-100"}`}
-                    title="Светлый фон"
-                  />
+                    onClick={() => setNightMode(false)}
+                    className={`flex items-center gap-1.5 text-xs font-body font-medium transition-all ${!nightMode ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                    title="День"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                    День
+                  </button>
+                  <span className="w-px h-3 bg-border" />
                   <button
                     type="button"
-                    onClick={() => setDarkBg(true)}
-                    className={`w-5 h-5 rounded-full border transition-all ${darkBg ? "border-foreground ring-1 ring-foreground/30 bg-foreground" : "border-border bg-foreground opacity-60 hover:opacity-100"}`}
-                    title="Тёмный фон"
-                  />
+                    onClick={() => setNightMode(true)}
+                    className={`flex items-center gap-1.5 text-xs font-body font-medium transition-all ${nightMode ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                    title="Ночь"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                    Ночь
+                  </button>
                 </div>
               </div>
               {allImages.length > 1 && (
