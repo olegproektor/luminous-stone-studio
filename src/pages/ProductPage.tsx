@@ -27,6 +27,7 @@ const ProductPage = () => {
 
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [activeImage, setActiveImage] = useState(0);
+  const [darkBg, setDarkBg] = useState(false);
 
   if (!product) {
     return (
@@ -71,12 +72,29 @@ const ProductPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             {/* Gallery */}
             <div>
-              <div className="aspect-square bg-secondary overflow-hidden mb-4">
-                <img
-                  src={allImages[activeImage]?.src || "/placeholder.svg"}
-                  alt={allImages[activeImage]?.alt || product.name}
-                  className="w-full h-full object-cover"
-                />
+              <div className="relative">
+                <div className={`aspect-square overflow-hidden mb-4 transition-colors duration-300 ${darkBg ? "bg-foreground" : "bg-secondary"}`}>
+                  <img
+                    src={allImages[activeImage]?.src || "/placeholder.svg"}
+                    alt={allImages[activeImage]?.alt || product.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {/* Background toggle */}
+                <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-background/80 backdrop-blur-sm border border-border rounded-full px-2 py-1">
+                  <button
+                    type="button"
+                    onClick={() => setDarkBg(false)}
+                    className={`w-5 h-5 rounded-full border transition-all ${!darkBg ? "border-foreground ring-1 ring-foreground/30 bg-[#F5F0EB]" : "border-border bg-[#F5F0EB] opacity-60 hover:opacity-100"}`}
+                    title="Светлый фон"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setDarkBg(true)}
+                    className={`w-5 h-5 rounded-full border transition-all ${darkBg ? "border-foreground ring-1 ring-foreground/30 bg-foreground" : "border-border bg-foreground opacity-60 hover:opacity-100"}`}
+                    title="Тёмный фон"
+                  />
+                </div>
               </div>
               {allImages.length > 1 && (
                 <div className="grid grid-cols-4 gap-2">
