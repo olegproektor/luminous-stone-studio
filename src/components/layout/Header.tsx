@@ -295,31 +295,37 @@ const Header = () => {
       >
         <div
           className={cn(
-            "container-brand flex items-center px-6 md:px-12 lg:px-24",
-            "transition-[height,padding,justify-content] duration-[910ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
-            scrolled ? "h-12 md:h-[56px] justify-end gap-6" : "h-[68px] md:h-[88px] justify-between"
+            "container-brand flex items-center justify-between px-6 md:px-12 lg:px-24",
+            "transition-[height] duration-[910ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+            scrolled ? "h-12 md:h-[56px]" : "h-[68px] md:h-[88px]"
           )}
         >
           {/* Logo */}
           <Link
             to="/"
             className={cn(
-              "font-display font-medium tracking-[0.10em] origin-left",
-              "transition-[font-size,color,margin] duration-[910ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
-              scrolled ? "text-[16px] md:text-[18px] mr-auto" : "text-[19px] md:text-[22px]",
+              "font-display font-medium tracking-[0.10em] origin-left shrink-0",
+              "transition-[font-size,color] duration-[910ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+              scrolled ? "text-[16px] md:text-[18px]" : "text-[19px] md:text-[22px]",
               isTransparent ? "text-white" : "text-foreground"
             )}
           >
             STŌN
           </Link>
 
+          {/* Spacer — animates width to push nav right on scroll */}
+          <div
+            className="hidden lg:block transition-[width] duration-[7000ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+            style={{ width: scrolled ? '100%' : '0px' }}
+          />
+
           {/* Desktop Nav */}
           <nav
-            className={cn(
-              "hidden lg:flex items-center",
-              "transition-[gap,transform] duration-[7000ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
-              scrolled ? "gap-3 xl:gap-5 translate-x-0" : "gap-5 xl:gap-8 translate-x-0"
-            )}
+            className="hidden lg:flex items-center shrink-0"
+            style={{
+              gap: scrolled ? '12px' : '32px',
+              transition: 'gap 7000ms cubic-bezier(0.16, 1, 0.3, 1)',
+            }}
           >
             {navItems.map((item) => {
               const isActive = location.pathname.startsWith(item.href);
