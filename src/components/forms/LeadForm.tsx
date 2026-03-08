@@ -133,7 +133,7 @@ const LeadForm = React.forwardRef<HTMLFormElement, LeadFormProps>(({
   }
 
   return (
-    <form onSubmit={handleSubmit} className={className} noValidate>
+    <form ref={ref} onSubmit={handleSubmit} className={className} noValidate>
       {/* Honeypot — invisible to users */}
       <input
         type="text"
