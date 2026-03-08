@@ -174,7 +174,7 @@ const CatalogPage = () => {
       {entryMode === "all" && (
         <>
           {/* By Collection */}
-          <Section eyebrow="Вход 1" title="По коллекциям">
+          <Section title="По коллекциям">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
               {collections.map((col) => (
                 <button
