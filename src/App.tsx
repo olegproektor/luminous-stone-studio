@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import CookieConsentBanner from "@/components/ui/cookie-consent";
+import StickyMobileCTA from "@/components/ui/sticky-mobile-cta";
 
 // Pages
 import Index from "./pages/Index";
@@ -57,6 +59,8 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <CookieConsentBanner />
+        <StickyMobileCTA />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

@@ -1,7 +1,25 @@
 import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
-import CTASection from "@/components/layout/CTASection";
+import LeadForm from "@/components/forms/LeadForm";
+
+const customFormFields = [
+  { name: "name", label: "Имя", type: "text" as const, required: true, placeholder: "Как вас зовут" },
+  { name: "phone", label: "Телефон", type: "tel" as const, required: true, placeholder: "+7 (___) ___-__-__" },
+  { name: "email", label: "Email", type: "email" as const, placeholder: "email@example.com" },
+  {
+    name: "clientType",
+    label: "Тип клиента",
+    type: "select" as const,
+    options: [
+      { value: "private", label: "Частный клиент" },
+      { value: "architect", label: "Архитектор / дизайнер" },
+      { value: "glamping-hotel", label: "Глэмпинг / отель" },
+      { value: "developer", label: "Девелопер" },
+    ],
+  },
+  { name: "message", label: "Опишите задачу", type: "textarea" as const, required: true, placeholder: "Размеры, форма, фактура, цвет, количество, особенности монтажа...", half: false },
+];
 
 const CustomPage = () => {
   return (
@@ -13,7 +31,6 @@ const CustomPage = () => {
         eyebrow="Кастомизация"
         title="Индивидуальные решения"
         subtitle="Нестандартные размеры, формы, фактуры, цвета и конфигурации под ваш проект."
-        ctas={[{ label: "Обсудить проект", href: "/request-project" }]}
       />
 
       <Section eyebrow="Возможности" title="Что мы можем кастомизировать">
@@ -34,11 +51,19 @@ const CustomPage = () => {
         </div>
       </Section>
 
-      <CTASection
-        title="Расскажите о вашей задаче"
-        subtitle="Подготовим предложение по кастомному решению в течение 3 рабочих дней."
-        primaryCta={{ label: "Запросить кастомизацию", href: "/request-project" }}
-      />
+      <Section variant="alt" eyebrow="Запрос" title="Расскажите о вашей задаче">
+        <div className="max-w-2xl">
+          <p className="font-body text-sm text-muted-foreground mb-8">
+            Подготовим предложение по кастомному решению в течение 3 рабочих дней.
+          </p>
+          <LeadForm
+            formId="custom_request"
+            fields={customFormFields}
+            submitLabel="Запросить кастомизацию"
+            analyticsEvent="request_custom"
+          />
+        </div>
+      </Section>
     </PageLayout>
   );
 };
