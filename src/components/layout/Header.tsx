@@ -305,7 +305,7 @@ const Header = () => {
             to="/"
             className={cn(
               "font-display font-medium tracking-[0.10em] origin-left",
-              "transition-[font-size,color,margin] duration-[420ms] ease-[cubic-bezier(0.4,0,0.2,1)]",
+              "transition-[font-size,color,margin] duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
               scrolled ? "text-[16px] md:text-[18px] mr-auto" : "text-[19px] md:text-[22px]",
               isTransparent ? "text-white" : "text-foreground"
             )}
