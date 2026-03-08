@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type ReactNode } from "react";
+import React, { useState, type FormEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { trackEvent, type AnalyticsEventName } from "@/lib/analytics";
 import { useUTM } from "@/hooks/use-utm";
