@@ -47,6 +47,9 @@ const ProductPage = () => {
 
   const related = getRelatedProducts(product);
   const allImages = [...product.images, ...product.environmentImages];
+  const allNightImages = product.nightImages.length > 0 ? [...product.nightImages, ...product.environmentImages] : allImages;
+  const showNight = nightMode || hovering;
+  const displayImages = showNight ? allNightImages : allImages;
   const priceFrom = Math.min(...product.variants.map((v) => v.price ?? Infinity));
   const uniqueColors = Array.from(
     new Map(product.variants.map((v) => [v.color, v])).values()
