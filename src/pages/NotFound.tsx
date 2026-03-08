@@ -1,23 +1,40 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import PageLayout from "@/components/layout/PageLayout";
 
 const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-muted-foreground">Oops! Page not found</p>
-        <a href="/" className="text-primary underline hover:text-primary/90">
-          Return to Home
-        </a>
-      </div>
-    </div>
+    <PageLayout
+      title="Страница не найдена — STŌN"
+      description="Запрашиваемая страница не существует."
+    >
+      <section className="section-padding">
+        <div className="container-brand text-center py-20">
+          <p className="text-sm font-body font-medium tracking-[0.15em] uppercase text-muted-foreground mb-4">
+            Ошибка 404
+          </p>
+          <h1 className="font-display text-5xl md:text-7xl font-light text-foreground mb-6">
+            Страница не найдена
+          </h1>
+          <p className="font-body text-base text-muted-foreground max-w-md mx-auto mb-10">
+            Возможно, она была перемещена или удалена. Воспользуйтесь навигацией или вернитесь на главную.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/"
+              className="inline-flex items-center justify-center text-sm font-body font-medium tracking-wide bg-primary text-primary-foreground px-10 py-4 hover:bg-charcoal-light transition-colors"
+            >
+              На главную
+            </Link>
+            <Link
+              to="/catalog"
+              className="inline-flex items-center justify-center text-sm font-body font-medium tracking-wide border border-border text-foreground px-10 py-4 hover:bg-secondary transition-colors"
+            >
+              Каталог
+            </Link>
+          </div>
+        </div>
+      </section>
+    </PageLayout>
   );
 };
 
