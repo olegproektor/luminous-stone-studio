@@ -95,6 +95,7 @@ const ProductPage = () => {
                     title="Тёмный фон"
                   />
                 </div>
+              </div>
               {allImages.length > 1 && (
                 <div className="grid grid-cols-4 gap-2">
                   {allImages.map((img, i) => (
