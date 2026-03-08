@@ -77,6 +77,8 @@ const CookieConsentBanner = React.forwardRef<HTMLDivElement>((_, ref) => {
       </div>
     </div>
   );
-};
+});
+
+CookieConsentBanner.displayName = "CookieConsentBanner";
 
 export default CookieConsentBanner;
