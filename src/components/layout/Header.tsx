@@ -317,7 +317,7 @@ const Header = () => {
           <nav
             className={cn(
               "hidden lg:flex items-center",
-              "transition-[gap,transform] duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+              "transition-[gap,transform] duration-[910ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
               scrolled ? "gap-3 xl:gap-5 translate-x-0" : "gap-5 xl:gap-8 translate-x-0"
             )}
           >
