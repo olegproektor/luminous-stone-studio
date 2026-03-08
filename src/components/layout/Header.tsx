@@ -253,7 +253,7 @@ const Header = () => {
   const isTransparent = isHome && !scrolled;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 56);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -286,24 +286,27 @@ const Header = () => {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "fixed top-0 left-0 right-0 z-50",
+          "transition-[background-color,backdrop-filter,box-shadow,border-color] duration-[420ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
           isTransparent
-            ? "bg-transparent"
-            : "bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-[0_1px_20px_-6px_hsl(var(--foreground)/0.06)]"
+            ? "bg-transparent border-b border-transparent"
+            : "bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-[0_1px_24px_-8px_hsl(var(--foreground)/0.08)]"
         )}
       >
         <div
           className={cn(
-            "container-brand flex items-center justify-between px-6 md:px-12 lg:px-24 transition-all duration-700 ease-out",
-            scrolled ? "h-12 md:h-14" : "h-16 md:h-20"
+            "container-brand flex items-center justify-between px-6 md:px-12 lg:px-24",
+            "transition-[height,padding] duration-[420ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+            scrolled ? "h-12 md:h-[56px]" : "h-[68px] md:h-[88px]"
           )}
         >
           {/* Logo */}
           <Link
             to="/"
             className={cn(
-              "font-display font-medium tracking-[0.10em] transition-all duration-700",
-              scrolled ? "text-base md:text-lg" : "text-lg md:text-xl",
+              "font-display font-medium tracking-[0.10em] origin-left",
+              "transition-[font-size,color,transform] duration-[420ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+              scrolled ? "text-[16px] md:text-[18px] scale-100" : "text-[19px] md:text-[22px] scale-100",
               isTransparent ? "text-white" : "text-foreground"
             )}
           >
@@ -311,7 +314,13 @@ const Header = () => {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav
+            className={cn(
+              "hidden lg:flex items-center",
+              "transition-[gap] duration-[420ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+              scrolled ? "gap-6" : "gap-8"
+            )}
+          >
             {navItems.map((item) => {
               const isActive = location.pathname.startsWith(item.href);
               return (
@@ -362,7 +371,8 @@ const Header = () => {
             <Link
               to="/request-project"
               className={cn(
-                "text-[11px] font-body font-medium tracking-[0.08em] uppercase px-7 py-2.5 transition-all duration-500",
+                "text-[11px] font-body font-medium tracking-[0.08em] uppercase transition-all duration-[420ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+                scrolled ? "px-5 py-2" : "px-7 py-2.5",
                 isTransparent
                   ? "text-white border border-white/25 hover:bg-white/8 hover:border-white/40"
                   : "text-primary-foreground bg-primary hover:bg-charcoal-light"
