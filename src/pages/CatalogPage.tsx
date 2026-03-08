@@ -193,7 +193,7 @@ const CatalogPage = () => {
           </Section>
 
           {/* By Task */}
-          <Section variant="alt" eyebrow="Вход 2" title="По задаче">
+          <Section variant="alt" title="По задаче">
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {tasks.map((task) => (
                 <button
