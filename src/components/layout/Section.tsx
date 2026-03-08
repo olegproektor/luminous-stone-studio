@@ -1,3 +1,5 @@
+import React from "react";
+
 interface SectionProps {
   children: React.ReactNode;
   eyebrow?: string;
@@ -17,7 +19,7 @@ const bgMap = {
 /**
  * Reusable content section with optional eyebrow, title, subtitle.
  */
-const Section = ({
+const Section = React.forwardRef<HTMLElement, SectionProps>(({
   children,
   eyebrow,
   title,
@@ -25,7 +27,7 @@ const Section = ({
   variant = "default",
   id,
   className = "",
-}: SectionProps) => {
+}, ref) => {
   const isDark = variant === "dark";
 
   return (
