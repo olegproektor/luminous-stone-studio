@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type ReactNode } from "react";
+import React, { useState, type FormEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { trackEvent, type AnalyticsEventName } from "@/lib/analytics";
 import { useUTM } from "@/hooks/use-utm";
@@ -26,7 +26,7 @@ interface LeadFormProps {
 // Simple honeypot anti-spam
 const HONEYPOT_FIELD = "website_url";
 
-const LeadForm = ({
+const LeadForm = React.forwardRef<HTMLFormElement, LeadFormProps>(({
   formId,
   fields,
   submitLabel = "Отправить заявку",
@@ -34,7 +34,7 @@ const LeadForm = ({
   onSubmit,
   className = "",
   children,
-}: LeadFormProps) => {
+}, ref) => {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -133,7 +133,7 @@ const LeadForm = ({
   }
 
   return (
-    <form onSubmit={handleSubmit} className={className} noValidate>
+    <form ref={ref} onSubmit={handleSubmit} className={className} noValidate>
       {/* Honeypot — invisible to users */}
       <input
         type="text"
@@ -261,6 +261,8 @@ const LeadForm = ({
       </button>
     </form>
   );
-};
+});
+
+LeadForm.displayName = "LeadForm";
 
 export default LeadForm;

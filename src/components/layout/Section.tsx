@@ -1,3 +1,5 @@
+import React from "react";
+
 interface SectionProps {
   children: React.ReactNode;
   eyebrow?: string;
@@ -17,7 +19,7 @@ const bgMap = {
 /**
  * Reusable content section with optional eyebrow, title, subtitle.
  */
-const Section = ({
+const Section = React.forwardRef<HTMLElement, SectionProps>(({
   children,
   eyebrow,
   title,
@@ -25,11 +27,11 @@ const Section = ({
   variant = "default",
   id,
   className = "",
-}: SectionProps) => {
+}, ref) => {
   const isDark = variant === "dark";
 
   return (
-    <section id={id} className={`section-padding ${bgMap[variant]} ${className}`}>
+    <section ref={ref} id={id} className={`section-padding ${bgMap[variant]} ${className}`}>
       <div className="container-brand">
         {(eyebrow || title || subtitle) && (
           <div className="mb-12 md:mb-16 max-w-2xl">
@@ -66,6 +68,8 @@ const Section = ({
       </div>
     </section>
   );
-};
+});
+
+Section.displayName = "Section";
 
 export default Section;
