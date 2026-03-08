@@ -68,6 +68,8 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(({
       </div>
     </section>
   );
-};
+});
+
+Section.displayName = "Section";
 
 export default Section;
