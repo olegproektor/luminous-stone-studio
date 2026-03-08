@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useTheme } from "next-themes";
 
 const navItems = [
   { label: "Коллекции", href: "/collections" },
@@ -15,6 +16,7 @@ const navItems = [
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const { theme, setTheme } = useTheme();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
@@ -39,12 +41,21 @@ const Header = () => {
           ))}
         </nav>
 
-        <Link
-          to="/request-project"
-          className="hidden lg:inline-flex text-sm font-body font-medium tracking-wide text-primary-foreground bg-primary px-6 py-2.5 hover:bg-charcoal-light transition-colors duration-200"
-        >
-          Запросить проект
-        </Link>
+        <div className="hidden lg:flex items-center gap-4">
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Переключить тему"
+          >
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+          <Link
+            to="/request-project"
+            className="inline-flex text-sm font-body font-medium tracking-wide text-primary-foreground bg-primary px-6 py-2.5 hover:bg-charcoal-light transition-colors duration-200"
+          >
+            Запросить проект
+          </Link>
+        </div>
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -68,6 +79,13 @@ const Header = () => {
                 {item.label}
               </Link>
             ))}
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="flex items-center gap-3 text-base font-body font-medium text-foreground"
+            >
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+              {theme === "dark" ? "Светлая тема" : "Тёмная тема"}
+            </button>
             <Link
               to="/request-project"
               className="mt-2 text-center text-sm font-body font-medium text-primary-foreground bg-primary px-6 py-3"
