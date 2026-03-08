@@ -79,6 +79,13 @@ const Header = () => {
                 {item.label}
               </Link>
             ))}
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="flex items-center gap-3 text-base font-body font-medium text-foreground"
+            >
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+              {theme === "dark" ? "Светлая тема" : "Тёмная тема"}
+            </button>
             <Link
               to="/request-project"
               className="mt-2 text-center text-sm font-body font-medium text-primary-foreground bg-primary px-6 py-3"
