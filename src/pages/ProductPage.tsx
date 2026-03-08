@@ -7,6 +7,8 @@ import Breadcrumbs from "@/components/ui/breadcrumbs";
 import SpecTable from "@/components/ui/spec-table";
 import MaterialSwatch from "@/components/ui/material-swatch";
 import ProductCard from "@/components/ui/product-card";
+import PriceRequestForm from "@/components/forms/PriceRequestForm";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { getProductBySlug, getRelatedProducts, products } from "@/data/products";
 
 const mountingLabels: Record<string, string> = {
