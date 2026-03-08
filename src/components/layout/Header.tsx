@@ -287,7 +287,8 @@ const Header = () => {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50",
-          "transition-[background-color,backdrop-filter,box-shadow,border-color] duration-[1300ms] ease-[cubic-bezier(0.7,0,1,0.5)]",
+           "transition-[background-color,backdrop-filter,box-shadow,border-color] duration-[1300ms]",
+           scrolled ? "ease-[cubic-bezier(0.7,0,1,0.5)]" : "ease-linear",
           isTransparent
             ? "bg-transparent border-b border-transparent"
             : "bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-[0_1px_24px_-8px_hsl(var(--foreground)/0.08)]"
@@ -315,7 +316,7 @@ const Header = () => {
 
           {/* Spacer — animates width to push nav right on scroll */}
           <div
-            className="hidden lg:block transition-[width] duration-[2700ms] ease-[cubic-bezier(0.7,0,1,0.5)]"
+            className={cn("hidden lg:block transition-[width] duration-[2700ms]", scrolled ? "ease-[cubic-bezier(0.7,0,1,0.5)]" : "ease-linear")}
             style={{ width: scrolled ? '100%' : '0px' }}
           />
 
@@ -324,7 +325,7 @@ const Header = () => {
             className="hidden lg:flex items-center shrink-0"
             style={{
               gap: scrolled ? '12px' : '32px',
-              transition: 'gap 2700ms cubic-bezier(0.7, 0, 1, 0.5)',
+              transition: `gap 2700ms ${scrolled ? 'cubic-bezier(0.7, 0, 1, 0.5)' : 'linear'}`,
             }}
           >
             {navItems.map((item) => {
@@ -377,7 +378,7 @@ const Header = () => {
             <Link
               to="/request-project"
               className={cn(
-                "text-[11px] font-body font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-[800ms] ease-[cubic-bezier(0.7,0,1,0.5)]",
+                `text-[11px] font-body font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-[800ms] ${scrolled ? 'ease-[cubic-bezier(0.7,0,1,0.5)]' : 'ease-linear'}`,
                 scrolled
                   ? "opacity-0 max-w-0 overflow-hidden px-0 py-0 pointer-events-none"
                   : "opacity-100 max-w-[200px] px-5 xl:px-7 py-2.5",
