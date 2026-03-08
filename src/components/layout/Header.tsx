@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useTheme } from "next-themes";
 
 const navItems = [
   { label: "Коллекции", href: "/collections" },
