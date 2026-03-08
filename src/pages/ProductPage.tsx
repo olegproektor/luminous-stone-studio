@@ -81,7 +81,7 @@ const ProductPage = () => {
                   />
                 </div>
                 {/* Background toggle */}
-                <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-background/80 backdrop-blur-sm border border-border rounded-full px-2 py-1">
+                <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5 bg-background/80 backdrop-blur-sm border border-border rounded-full px-2 py-1">
                   <button
                     type="button"
                     onClick={() => setDarkBg(false)}
