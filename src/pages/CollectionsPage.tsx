@@ -1,15 +1,18 @@
+import { Link } from "react-router-dom";
 import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
-import Grid from "@/components/layout/Grid";
 import CTASection from "@/components/layout/CTASection";
+import CollectionCard from "@/components/ui/collection-card";
+import ProductCard from "@/components/ui/product-card";
 import { collections } from "@/data/collections";
+import { products } from "@/data/products";
 
 const CollectionsPage = () => {
   return (
     <PageLayout
       title="Коллекции — STŌN"
-      description="Коллекции архитектурных уличных светильников из литьевого камня и композита. Болларды, садовые светильники, акцентные объекты."
+      description="Коллекции архитектурных уличных светильников из литьевого камня и композита."
     >
       <PageHero
         eyebrow="Коллекции"
@@ -17,30 +20,45 @@ const CollectionsPage = () => {
         subtitle="Каждая коллекция — это законченная световая система для определённого типа пространства."
       />
 
-      <Section>
-        <Grid columns={3}>
-          {collections.map((col) => (
-            <a
-              key={col.id}
-              href={`/catalog?collection=${col.slug}`}
-              className="group block"
-            >
-              <div className="aspect-[4/3] bg-secondary mb-4 overflow-hidden">
+      {collections.map((col) => {
+        const colProducts = products.filter((p) =>
+          col.productIds.includes(p.id)
+        );
+        return (
+          <Section key={col.id} variant={collections.indexOf(col) % 2 === 0 ? "default" : "alt"}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-10">
+              <div>
+                <p className="text-xs font-body font-medium tracking-[0.1em] uppercase text-muted-foreground mb-3">
+                  Коллекция
+                </p>
+                <h2 className="font-display text-3xl md:text-4xl font-light text-foreground mb-3">
+                  {col.name}
+                </h2>
+                <p className="font-body text-lg text-accent mb-4">{col.tagline}</p>
+                <p className="font-body text-sm text-muted-foreground leading-relaxed max-w-md">
+                  {col.description}
+                </p>
+              </div>
+              <div className="aspect-[4/3] bg-secondary overflow-hidden">
                 <img
                   src={col.coverImage.src}
                   alt={col.coverImage.alt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover"
                   loading="lazy"
                 />
               </div>
-              <h3 className="font-display text-xl font-medium text-foreground mb-1">
-                {col.name}
-              </h3>
-              <p className="font-body text-sm text-muted-foreground">{col.tagline}</p>
-            </a>
-          ))}
-        </Grid>
-      </Section>
+            </div>
+
+            {colProducts.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {colProducts.map((p) => (
+                  <ProductCard key={p.id} product={p} />
+                ))}
+              </div>
+            )}
+          </Section>
+        );
+      })}
 
       <CTASection
         eyebrow="Не нашли подходящее?"
