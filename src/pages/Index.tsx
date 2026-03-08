@@ -10,6 +10,7 @@ import ProjectsSection from "@/components/sections/ProjectsSection";
 import ArchitectsSection from "@/components/sections/ArchitectsSection";
 import CustomSection from "@/components/sections/CustomSection";
 import MaterialsSection from "@/components/sections/MaterialsSection";
+import ProcessSection from "@/components/sections/ProcessSection";
 import TrustSection from "@/components/sections/TrustSection";
 import FaqSection from "@/components/sections/FaqSection";
 import FinalCTASection from "@/components/sections/FinalCTASection";
@@ -39,6 +40,7 @@ const Index = () => {
         <FeaturedProductsSection />
         <ProjectsSection />
         <ArchitectsSection />
+        <ProcessSection />
         <CustomSection />
         <MaterialsSection />
         <TrustSection />
