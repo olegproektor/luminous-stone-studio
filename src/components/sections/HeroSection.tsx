@@ -1,8 +1,9 @@
 import heroBollard from "@/assets/hero-bollard.jpg";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-end md:items-center">
+    <section className="relative min-h-screen flex items-end">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -11,38 +12,63 @@ const HeroSection = () => {
           className="w-full h-full object-cover"
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/70 via-foreground/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/30 to-foreground/10" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container-brand px-6 md:px-12 lg:px-24 pb-20 md:pb-0">
-        <div className="max-w-xl animate-fade-up">
-          <p className="text-sm font-body font-medium tracking-[0.2em] uppercase text-background/60 mb-4">
-            Архитектурный свет
-          </p>
-          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-light text-background leading-[1.1] mb-6">
-            Камень.
-            <br />
-            Свет.
-            <br />
-            Ландшафт.
-          </h1>
-          <p className="font-body text-base md:text-lg text-background/70 leading-relaxed mb-10 max-w-md">
-            Болларды и светильники из литьевого камня для архитектурного ландшафта. Премиальное качество, российское производство.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <a
-              href="/catalog"
-              className="inline-flex items-center justify-center text-sm font-body font-medium tracking-wide bg-background text-foreground px-8 py-3.5 hover:bg-background/90 transition-colors duration-200"
-            >
-              Смотреть каталог
-            </a>
-            <a
-              href="/contacts"
-              className="inline-flex items-center justify-center text-sm font-body font-medium tracking-wide border border-background/40 text-background px-8 py-3.5 hover:bg-background/10 transition-colors duration-200"
-            >
-              Запросить проект
-            </a>
+      <div className="relative z-10 w-full">
+        <div className="container-brand px-6 md:px-12 lg:px-24 pb-16 md:pb-24">
+          <div className="max-w-3xl">
+            <p className="text-xs font-body font-medium tracking-brand-wide uppercase text-background/50 mb-6 animate-fade-up">
+              Архитектурное ландшафтное освещение
+            </p>
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-light text-background leading-[0.95] mb-8 animate-fade-up">
+              Камень.
+              <br />
+              Свет.
+              <br />
+              Среда.
+            </h1>
+            <p className="font-body text-sm md:text-base text-background/60 leading-relaxed mb-12 max-w-md animate-fade-up-delay">
+              Болларды и светильники из литьевого камня, которые становятся частью архитектуры ландшафта. Для частных резиденций, отелей и общественных пространств.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 animate-fade-up-delay-2">
+              <Link
+                to="/collections"
+                className="inline-flex items-center justify-center text-xs font-body font-medium tracking-brand uppercase bg-background text-foreground px-10 py-4 hover:bg-background/90 transition-colors duration-300"
+              >
+                Коллекции
+              </Link>
+              <Link
+                to="/request-project"
+                className="inline-flex items-center justify-center text-xs font-body font-medium tracking-brand uppercase border border-background/30 text-background px-10 py-4 hover:bg-background/10 transition-colors duration-300"
+              >
+                Обсудить проект
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom metrics bar — iGuzzini-inspired system feel */}
+        <div className="border-t border-background/10">
+          <div className="container-brand px-6 md:px-12 lg:px-24">
+            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-background/10">
+              {[
+                { value: "IP65", label: "Защита" },
+                { value: "3000K", label: "Тёплый свет" },
+                { value: "10+", label: "Лет службы" },
+                { value: "РФ", label: "Производство" },
+              ].map((item) => (
+                <div key={item.label} className="py-5 md:py-6 px-4 md:px-8">
+                  <span className="font-display text-lg md:text-xl font-light text-background/80">
+                    {item.value}
+                  </span>
+                  <span className="block text-[10px] font-body font-medium tracking-brand uppercase text-background/35 mt-1">
+                    {item.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

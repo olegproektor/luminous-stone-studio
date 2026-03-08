@@ -59,6 +59,10 @@ export default {
           DEFAULT: "hsl(var(--charcoal))",
           light: "hsl(var(--charcoal-light))",
         },
+        cream: {
+          DEFAULT: "hsl(var(--cream))",
+          dark: "hsl(var(--cream-dark))",
+        },
         "warm-glow": "hsl(var(--warm-glow))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -75,6 +79,10 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      letterSpacing: {
+        'brand': '0.15em',
+        'brand-wide': '0.2em',
       },
       keyframes: {
         "accordion-down": {
