@@ -295,7 +295,7 @@ const Header = () => {
       >
         <div
           className={cn(
-            "container-brand flex items-center px-6 md:px-12 lg:px-24",
+            "container-brand flex items-center justify-between px-6 md:px-12 lg:px-24",
             "transition-[height] duration-[910ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
             scrolled ? "h-12 md:h-[56px]" : "h-[68px] md:h-[88px]"
           )}
