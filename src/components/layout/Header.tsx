@@ -7,6 +7,7 @@ const navItems = [
   { label: "Каталог", href: "/catalog" },
   { label: "Проекты", href: "/projects" },
   { label: "Для архитекторов", href: "/for-architects" },
+  { label: "Журнал", href: "/blog" },
   { label: "О бренде", href: "/about" },
   { label: "Контакты", href: "/contacts" },
 ];
