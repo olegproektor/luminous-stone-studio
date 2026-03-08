@@ -371,7 +371,7 @@ const Header = () => {
             <Link
               to="/request-project"
               className={cn(
-                "text-[11px] font-body font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-[420ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+                "text-[11px] font-body font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
                 scrolled
                   ? "opacity-0 max-w-0 overflow-hidden px-0 py-0 pointer-events-none"
                   : "opacity-100 max-w-[200px] px-5 xl:px-7 py-2.5",
