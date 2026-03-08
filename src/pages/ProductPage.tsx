@@ -78,7 +78,7 @@ const ProductPage = () => {
             <div>
               <div className="relative">
                 <div
-                  className={`aspect-square overflow-hidden mb-4 transition-colors duration-500 ${showNight ? "bg-foreground" : "bg-secondary"}`}
+                  className={`relative aspect-square overflow-hidden mb-4 transition-colors duration-500 ${showNight ? "bg-foreground" : "bg-secondary"}`}
                   onMouseEnter={() => setHovering(true)}
                   onMouseLeave={() => setHovering(false)}
                 >
