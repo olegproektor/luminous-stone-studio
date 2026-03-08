@@ -296,8 +296,8 @@ const Header = () => {
         <div
           className={cn(
             "container-brand flex items-center px-6 md:px-12 lg:px-24",
-            "transition-[height,padding,justify-content] duration-[910ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
-            scrolled ? "h-12 md:h-[56px] justify-end gap-6" : "h-[68px] md:h-[88px] justify-between"
+            "transition-[height] duration-[910ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+            scrolled ? "h-12 md:h-[56px]" : "h-[68px] md:h-[88px]"
           )}
         >
           {/* Logo */}
