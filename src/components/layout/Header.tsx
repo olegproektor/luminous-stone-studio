@@ -304,14 +304,22 @@ const Header = () => {
           <Link
             to="/"
             className={cn(
-              "font-display font-medium tracking-[0.10em] origin-left",
-              "transition-[font-size,color,margin] duration-[910ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
-              scrolled ? "text-[16px] md:text-[18px] mr-auto" : "text-[19px] md:text-[22px]",
+              "font-display font-medium tracking-[0.10em] origin-left shrink-0",
+              "transition-[font-size,color] duration-[910ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+              scrolled ? "text-[16px] md:text-[18px]" : "text-[19px] md:text-[22px]",
               isTransparent ? "text-white" : "text-foreground"
             )}
           >
             STŌN
           </Link>
+
+          {/* Spacer that shrinks on scroll to push nav right */}
+          <div
+            className={cn(
+              "hidden lg:block transition-[flex-grow] duration-[7000ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+              scrolled ? "grow" : "grow-0"
+            )}
+          />
 
           {/* Desktop Nav */}
           <nav
