@@ -37,7 +37,7 @@ const CookieConsentBanner = React.forwardRef<HTMLDivElement>((_, ref) => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-foreground text-background p-4 md:p-6 animate-fade-in">
+    <div ref={ref} className="fixed bottom-0 left-0 right-0 z-50 bg-foreground text-background p-4 md:p-6 animate-fade-in">
       <div className="container-brand flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex-1 pr-8">
           <p className="font-body text-sm leading-relaxed">
