@@ -215,6 +215,7 @@ const CatalogPage = () => {
         eyebrow="Нужна помощь с выбором?"
         title="Подберём решение под ваш объект"
         primaryCta={{ label: "Получить консультацию", href: "/contacts" }}
+        secondaryCta={{ label: "Скачать каталог", href: "/for-architects#resources" }}
       />
     </PageLayout>
   );

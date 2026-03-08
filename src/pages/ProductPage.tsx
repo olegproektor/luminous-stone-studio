@@ -7,6 +7,8 @@ import Breadcrumbs from "@/components/ui/breadcrumbs";
 import SpecTable from "@/components/ui/spec-table";
 import MaterialSwatch from "@/components/ui/material-swatch";
 import ProductCard from "@/components/ui/product-card";
+import PriceRequestForm from "@/components/forms/PriceRequestForm";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { getProductBySlug, getRelatedProducts, products } from "@/data/products";
 
 const mountingLabels: Record<string, string> = {
@@ -170,12 +172,19 @@ const ProductPage = () => {
 
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-3">
-                <Link
-                  to="/request-project"
-                  className="inline-flex items-center justify-center text-sm font-body font-medium tracking-wide bg-primary text-primary-foreground px-8 py-3.5 hover:bg-charcoal-light transition-colors"
-                >
-                  Запросить цену
-                </Link>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <button className="inline-flex items-center justify-center text-sm font-body font-medium tracking-wide bg-primary text-primary-foreground px-8 py-3.5 hover:bg-charcoal-light transition-colors">
+                      Запросить цену
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-lg">
+                    <DialogHeader>
+                      <DialogTitle className="font-display text-xl">Запросить цену — {product.name}</DialogTitle>
+                    </DialogHeader>
+                    <PriceRequestForm productName={product.name} productSlug={product.slug} />
+                  </DialogContent>
+                </Dialog>
                 <Link
                   to="/contacts"
                   className="inline-flex items-center justify-center text-sm font-body font-medium tracking-wide border border-border text-foreground px-8 py-3.5 hover:bg-secondary transition-colors"

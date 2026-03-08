@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { X } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
@@ -15,7 +15,7 @@ function getStoredConsent(): ConsentState {
   return "pending";
 }
 
-const CookieConsentBanner = () => {
+const CookieConsentBanner = React.forwardRef<HTMLDivElement>((_, ref) => {
   const [state, setState] = useState<ConsentState>(getStoredConsent);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const CookieConsentBanner = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-foreground text-background p-4 md:p-6 animate-fade-in">
+    <div ref={ref} className="fixed bottom-0 left-0 right-0 z-50 bg-foreground text-background p-4 md:p-6 animate-fade-in">
       <div className="container-brand flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex-1 pr-8">
           <p className="font-body text-sm leading-relaxed">
@@ -77,6 +77,8 @@ const CookieConsentBanner = () => {
       </div>
     </div>
   );
-};
+});
+
+CookieConsentBanner.displayName = "CookieConsentBanner";
 
 export default CookieConsentBanner;
