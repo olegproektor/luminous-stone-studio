@@ -15,7 +15,7 @@ function getStoredConsent(): ConsentState {
   return "pending";
 }
 
-const CookieConsentBanner = () => {
+const CookieConsentBanner = React.forwardRef<HTMLDivElement>((_, ref) => {
   const [state, setState] = useState<ConsentState>(getStoredConsent);
 
   useEffect(() => {
