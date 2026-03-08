@@ -26,7 +26,7 @@ interface LeadFormProps {
 // Simple honeypot anti-spam
 const HONEYPOT_FIELD = "website_url";
 
-const LeadForm = ({
+const LeadForm = React.forwardRef<HTMLFormElement, LeadFormProps>(({
   formId,
   fields,
   submitLabel = "Отправить заявку",
@@ -34,7 +34,7 @@ const LeadForm = ({
   onSubmit,
   className = "",
   children,
-}: LeadFormProps) => {
+}, ref) => {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
