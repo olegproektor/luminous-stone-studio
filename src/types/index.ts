@@ -69,6 +69,7 @@ export interface Product {
   specs: ProductSpec[];
   variants: ProductVariant[];
   images: ImageAsset[];
+  nightImages: ImageAsset[];
   environmentImages: ImageAsset[];
   materials: string[];
   ipRating: string;
