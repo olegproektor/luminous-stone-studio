@@ -174,7 +174,7 @@ const CatalogPage = () => {
       {entryMode === "all" && (
         <>
           {/* By Collection */}
-          <Section eyebrow="Вход 1" title="По коллекциям">
+          <Section title="По коллекциям">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
               {collections.map((col) => (
                 <button
@@ -193,7 +193,7 @@ const CatalogPage = () => {
           </Section>
 
           {/* By Task */}
-          <Section variant="alt" eyebrow="Вход 2" title="По задаче">
+          <Section variant="alt" title="По задаче">
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {tasks.map((task) => (
                 <button
