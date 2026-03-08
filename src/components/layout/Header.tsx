@@ -318,7 +318,7 @@ const Header = () => {
             className={cn(
               "hidden lg:flex items-center",
               "transition-[gap] duration-[420ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
-              scrolled ? "gap-6" : "gap-8"
+              scrolled ? "gap-4 xl:gap-6" : "gap-5 xl:gap-8"
             )}
           >
             {navItems.map((item) => {
