@@ -1,4 +1,3 @@
-import Section from "@/components/layout/Section";
 import { Link } from "react-router-dom";
 import { FileDown, Package, MessageSquare } from "lucide-react";
 
@@ -20,7 +19,7 @@ const items = [
   {
     icon: MessageSquare,
     title: "Консультация по проекту",
-    description: "Поможем подобрать модели, рассчитать количество и адаптировать под конкретный объект.",
+    description: "Подберём модели, рассчитаем количество и адаптируем под объект.",
     cta: "Обсудить проект",
     href: "/request-project",
   },
@@ -28,32 +27,45 @@ const items = [
 
 const ArchitectsSection = () => {
   return (
-    <Section
-      variant="dark"
-      eyebrow="Для архитекторов"
-      title="Проектным бюро и дизайнерам"
-      subtitle="Работаем с архитекторами и ландшафтными дизайнерами напрямую. Предоставляем всё необходимое для включения продукта в проект."
-    >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {items.map((item) => (
-          <div key={item.title} className="border border-primary-foreground/15 p-8 flex flex-col">
-            <item.icon size={28} className="text-accent mb-6" strokeWidth={1.5} />
-            <h3 className="font-display text-xl font-medium text-primary-foreground mb-3">
-              {item.title}
-            </h3>
-            <p className="font-body text-sm text-primary-foreground/60 leading-relaxed mb-8 flex-grow">
-              {item.description}
+    <section className="section-padding bg-primary text-primary-foreground relative grain-overlay">
+      <div className="container-brand relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20">
+          {/* Left: intro */}
+          <div className="lg:col-span-4">
+            <p className="text-xs font-body font-medium tracking-brand-wide uppercase text-primary-foreground/40 mb-6">
+              Для архитекторов
             </p>
-            <Link
-              to={item.href}
-              className="inline-flex text-sm font-body font-medium tracking-wide text-primary-foreground border-b border-primary-foreground/30 pb-1 hover:border-primary-foreground transition-colors self-start"
-            >
-              {item.cta}
-            </Link>
+            <h2 className="font-display text-3xl md:text-4xl font-light text-primary-foreground leading-tight mb-6">
+              Проектным бюро и дизайнерам
+            </h2>
+            <p className="font-body text-sm text-primary-foreground/50 leading-relaxed">
+              Работаем с архитекторами и ландшафтными дизайнерами напрямую. Предоставляем всё для включения продукта в проект.
+            </p>
           </div>
-        ))}
+
+          {/* Right: cards */}
+          <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-px bg-primary-foreground/10">
+            {items.map((item) => (
+              <div key={item.title} className="bg-primary p-8 flex flex-col">
+                <item.icon size={24} className="text-accent mb-8" strokeWidth={1.5} />
+                <h3 className="font-display text-lg font-medium text-primary-foreground mb-3">
+                  {item.title}
+                </h3>
+                <p className="font-body text-xs text-primary-foreground/45 leading-relaxed mb-8 flex-grow">
+                  {item.description}
+                </p>
+                <Link
+                  to={item.href}
+                  className="text-xs font-body font-medium tracking-brand uppercase text-primary-foreground/70 border-b border-primary-foreground/20 pb-1 hover:text-primary-foreground hover:border-primary-foreground/50 transition-colors self-start"
+                >
+                  {item.cta}
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-    </Section>
+    </section>
   );
 };
 

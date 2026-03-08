@@ -1,60 +1,64 @@
 import { Check } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const features = [
-  { text: "Литьевой камень / композит" },
-  { text: "Высота 500 и 700 мм" },
-  { text: "Гладкая и текстурная поверхность" },
-  { text: "Вертикальная световая щель" },
-  { text: "2 варианта монтажа" },
-  { text: "LED, тёплый свет 3000K" },
+  "Литьевой камень / композит",
+  "Высота 500 и 700 мм",
+  "Гладкая и текстурная поверхность",
+  "Вертикальная световая щель",
+  "2 варианта монтажа",
+  "LED, тёплый свет 3000K",
 ];
 
 const AboutProductSection = () => {
   return (
-    <section className="section-padding bg-background">
-      <div className="container-brand">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          {/* Text */}
-          <div>
-            <p className="text-sm font-body font-medium tracking-[0.15em] uppercase text-muted-foreground mb-4">
+    <section className="bg-background">
+      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[80vh]">
+        {/* Visual — full-bleed image area */}
+        <div className="relative aspect-[3/4] lg:aspect-auto bg-secondary overflow-hidden order-2 lg:order-1">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center px-8">
+              <div className="w-px h-40 bg-accent/30 mx-auto mb-8" />
+              <p className="font-display text-3xl font-light text-foreground/30">
+                500 / 700
+              </p>
+              <p className="font-body text-xs tracking-brand uppercase text-muted-foreground mt-3">
+                Две высоты · Два финиша
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Text content */}
+        <div className="flex items-center order-1 lg:order-2">
+          <div className="px-6 py-24 md:px-12 lg:px-20 lg:py-0 max-w-xl">
+            <p className="text-xs font-body font-medium tracking-brand-wide uppercase text-muted-foreground mb-6">
               Флагманский продукт
             </p>
-            <h2 className="font-display text-3xl md:text-5xl font-light text-foreground leading-tight mb-6">
+            <h2 className="font-display text-4xl md:text-5xl font-light text-foreground leading-tight mb-6">
               Боллард STŌN
             </h2>
-            <p className="font-body text-base text-muted-foreground leading-relaxed mb-10 max-w-lg">
+            <p className="font-body text-sm text-muted-foreground leading-relaxed mb-10">
               Минималистичный уличный светильник из литьевого камня с вертикальной световой щелью.
-              Создан для архитектурного ландшафта — дорожки, террасы, входные группы, сады.
+              Спроектирован для архитектурного ландшафта — дорожки, террасы, входные группы, сады.
+              Материал, форма и свет работают как единое целое.
             </p>
 
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <ul className="space-y-3 mb-10">
               {features.map((feature) => (
-                <li key={feature.text} className="flex items-start gap-3">
-                  <Check size={18} className="text-accent mt-0.5 flex-shrink-0" />
-                  <span className="font-body text-sm text-foreground">{feature.text}</span>
+                <li key={feature} className="flex items-center gap-3">
+                  <Check size={14} className="text-accent flex-shrink-0" strokeWidth={2} />
+                  <span className="font-body text-sm text-foreground">{feature}</span>
                 </li>
               ))}
             </ul>
 
-            <a
-              href="/catalog"
-              className="inline-flex mt-10 text-sm font-body font-medium tracking-wide text-primary-foreground bg-primary px-8 py-3.5 hover:bg-charcoal-light transition-colors duration-200"
+            <Link
+              to="/catalog"
+              className="inline-flex text-xs font-body font-medium tracking-brand uppercase text-primary-foreground bg-primary px-10 py-4 hover:bg-charcoal-light transition-colors duration-300"
             >
-              Подробнее о продукте
-            </a>
-          </div>
-
-          {/* Visual placeholder — будет заменён на реальное фото продукта */}
-          <div className="relative aspect-[3/4] bg-secondary flex items-center justify-center">
-            <div className="text-center px-8">
-              <div className="w-px h-32 bg-accent mx-auto mb-6" />
-              <p className="font-display text-2xl font-light text-foreground/40">
-                500 / 700 мм
-              </p>
-              <p className="font-body text-sm text-muted-foreground mt-2">
-                Две высоты, два финиша
-              </p>
-            </div>
+              Подробнее
+            </Link>
           </div>
         </div>
       </div>
