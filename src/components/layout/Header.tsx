@@ -321,11 +321,11 @@ const Header = () => {
 
           {/* Desktop Nav */}
           <nav
-            className={cn(
-              "hidden lg:flex items-center",
-              "transition-[gap,transform] duration-[7000ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
-              scrolled ? "gap-3 xl:gap-5 translate-x-0" : "gap-5 xl:gap-8 translate-x-0"
-            )}
+            className="hidden lg:flex items-center shrink-0"
+            style={{
+              gap: scrolled ? '12px' : '32px',
+              transition: 'gap 7000ms cubic-bezier(0.16, 1, 0.3, 1)',
+            }}
           >
             {navItems.map((item) => {
               const isActive = location.pathname.startsWith(item.href);
