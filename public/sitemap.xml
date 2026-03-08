@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://ston.ru/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://ston.ru/collections</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ston.ru/catalog</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ston.ru/projects</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ston.ru/for-architects</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ston.ru/custom</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ston.ru/materials</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ston.ru/about</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ston.ru/blog</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ston.ru/faq</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ston.ru/contacts</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ston.ru/request-project</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ston.ru/privacy</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://ston.ru/cookies</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://ston.ru/consent</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://ston.ru/terms</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <!-- Product pages — add dynamically when CMS is connected -->
+  <!-- Project pages — add dynamically when CMS is connected -->
+  <!-- Blog posts — add dynamically when CMS is connected -->
+</urlset>
