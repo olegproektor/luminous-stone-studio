@@ -287,7 +287,7 @@ const Header = () => {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50",
-          "transition-[background-color,backdrop-filter,box-shadow,border-color] duration-[420ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+          "transition-[background-color,backdrop-filter,box-shadow,border-color] duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
           isTransparent
             ? "bg-transparent border-b border-transparent"
             : "bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-[0_1px_24px_-8px_hsl(var(--foreground)/0.08)]"
