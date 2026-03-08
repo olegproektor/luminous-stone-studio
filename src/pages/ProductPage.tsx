@@ -27,7 +27,8 @@ const ProductPage = () => {
 
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [activeImage, setActiveImage] = useState(0);
-  const [darkBg, setDarkBg] = useState(false);
+  const [nightMode, setNightMode] = useState(false);
+  const [hovering, setHovering] = useState(false);
 
   if (!product) {
     return (
