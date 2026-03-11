@@ -11,7 +11,9 @@ function getStoredConsent(): ConsentState {
   try {
     const val = localStorage.getItem(CONSENT_KEY);
     if (val === "accepted" || val === "rejected") return val;
-  } catch {}
+  } catch (error) {
+    void error;
+  }
   return "pending";
 }
 

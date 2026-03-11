@@ -30,11 +30,11 @@ const PageLayout = ({ children, title, description, canonical, jsonLd }: PageLay
 
     // OG tags
     if (title) {
-      let og = document.querySelector('meta[property="og:title"]');
+      const og = document.querySelector('meta[property="og:title"]');
       if (og) og.setAttribute("content", title);
     }
     if (description) {
-      let og = document.querySelector('meta[property="og:description"]');
+      const og = document.querySelector('meta[property="og:description"]');
       if (og) og.setAttribute("content", description);
     }
 

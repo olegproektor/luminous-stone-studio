@@ -32,13 +32,27 @@ export interface AnalyticsEvent {
   timestamp?: number;
 }
 
+type AnalyticsParams = Record<string, string | number | boolean>;
+
+declare global {
+  interface Window {
+    ym?: (
+      metrikaId: number | string,
+      action: "reachGoal",
+      goal: AnalyticsEventName,
+      params: AnalyticsParams
+    ) => void;
+    __METRIKA_ID__?: number | string;
+  }
+}
+
 /**
  * Central tracking function.
  * In production, wire this to Yandex Metrika reachGoal / params.
  */
 export function trackEvent(
   name: AnalyticsEventName,
-  params?: Record<string, string | number | boolean>
+  params?: AnalyticsParams
 ) {
   const event: AnalyticsEvent = {
     name,
@@ -47,10 +61,10 @@ export function trackEvent(
   };
 
   // Yandex Metrika integration
-  if (typeof window !== "undefined" && (window as any).ym) {
-    const metrikaId = (window as any).__METRIKA_ID__;
+  if (typeof window !== "undefined" && window.ym) {
+    const metrikaId = window.__METRIKA_ID__;
     if (metrikaId) {
-      (window as any).ym(metrikaId, "reachGoal", name, params || {});
+      window.ym(metrikaId, "reachGoal", name, params || {});
     }
   }
 

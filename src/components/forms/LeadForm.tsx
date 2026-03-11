@@ -67,7 +67,7 @@ const LeadForm = React.forwardRef<HTMLFormElement, LeadFormProps>(({
       if (field.type === "email" && val && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
         newErrors[field.name] = "Некорректный email";
       }
-      if (field.type === "tel" && val && !/^[\d\s\+\-\(\)]{7,20}$/.test(val)) {
+      if (field.type === "tel" && val && !/^[\d\s+()-]{7,20}$/.test(val)) {
         newErrors[field.name] = "Некорректный телефон";
       }
     });
