@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { Product } from "@/types";
+import { buildPath } from "@/lib/route-helpers";
 
 interface ProductCardProps {
   product: Product;
@@ -12,7 +13,7 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
 
   return (
     <Link
-      to={`/catalog/${product.slug}`}
+      to={buildPath.product(product.slug)}
       className={`group block ${className}`}
     >
       <div className="relative aspect-[3/4] bg-secondary overflow-hidden mb-5">

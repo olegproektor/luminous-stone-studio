@@ -1,3 +1,5 @@
+import type { FormAnalyticsEventName } from "@/types/form-events";
+
 /**
  * Analytics event system for STŌN
  * Centralized event tracking — ready for Yandex Metrika, GTM, CRM
@@ -5,26 +7,19 @@
  * Usage: trackEvent("form_submit", { form: "request_project", clientType: "architect" })
  */
 
-export type AnalyticsEventName =
+type BaseAnalyticsEventName =
   | "page_view"
   | "product_view"
   | "project_view"
   | "article_view"
   | "download_pdf"
-  | "form_start"
-  | "form_submit"
-  | "form_error"
   | "click_call"
   | "click_messenger"
   | "click_email"
-  | "request_project"
-  | "request_price"
-  | "request_consultation"
-  | "request_catalog"
-  | "request_custom"
-  | "architect_lead"
   | "cookie_consent_accept"
   | "cookie_consent_reject";
+
+export type AnalyticsEventName = BaseAnalyticsEventName | FormAnalyticsEventName;
 
 export interface AnalyticsEvent {
   name: AnalyticsEventName;

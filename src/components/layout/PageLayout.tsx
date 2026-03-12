@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
+import { resolveCanonicalUrl } from "@/lib/canonical";
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -15,6 +17,8 @@ interface PageLayoutProps {
  * Handles document title, meta, canonical, JSON-LD, Header, Footer, scroll reset.
  */
 const PageLayout = ({ children, title, description, canonical, jsonLd }: PageLayoutProps) => {
+  const location = useLocation();
+
   useEffect(() => {
     if (title) document.title = title;
 
@@ -38,15 +42,16 @@ const PageLayout = ({ children, title, description, canonical, jsonLd }: PageLay
       if (og) og.setAttribute("content", description);
     }
 
-    // Canonical
-    if (canonical) {
+    // Canonical (single source, alias-aware)
+    const resolvedCanonical = resolveCanonicalUrl(location.pathname, canonical);
+    if (resolvedCanonical) {
       let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
       if (!link) {
         link = document.createElement("link");
         link.setAttribute("rel", "canonical");
         document.head.appendChild(link);
       }
-      link.href = canonical;
+      link.href = resolvedCanonical;
     }
 
     // JSON-LD
@@ -62,7 +67,7 @@ const PageLayout = ({ children, title, description, canonical, jsonLd }: PageLay
     }
 
     window.scrollTo(0, 0);
-  }, [title, description, canonical, jsonLd]);
+  }, [title, description, canonical, jsonLd, location.pathname]);
 
   return (
     <>

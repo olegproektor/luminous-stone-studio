@@ -1,6 +1,6 @@
 import type { Collection } from "@/types";
 
-export const collections: Collection[] = [
+const legacyCollections: Collection[] = [
   {
     id: "c1",
     slug: "ston-classic",
@@ -46,6 +46,33 @@ export const collections: Collection[] = [
         "Садовые светильники LIRA и акцентные объекты FORMA из литьевого камня и композита.",
     },
   },
+];
+
+const launchCollections: Collection[] = [
+  {
+    id: "lc1",
+    slug: "bollards-core",
+    name: "Bollards Core",
+    tagline: "Стартовая линейка боллардов для частных и коммерческих объектов",
+    description:
+      "Фокусная коллекция первого релиза: 400 / 600 Cast / 600 Natural / 800. Единая световая логика, совместимые сценарии применения, прозрачная ценовая структура.",
+    coverImage: { src: "/placeholder.svg", alt: "Коллекция Bollards Core" },
+    productIds: ["lp1", "lp2", "lp3", "lp4"],
+    seo: {
+      title: "Bollards Core — стартовая коллекция STŌN",
+      description: "Стартовая коллекция боллардов STŌN: 400, 600 (cast/natural), 800.",
+    },
+    launchTier: "primary",
+  },
+];
+
+export const collections: Collection[] = [
+  ...launchCollections,
+  ...legacyCollections.map((item) => ({
+    ...item,
+    launchTier: "secondary" as const,
+    isHidden: true,
+  })),
 ];
 
 export function getCollectionBySlug(slug: string): Collection | undefined {

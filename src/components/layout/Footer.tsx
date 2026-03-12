@@ -1,15 +1,6 @@
 import { Link } from "react-router-dom";
-
-const footerNav = [
-  { label: "Коллекции", href: "/collections" },
-  { label: "Каталог", href: "/catalog" },
-  { label: "Проекты", href: "/projects" },
-  { label: "Для архитекторов", href: "/for-architects" },
-  { label: "О бренде", href: "/about" },
-  { label: "Журнал", href: "/blog" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Контакты", href: "/contacts" },
-];
+import { footerNavigation } from "@/config/footer.config";
+import { routes } from "@/config/routes";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -32,7 +23,7 @@ const Footer = () => {
               Навигация
             </h4>
             <nav className="flex flex-col gap-3">
-              {footerNav.slice(0, 4).map((item) => (
+              {footerNavigation.primary.map((item) => (
                 <Link
                   key={item.href}
                   to={item.href}
@@ -50,7 +41,7 @@ const Footer = () => {
               Информация
             </h4>
             <nav className="flex flex-col gap-3">
-              {footerNav.slice(4).map((item) => (
+              {footerNavigation.company.map((item) => (
                 <Link
                   key={item.href}
                   to={item.href}
@@ -87,13 +78,13 @@ const Footer = () => {
             © {currentYear} STŌN. Все права защищены.
           </p>
           <div className="flex gap-6">
-            <Link to="/privacy" className="text-[10px] font-body text-primary-foreground/25 hover:text-primary-foreground/40 transition-colors">
+            <Link to={routes.privacy} className="text-[10px] font-body text-primary-foreground/25 hover:text-primary-foreground/40 transition-colors">
               Конфиденциальность
             </Link>
-            <Link to="/cookies" className="text-[10px] font-body text-primary-foreground/25 hover:text-primary-foreground/40 transition-colors">
+            <Link to={routes.cookies} className="text-[10px] font-body text-primary-foreground/25 hover:text-primary-foreground/40 transition-colors">
               Cookie
             </Link>
-            <Link to="/terms" className="text-[10px] font-body text-primary-foreground/25 hover:text-primary-foreground/40 transition-colors">
+            <Link to={routes.terms} className="text-[10px] font-body text-primary-foreground/25 hover:text-primary-foreground/40 transition-colors">
               Оферта
             </Link>
           </div>

@@ -2,8 +2,11 @@ import CollectionCard from "@/components/ui/collection-card";
 import { collections } from "@/data/collections";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { navPaths } from "@/lib/route-helpers";
 
 const CollectionsSection = () => {
+  const featuredCollections = collections.filter((item) => item.launchTier === "primary" && !item.isHidden);
+
   return (
     <section className="section-padding bg-secondary">
       <div className="container-brand">
@@ -17,7 +20,7 @@ const CollectionsSection = () => {
             </h2>
           </div>
           <Link
-            to="/collections"
+            to={navPaths.collections}
             className="mt-6 md:mt-0 inline-flex items-center gap-2 text-xs font-body font-medium tracking-brand uppercase text-foreground border-b border-foreground/30 pb-1 hover:border-foreground transition-colors"
           >
             Все коллекции <ArrowRight size={14} />
@@ -25,7 +28,7 @@ const CollectionsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-          {collections.map((c) => (
+          {featuredCollections.map((c) => (
             <CollectionCard key={c.id} collection={c} />
           ))}
         </div>

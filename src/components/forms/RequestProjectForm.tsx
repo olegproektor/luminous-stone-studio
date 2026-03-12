@@ -1,64 +1,18 @@
 import { useState } from "react";
-import LeadForm, { type FormField } from "./LeadForm";
 import { trackEvent } from "@/lib/analytics";
+import LeadFormWrapper from "./LeadFormWrapper";
+import { requestProjectFinalPreset, requestProjectStep1Fields } from "@/data/lead-form-presets";
 
 const steps = [
   {
     title: "О вас",
     subtitle: "Как с вами связаться",
-    fields: [
-      { name: "name", label: "Имя", type: "text" as const, required: true, placeholder: "Как вас зовут" },
-      { name: "phone", label: "Телефон", type: "tel" as const, required: true, placeholder: "+7 (___) ___-__-__" },
-      { name: "email", label: "Email", type: "email" as const, placeholder: "email@example.com" },
-      {
-        name: "clientType",
-        label: "Тип клиента",
-        type: "select" as const,
-        options: [
-          { value: "private", label: "Частный клиент" },
-          { value: "architect", label: "Архитектор / дизайнер" },
-          { value: "glamping-hotel", label: "Глэмпинг / отель / ресторан" },
-          { value: "developer", label: "Девелопер / комплектатор" },
-          { value: "other", label: "Другое" },
-        ],
-      },
-    ] satisfies FormField[],
+    fields: requestProjectStep1Fields,
   },
   {
     title: "О проекте",
     subtitle: "Расскажите о вашем объекте",
-    fields: [
-      { name: "city", label: "Город / регион", type: "text" as const, placeholder: "Москва" },
-      {
-        name: "objectType",
-        label: "Тип объекта",
-        type: "select" as const,
-        options: [
-          { value: "private-house", label: "Загородный дом" },
-          { value: "apartment-complex", label: "ЖК / комплекс" },
-          { value: "glamping", label: "Глэмпинг" },
-          { value: "hotel", label: "Отель" },
-          { value: "restaurant", label: "Ресторан / кафе" },
-          { value: "park", label: "Парк / сквер" },
-          { value: "commercial", label: "Коммерческий объект" },
-          { value: "other", label: "Другое" },
-        ],
-      },
-      {
-        name: "budget",
-        label: "Ориентировочный бюджет",
-        type: "select" as const,
-        placeholder: "Выберите диапазон",
-        options: [
-          { value: "to-50k", label: "До 50 000 ₽" },
-          { value: "50-150k", label: "50 000 — 150 000 ₽" },
-          { value: "150-500k", label: "150 000 — 500 000 ₽" },
-          { value: "500k+", label: "Более 500 000 ₽" },
-          { value: "unknown", label: "Пока не определён" },
-        ],
-      },
-      { name: "message", label: "Комментарий", type: "textarea" as const, placeholder: "Опишите задачу, площадь, пожелания...", half: false },
-    ] satisfies FormField[],
+    fields: requestProjectFinalPreset.fields,
   },
 ];
 
@@ -102,11 +56,8 @@ const RequestProjectForm = () => {
           {currentStep.subtitle}
         </p>
 
-        <LeadForm
-          formId="request_project"
-          fields={currentStep.fields}
-          submitLabel="Отправить заявку"
-          analyticsEvent="request_project"
+        <LeadFormWrapper
+          preset={requestProjectFinalPreset}
           onSubmit={async (data) => {
             const fullData = { ...stepData, ...data };
             console.log("[Request Project]", fullData);

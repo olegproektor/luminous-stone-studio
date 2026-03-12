@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { Collection } from "@/types";
+import { buildPath } from "@/lib/route-helpers";
 
 interface CollectionCardProps {
   collection: Collection;
@@ -9,7 +10,7 @@ interface CollectionCardProps {
 const CollectionCard = ({ collection, className = "" }: CollectionCardProps) => {
   return (
     <Link
-      to={`/collections`}
+      to={buildPath.collection(collection.slug)}
       className={`group block relative overflow-hidden ${className}`}
     >
       <div className="relative aspect-[3/4] bg-card">

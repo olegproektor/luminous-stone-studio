@@ -36,8 +36,8 @@ const architectFormFields = [
 const ForArchitectsPage = () => {
   return (
     <PageLayout
-      title="Для архитекторов — STŌN"
-      description="Материалы для проектирования: PDF-каталог, чертежи, технические листы, 3D-модели. Запрос образцов и консультации."
+      title="Загрузки и материалы — STŌN"
+      description="Каталог, техлисты, чертежи и материалы для проектирования. Раздел загрузок STŌN."
     >
       <PageHero
         eyebrow="Для архитекторов"

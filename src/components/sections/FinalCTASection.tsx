@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { navPaths } from "@/lib/route-helpers";
 
 const FinalCTASection = () => {
   return (
@@ -15,7 +16,7 @@ const FinalCTASection = () => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
-            to="/request-project"
+            to={navPaths.requestProject}
             className="inline-flex items-center justify-center text-xs font-body font-medium tracking-brand uppercase bg-background text-foreground px-12 py-4 hover:bg-background/90 transition-colors duration-300"
           >
             Запросить проект

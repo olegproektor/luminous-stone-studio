@@ -2,12 +2,13 @@ import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
+import { pageContentSeed } from "@/data/page-content.seed";
 
 const AboutPage = () => {
   return (
     <PageLayout
-      title="О бренде — STŌN"
-      description="STŌN — российский бренд архитектурных уличных светильников из литьевого камня и композита. Производство в России."
+      title={pageContentSeed.company.title}
+      description={pageContentSeed.company.description}
     >
       <PageHero
         eyebrow="О бренде"

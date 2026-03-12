@@ -2,12 +2,13 @@ import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
 import RequestProjectForm from "@/components/forms/RequestProjectForm";
+import { pageContentSeed } from "@/data/page-content.seed";
 
 const RequestProjectPage = () => {
   return (
     <PageLayout
-      title="Запросить проект — STŌN"
-      description="Оставьте заявку на проект ландшафтного освещения. Подготовим подборку и расчёт."
+      title={pageContentSeed.requestProject.title}
+      description={pageContentSeed.requestProject.description}
     >
       <PageHero
         eyebrow="Заявка"

@@ -2,16 +2,9 @@ import React, { useState, type FormEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { trackEvent, type AnalyticsEventName } from "@/lib/analytics";
 import { useUTM } from "@/hooks/use-utm";
+import type { LeadFormField } from "@/types/lead-form-contract";
 
-export interface FormField {
-  name: string;
-  label: string;
-  type: "text" | "email" | "tel" | "textarea" | "select";
-  required?: boolean;
-  placeholder?: string;
-  options?: { value: string; label: string }[];
-  half?: boolean; // half-width on desktop
-}
+export type FormField = LeadFormField;
 
 interface LeadFormProps {
   formId: string;

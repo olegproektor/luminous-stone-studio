@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import CookieConsentBanner from "@/components/ui/cookie-consent";
 import StickyMobileCTA from "@/components/ui/sticky-mobile-cta";
+import { routes } from "@/config/routes";
 
 // Eagerly loaded (above fold)
 import Index from "./pages/Index";
@@ -53,24 +54,28 @@ const App = () => (
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/collections" element={<CollectionsPage />} />
-            <Route path="/catalog" element={<CatalogPage />} />
+            <Route path={routes.collections} element={<CollectionsPage />} />
+            <Route path={routes.products} element={<CatalogPage />} />
+            <Route path="/products/:slug" element={<ProductPage />} />
+            <Route path={routes.productsLegacy} element={<CatalogPage />} />
             <Route path="/catalog/:slug" element={<ProductPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path={routes.projects} element={<ProjectsPage />} />
             <Route path="/projects/:slug" element={<ProjectDetailPage />} />
-            <Route path="/for-architects" element={<ForArchitectsPage />} />
+            <Route path={routes.downloads} element={<ForArchitectsPage />} />
+            <Route path={routes.downloadsLegacy} element={<ForArchitectsPage />} />
             <Route path="/custom" element={<CustomPage />} />
-            <Route path="/materials" element={<MaterialsPage />} />
-            <Route path="/about" element={<AboutPage />} />
+            <Route path={routes.materials} element={<MaterialsPage />} />
+            <Route path={routes.company} element={<AboutPage />} />
+            <Route path={routes.aboutLegacy} element={<AboutPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
-            <Route path="/faq" element={<FaqPage />} />
-            <Route path="/contacts" element={<ContactsPage />} />
-            <Route path="/request-project" element={<RequestProjectPage />} />
-            <Route path="/privacy" element={<PrivacyPage />} />
-            <Route path="/cookies" element={<CookiesPage />} />
-            <Route path="/consent" element={<ConsentPage />} />
-            <Route path="/terms" element={<TermsPage />} />
+            <Route path={routes.faq} element={<FaqPage />} />
+            <Route path={routes.contacts} element={<ContactsPage />} />
+            <Route path={routes.requestProject} element={<RequestProjectPage />} />
+            <Route path={routes.privacy} element={<PrivacyPage />} />
+            <Route path={routes.cookies} element={<CookiesPage />} />
+            <Route path={routes.consent} element={<ConsentPage />} />
+            <Route path={routes.terms} element={<TermsPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

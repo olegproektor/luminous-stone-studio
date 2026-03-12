@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FileDown, Package, MessageSquare } from "lucide-react";
+import { navPaths } from "@/lib/route-helpers";
 
 const items = [
   {
@@ -7,21 +8,21 @@ const items = [
     title: "Спецификации и чертежи",
     description: "PDF-каталог, техлисты, размеры и узлы монтажа — всё для включения в проект.",
     cta: "Скачать материалы",
-    href: "/for-architects",
+    href: navPaths.downloads,
   },
   {
     icon: Package,
     title: "Образцы",
     description: "Запросите образцы материала и финишей для утверждения у заказчика.",
     cta: "Запросить образцы",
-    href: "/contacts",
+    href: navPaths.contacts,
   },
   {
     icon: MessageSquare,
     title: "Консультация по проекту",
     description: "Подберём модели, рассчитаем количество и адаптируем под объект.",
     cta: "Обсудить проект",
-    href: "/request-project",
+    href: navPaths.requestProject,
   },
 ];
 

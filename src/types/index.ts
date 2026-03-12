@@ -79,6 +79,8 @@ export interface Product {
   useCases: string[];
   seo: SeoFields;
   createdAt: string;
+  launchTier?: "primary" | "secondary";
+  isHidden?: boolean;
 }
 
 // ---- Collection ----
@@ -92,6 +94,8 @@ export interface Collection {
   coverImage: ImageAsset;
   productIds: string[];
   seo: SeoFields;
+  launchTier?: "primary" | "secondary";
+  isHidden?: boolean;
 }
 
 // ---- Project / Case Study ----

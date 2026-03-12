@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import { Link } from "react-router-dom";
+import { navPaths } from "@/lib/route-helpers";
 
 const features = [
   "Литьевой камень / композит",
@@ -54,7 +55,7 @@ const AboutProductSection = () => {
             </ul>
 
             <Link
-              to="/catalog"
+              to={navPaths.products}
               className="inline-flex text-xs font-body font-medium tracking-brand uppercase text-primary-foreground bg-primary px-10 py-4 hover:bg-charcoal-light transition-colors duration-300"
             >
               Подробнее

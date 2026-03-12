@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { navPaths } from "@/lib/route-helpers";
 
 const steps = [
   {
@@ -54,7 +55,7 @@ const ProcessSection = () => {
 
         <div className="mt-12 text-center">
           <Link
-            to="/request-project"
+            to={navPaths.requestProject}
             className="inline-flex text-xs font-body font-medium tracking-brand uppercase text-primary-foreground bg-primary px-10 py-4 hover:bg-charcoal-light transition-colors duration-300"
           >
             Начать проект

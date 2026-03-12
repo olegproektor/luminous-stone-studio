@@ -1,5 +1,6 @@
 import heroBollard from "@/assets/hero-bollard.jpg";
 import { Link } from "react-router-dom";
+import { navPaths } from "@/lib/route-helpers";
 
 const HeroSection = () => {
   return (
@@ -34,13 +35,13 @@ const HeroSection = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-up-delay-2">
               <Link
-                to="/collections"
+                to={navPaths.collections}
                 className="inline-flex items-center justify-center text-xs font-body font-medium tracking-brand uppercase bg-background text-foreground px-10 py-4 hover:bg-background/90 transition-colors duration-300"
               >
                 Коллекции
               </Link>
               <Link
-                to="/request-project"
+                to={navPaths.requestProject}
                 className="inline-flex items-center justify-center text-xs font-body font-medium tracking-brand uppercase border border-background/30 text-background px-10 py-4 hover:bg-background/10 transition-colors duration-300"
               >
                 Обсудить проект

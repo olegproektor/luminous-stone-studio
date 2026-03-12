@@ -1,33 +1,16 @@
 import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
-import LeadForm from "@/components/forms/LeadForm";
+import LeadFormWrapper from "@/components/forms/LeadFormWrapper";
 import { trackClick } from "@/lib/analytics";
-
-const contactFormFields = [
-  { name: "name", label: "Имя", type: "text" as const, required: true, placeholder: "Как вас зовут" },
-  { name: "phone", label: "Телефон", type: "tel" as const, required: true, placeholder: "+7 (___) ___-__-__" },
-  { name: "email", label: "Email", type: "email" as const, placeholder: "email@example.com" },
-  {
-    name: "clientType",
-    label: "Я обращаюсь как",
-    type: "select" as const,
-    options: [
-      { value: "private", label: "Частный клиент" },
-      { value: "architect", label: "Архитектор / дизайнер" },
-      { value: "glamping-hotel", label: "Глэмпинг / отель" },
-      { value: "developer", label: "Девелопер" },
-      { value: "other", label: "Другое" },
-    ],
-  },
-  { name: "message", label: "Сообщение", type: "textarea" as const, placeholder: "Расскажите о вашем запросе...", half: false },
-];
+import { contactFormPreset } from "@/data/lead-form-presets";
+import { pageContentSeed } from "@/data/page-content.seed";
 
 const ContactsPage = () => {
   return (
     <PageLayout
-      title="Контакты — STŌN"
-      description="Свяжитесь с нами: телефон, email, форма обратной связи. Москва, Россия."
+      title={pageContentSeed.contacts.title}
+      description={pageContentSeed.contacts.description}
     >
       <PageHero
         eyebrow="Контакты"
@@ -108,12 +91,7 @@ const ContactsPage = () => {
             <p className="font-body text-sm text-muted-foreground mb-8">
               Ответим в течение рабочего дня.
             </p>
-            <LeadForm
-              formId="contact_general"
-              fields={contactFormFields}
-              submitLabel="Отправить"
-              analyticsEvent="request_consultation"
-            />
+            <LeadFormWrapper preset={contactFormPreset} />
           </div>
         </div>
       </Section>

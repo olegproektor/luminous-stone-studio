@@ -3,6 +3,8 @@ import { Menu, X, Sun, Moon, ChevronRight, ArrowRight } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
+import { headerNavigation } from "@/config/navigation.config";
+import { navPaths } from "@/lib/route-helpers";
 
 /* ─── Navigation Data ─── */
 interface SubItem {
@@ -17,32 +19,7 @@ interface NavItem {
   children?: SubItem[];
 }
 
-const navItems: NavItem[] = [
-  {
-    label: "Коллекции",
-    href: "/collections",
-    children: [
-      { label: "STŌN Classic", href: "/collections/ston-classic", description: "Гладкая форма, чистый свет" },
-      { label: "STŌN Texture", href: "/collections/ston-texture", description: "Природная фактура камня" },
-      { label: "LIRA & FORMA", href: "/collections/lira-garden", description: "Свет для сада и акцентов" },
-      { label: "Все коллекции", href: "/collections" },
-    ],
-  },
-  {
-    label: "Каталог",
-    href: "/catalog",
-    children: [
-      { label: "Болларды", href: "/catalog?category=bollard", description: "Архитектурные световые столбики" },
-      { label: "Ландшафтные светильники", href: "/catalog?category=garden", description: "Садовое и парковое освещение" },
-      { label: "Акцентные объекты", href: "/catalog?category=accent", description: "Световые формы и скульптуры" },
-      { label: "Весь каталог", href: "/catalog" },
-    ],
-  },
-  { label: "Проекты", href: "/projects" },
-  { label: "Для архитекторов", href: "/for-architects" },
-  { label: "Журнал", href: "/blog" },
-  { label: "Контакты", href: "/contacts" },
-];
+const navItems: NavItem[] = headerNavigation;
 
 /* ─── Mega Menu Panel ─── */
 const MegaMenu = ({
@@ -190,7 +167,7 @@ const MobileMenu = ({
                 {theme === "dark" ? "Светлая тема" : "Тёмная тема"}
               </button>
               <Link
-                to="/request-project"
+                to={navPaths.requestProject}
                 onClick={onClose}
                 className="block text-center text-xs font-body font-medium tracking-brand uppercase text-primary-foreground bg-primary px-6 py-4 transition-colors hover:bg-charcoal-light"
               >
@@ -376,7 +353,7 @@ const Header = () => {
               {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
             </button>
             <Link
-              to="/request-project"
+              to={navPaths.requestProject}
               className={cn(
                 `text-[11px] font-body font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-[800ms] ${scrolled ? 'ease-[cubic-bezier(0.7,0,1,0.5)]' : 'ease-linear'}`,
                 scrolled

@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { navPaths } from "@/lib/route-helpers";
 
 const scenarios = [
   {
     title: "Загородная резиденция",
     description: "Дорожки, терраса, входная группа, сад. Камерный свет, который подчёркивает архитектуру участка и создаёт вечернюю атмосферу.",
-    href: "/catalog",
+    href: navPaths.products,
     image: "/placeholder.svg",
     span: "md:col-span-2",
     aspect: "aspect-[16/9]",
@@ -21,7 +22,7 @@ const scenarios = [
   {
     title: "Ресторан · Терраса",
     description: "Мягкий периферийный свет для открытых зон. Камерность и стиль заведения.",
-    href: "/catalog",
+    href: navPaths.products,
     image: "/placeholder.svg",
     span: "",
     aspect: "aspect-[4/5]",
@@ -29,7 +30,7 @@ const scenarios = [
   {
     title: "Общественное пространство",
     description: "Парки, скверы, набережные. Масштабируемые решения с единым визуальным языком для всей территории.",
-    href: "/for-architects",
+    href: navPaths.downloads,
     image: "/placeholder.svg",
     span: "md:col-span-2",
     aspect: "aspect-[16/9]",
@@ -53,7 +54,7 @@ const ScenariosSection = () => {
             </p>
           </div>
           <Link
-            to="/catalog"
+            to={navPaths.products}
             className="mt-6 md:mt-0 inline-flex items-center gap-2 text-xs font-body font-medium tracking-brand uppercase text-foreground border-b border-foreground/30 pb-1 hover:border-foreground transition-colors"
           >
             Подобрать по задаче <ArrowRight size={14} />

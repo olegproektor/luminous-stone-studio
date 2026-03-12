@@ -9,6 +9,7 @@ import ChipTag from "@/components/ui/chip-tag";
 import EmptyState from "@/components/ui/empty-state";
 import { products } from "@/data/products";
 import type { ProductCategory, TextureType } from "@/types";
+import { navPaths } from "@/lib/route-helpers";
 
 type SortOption = "default" | "price-asc" | "price-desc" | "name";
 type EntryMode = "all" | "collection" | "task";
@@ -101,7 +102,7 @@ const CatalogPage = () => {
   };
 
   const filtered = useMemo(() => {
-    let result = [...products];
+    let result = products.filter((item) => !item.isHidden);
 
     // Task-based filtering (by useCases)
     if (entryMode === "task" && selectedTask) {
@@ -161,8 +162,8 @@ const CatalogPage = () => {
 
   return (
     <PageLayout
-      title="Каталог — STŌN"
-      description="Каталог архитектурных уличных светильников из литьевого камня: болларды, садовые светильники, акцентные объекты."
+      title="Продукты — STŌN"
+      description="Продукты STŌN: болларды и архитектурные уличные светильники из камня."
     >
       <PageHero
         eyebrow="Каталог"
@@ -333,8 +334,8 @@ const CatalogPage = () => {
       <CTASection
         eyebrow="Нужна помощь с выбором?"
         title="Подберём решение под ваш объект"
-        primaryCta={{ label: "Получить консультацию", href: "/contacts" }}
-        secondaryCta={{ label: "Скачать каталог", href: "/for-architects#resources" }}
+        primaryCta={{ label: "Получить консультацию", href: navPaths.contacts }}
+        secondaryCta={{ label: "Скачать каталог", href: `${navPaths.downloads}#resources` }}
       />
     </PageLayout>
   );

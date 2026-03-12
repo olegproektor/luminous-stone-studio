@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PageLayout from "@/components/layout/PageLayout";
+import { navPaths } from "@/lib/route-helpers";
 
 const NotFound = () => {
   return (
@@ -20,16 +21,16 @@ const NotFound = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/"
+              to={navPaths.home}
               className="inline-flex items-center justify-center text-sm font-body font-medium tracking-wide bg-primary text-primary-foreground px-10 py-4 hover:bg-charcoal-light transition-colors"
             >
               На главную
             </Link>
             <Link
-              to="/catalog"
+              to={navPaths.products}
               className="inline-flex items-center justify-center text-sm font-body font-medium tracking-wide border border-border text-foreground px-10 py-4 hover:bg-secondary transition-colors"
             >
-              Каталог
+              Продукты
             </Link>
           </div>
         </div>
