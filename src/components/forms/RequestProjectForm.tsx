@@ -2,6 +2,7 @@ import { useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 import LeadFormWrapper from "./LeadFormWrapper";
 import { requestProjectFinalPreset, requestProjectStep1Fields } from "@/data/lead-form-presets";
+import { deliverForm } from "@/lib/form-delivery";
 
 const steps = [
   {
@@ -60,8 +61,10 @@ const RequestProjectForm = () => {
           preset={requestProjectFinalPreset}
           onSubmit={async (data) => {
             const fullData = { ...stepData, ...data };
-            console.log("[Request Project]", fullData);
-            await new Promise((r) => setTimeout(r, 800));
+            const delivery = await deliverForm({ formId: "request_project", data: fullData });
+            if (!delivery.ok) {
+              throw new Error(delivery.message);
+            }
           }}
         />
       </div>

@@ -1,4 +1,5 @@
 import type { Project } from "@/types";
+import { projectRelationsSeed } from "./project-relations.seed";
 
 export const projects: Project[] = [
   {
@@ -14,7 +15,11 @@ export const projects: Project[] = [
       "Установлено 24 болларда STŌN Classic 500 и 8 боллардов STŌN Classic 700 в цвете «Песчаник». Световые линии подчёркивают геометрию дорожек, мягкий свет создаёт камерную атмосферу у зоны отдыха.",
     result:
       "Архитектурно выдержанное освещение, которое работает как навигация и как элемент дизайна участка.",
-    products: ["p1", "p2"],
+    products: ["lp1", "lp2"],
+    productSlugs: projectRelationsSeed["zagorodnyi-dom-rublyovka"].productSlugs,
+    collectionSlugs: projectRelationsSeed["zagorodnyi-dom-rublyovka"].collectionSlugs,
+    materialSlugs: projectRelationsSeed["zagorodnyi-dom-rublyovka"].materialSlugs,
+    summary: "Навигационная подсветка дорожек и входной группы на приватном участке 30 соток.",
     gallery: [{ src: "/placeholder.svg", alt: "Загородный дом — дорожки" }],
     coverImage: { src: "/placeholder.svg", alt: "Загородный дом на Рублёвке — обложка" },
     seo: {
@@ -36,7 +41,11 @@ export const projects: Project[] = [
       "Использованы текстурные болларды STŌN Texture 700 в цвете «Графит» — 16 штук вдоль основных путей и зон отдыха. Каменная фактура перекликается с окружающими горами.",
     result:
       "Свет стал частью ландшафта, а не чужеродным элементом. Гости отмечают атмосферность вечернего освещения.",
-    products: ["p4"],
+    products: ["lp3", "lp4"],
+    productSlugs: projectRelationsSeed["glamping-altai"].productSlugs,
+    collectionSlugs: projectRelationsSeed["glamping-altai"].collectionSlugs,
+    materialSlugs: projectRelationsSeed["glamping-altai"].materialSlugs,
+    summary: "Фактурные болларды в природном контексте без светового шума.",
     gallery: [{ src: "/placeholder.svg", alt: "Глэмпинг Алтай — вечер" }],
     coverImage: { src: "/placeholder.svg", alt: "Глэмпинг Алтай Резорт — обложка" },
     seo: {
@@ -58,7 +67,11 @@ export const projects: Project[] = [
       "Комбинация STŌN Classic 500 (входная группа), LIRA Garden Light (ресторанная зона) и FORMA Accent (декоративные зоны). Всего 42 светильника.",
     result:
       "Гостиница получила единый световой язык, который усиливает премиальное позиционирование.",
-    products: ["p1", "p5", "p6"],
+    products: ["lp1", "lp2", "lp3"],
+    productSlugs: projectRelationsSeed["hotel-sochi-terrasa"].productSlugs,
+    collectionSlugs: projectRelationsSeed["hotel-sochi-terrasa"].collectionSlugs,
+    materialSlugs: projectRelationsSeed["hotel-sochi-terrasa"].materialSlugs,
+    summary: "Комбинированный сценарий освещения для отельной территории с несколькими зонами.",
     gallery: [{ src: "/placeholder.svg", alt: "Отель Сочи Терраса — вечер" }],
     coverImage: { src: "/placeholder.svg", alt: "Отель Сочи Терраса — обложка" },
     seo: {

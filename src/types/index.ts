@@ -2,6 +2,8 @@
 // Core data models for the STŌN brand website
 // CMS-ready: all types mirror future CMS schemas
 // =============================================
+import type { ProductTechGroup, ProductTechGroupId } from "./product-tech";
+import type { ProductTaxonomyState } from "./taxonomy";
 
 // ---- Common ----
 
@@ -50,11 +52,21 @@ export interface ProductVariant {
   sku: string;
   price?: number; // ₽, undefined = "по запросу"
   inStock: boolean;
+  wattage?: string;
+  lumen?: string;
+  voltage?: string;
+  beamAngle?: string;
+  cct?: string;
+  leadTimeDays?: number;
 }
 
 export interface ProductSpec {
+  key?: string;
   label: string;
   value: string;
+  unit?: string;
+  group?: ProductTechGroupId;
+  priority?: number;
 }
 
 export interface Product {
@@ -77,6 +89,8 @@ export interface Product {
   pdfSpec?: string;
   relatedProductIds: string[];
   useCases: string[];
+  techGroups?: ProductTechGroup[];
+  taxonomy?: Partial<ProductTaxonomyState>;
   seo: SeoFields;
   createdAt: string;
   launchTier?: "primary" | "secondary";
@@ -112,6 +126,7 @@ export interface Project {
   id: string;
   slug: string;
   title: string;
+  summary?: string;
   projectType: ProjectType;
   region: string;
   year: number;
@@ -119,6 +134,9 @@ export interface Project {
   solution: string;
   result: string;
   products: string[]; // product IDs
+  productSlugs?: string[];
+  collectionSlugs?: string[];
+  materialSlugs?: string[];
   gallery: ImageAsset[];
   coverImage: ImageAsset;
   seo: SeoFields;

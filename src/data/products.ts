@@ -1,4 +1,5 @@
 import type { Product } from "@/types";
+import { toTechGroups } from "@/lib/product-tech";
 
 const legacyProducts: Product[] = [
   {
@@ -519,12 +520,14 @@ const launchProducts: Product[] = [
 ];
 
 export const products: Product[] = [
-  ...launchProducts,
-  ...legacyProducts.map((item) => ({
-    ...item,
-    launchTier: "secondary" as const,
-    isHidden: true,
-  })),
+  ...launchProducts.map((item) => normalizeProduct(item)),
+  ...legacyProducts.map((item) =>
+    normalizeProduct({
+      ...item,
+      launchTier: "secondary" as const,
+      isHidden: true,
+    })
+  ),
 ];
 
 export function getProductBySlug(slug: string): Product | undefined {
@@ -537,4 +540,39 @@ export function getProductsByCategory(category: Product["category"]): Product[] 
 
 export function getRelatedProducts(product: Product): Product[] {
   return products.filter((p) => product.relatedProductIds.includes(p.id));
+}
+
+function normalizeProduct(product: Product): Product {
+  const firstPrice = Math.min(...product.variants.map((variant) => variant.price ?? Infinity));
+  const priceBand =
+    firstPrice === Infinity ? "request" : firstPrice < 15000 ? "entry" : firstPrice <= 20000 ? "mid" : "premium";
+
+  const lowerUseCases = product.useCases.map((value) => value.toLowerCase());
+  let application = "public-space";
+  if (lowerUseCases.some((value) => value.includes("дорож") || value.includes("алле"))) application = "pathways";
+  else if (lowerUseCases.some((value) => value.includes("террас") || value.includes("патио"))) application = "terrace";
+  else if (lowerUseCases.some((value) => value.includes("вход"))) application = "entrance";
+  else if (lowerUseCases.some((value) => value.includes("глэмпинг") || value.includes("отел"))) application = "glamping";
+
+  const materialRaw = product.materials.join(" ").toLowerCase();
+  const material = materialRaw.includes("натураль")
+    ? "natural-stone"
+    : materialRaw.includes("композит")
+      ? "composite"
+      : "cast-stone";
+
+  const ipRaw = product.ipRating.toLowerCase();
+  const ip = ipRaw.includes("67") ? "ip67" : "ip65";
+
+  return {
+    ...product,
+    techGroups: toTechGroups(product.specs),
+    taxonomy: {
+      category: product.category,
+      application,
+      material,
+      ip,
+      priceBand,
+    },
+  };
 }

@@ -3,17 +3,22 @@ import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
 import CollectionCard from "@/components/ui/collection-card";
+import TrustProofStrip from "@/components/shared/TrustProofStrip";
 import { collections } from "@/data/collections";
 import { navPaths } from "@/lib/route-helpers";
 import { collectionsIndexSeed } from "@/data/collections-index.seed";
+import { getListMetadata } from "@/lib/metadata-pipeline";
+import { useAnalyticsView } from "@/hooks/useAnalyticsView";
 
 const CollectionsPage = () => {
+  const meta = getListMetadata("collections");
   const visibleCollections = collections.filter((item) => item.launchTier === "primary" && !item.isHidden);
+  useAnalyticsView({ type: "list", entity: "collection" });
 
   return (
     <PageLayout
-      title="Коллекции — STŌN"
-      description="Коллекции архитектурных уличных светильников из литьевого камня и композита."
+      title={meta.title}
+      description={meta.description}
     >
       <PageHero
         eyebrow={collectionsIndexSeed.eyebrow}
@@ -28,6 +33,8 @@ const CollectionsPage = () => {
           ))}
         </div>
       </Section>
+
+      <TrustProofStrip />
 
       <CTASection
         eyebrow="Не нашли подходящее?"

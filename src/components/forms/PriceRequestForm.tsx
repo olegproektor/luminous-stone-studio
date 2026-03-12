@@ -1,8 +1,10 @@
 import LeadForm, { type FormField } from "./LeadForm";
+import { deliverForm } from "@/lib/form-delivery";
 
 interface PriceRequestFormProps {
   productName?: string;
   productSlug?: string;
+  context?: "product-detail" | "project-detail" | "catalog";
 }
 
 const fields: FormField[] = [
@@ -23,7 +25,7 @@ const fields: FormField[] = [
   { name: "message", label: "Комментарий", type: "textarea", placeholder: "Уточнения по цвету, монтажу, доставке...", half: false },
 ];
 
-const PriceRequestForm = ({ productName, productSlug }: PriceRequestFormProps) => {
+const PriceRequestForm = ({ productName, productSlug, context = "product-detail" }: PriceRequestFormProps) => {
   return (
     <LeadForm
       formId="request_price"
@@ -31,9 +33,11 @@ const PriceRequestForm = ({ productName, productSlug }: PriceRequestFormProps) =
       submitLabel="Запросить цену"
       analyticsEvent="request_price"
       onSubmit={async (data) => {
-        const payload = { ...data, product: productName, productSlug };
-        console.log("[Price Request]", payload);
-        await new Promise((r) => setTimeout(r, 800));
+        const payload = { ...data, product: productName, productSlug, context };
+        const delivery = await deliverForm({ formId: "request_price", data: payload });
+        if (!delivery.ok) {
+          throw new Error(delivery.message);
+        }
       }}
     />
   );

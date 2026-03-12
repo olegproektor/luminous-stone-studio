@@ -14,6 +14,7 @@ import Index from "./pages/Index";
 
 // Lazy loaded pages
 const CollectionsPage = lazy(() => import("./pages/CollectionsPage"));
+const CollectionDetailPage = lazy(() => import("./pages/CollectionDetailPage"));
 const CatalogPage = lazy(() => import("./pages/CatalogPage"));
 const ProductPage = lazy(() => import("./pages/ProductPage"));
 const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
@@ -55,12 +56,13 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path={routes.collections} element={<CollectionsPage />} />
+            <Route path={routes.collectionsDetailPattern} element={<CollectionDetailPage />} />
             <Route path={routes.products} element={<CatalogPage />} />
-            <Route path="/products/:slug" element={<ProductPage />} />
+            <Route path={routes.productsDetailPattern} element={<ProductPage />} />
             <Route path={routes.productsLegacy} element={<CatalogPage />} />
-            <Route path="/catalog/:slug" element={<ProductPage />} />
+            <Route path={routes.productsDetailLegacyPattern} element={<ProductPage />} />
             <Route path={routes.projects} element={<ProjectsPage />} />
-            <Route path="/projects/:slug" element={<ProjectDetailPage />} />
+            <Route path={routes.projectDetailPattern} element={<ProjectDetailPage />} />
             <Route path={routes.downloads} element={<ForArchitectsPage />} />
             <Route path={routes.downloadsLegacy} element={<ForArchitectsPage />} />
             <Route path="/custom" element={<CustomPage />} />

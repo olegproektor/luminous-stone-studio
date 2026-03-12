@@ -34,12 +34,22 @@ const PageLayout = ({ children, title, description, canonical, jsonLd }: PageLay
 
     // OG tags
     if (title) {
-      const og = document.querySelector('meta[property="og:title"]');
-      if (og) og.setAttribute("content", title);
+      let og = document.querySelector('meta[property="og:title"]');
+      if (!og) {
+        og = document.createElement("meta");
+        og.setAttribute("property", "og:title");
+        document.head.appendChild(og);
+      }
+      og.setAttribute("content", title);
     }
     if (description) {
-      const og = document.querySelector('meta[property="og:description"]');
-      if (og) og.setAttribute("content", description);
+      let og = document.querySelector('meta[property="og:description"]');
+      if (!og) {
+        og = document.createElement("meta");
+        og.setAttribute("property", "og:description");
+        document.head.appendChild(og);
+      }
+      og.setAttribute("content", description);
     }
 
     // Canonical (single source, alias-aware)

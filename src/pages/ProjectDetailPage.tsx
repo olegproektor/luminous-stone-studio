@@ -3,18 +3,15 @@ import PageLayout from "@/components/layout/PageLayout";
 import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
-import ProductCard from "@/components/ui/product-card";
+import TrustProofStrip from "@/components/shared/TrustProofStrip";
+import ProjectHeroModule from "@/components/projects/modules/ProjectHeroModule";
+import ProjectContentModule from "@/components/projects/modules/ProjectContentModule";
+import ProjectProductsModule from "@/components/projects/modules/ProjectProductsModule";
 import { getProjectBySlug, projects } from "@/data/projects";
 import { products } from "@/data/products";
-
-const projectTypeLabels: Record<string, string> = {
-  "private-house": "Частный дом",
-  glamping: "Глэмпинг",
-  hotel: "Отель",
-  restaurant: "Ресторан",
-  "public-space": "Общественное пространство",
-  "residential-complex": "ЖК",
-};
+import { buildPath, navPaths } from "@/lib/route-helpers";
+import { getDetailMetadata } from "@/lib/metadata-pipeline";
+import { useAnalyticsView } from "@/hooks/useAnalyticsView";
 
 const ProjectDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -26,7 +23,7 @@ const ProjectDetailPage = () => {
         <Section>
           <div className="text-center py-20">
             <h1 className="font-display text-3xl text-foreground mb-4">Проект не найден</h1>
-            <Link to="/projects" className="font-body text-sm text-muted-foreground underline">
+            <Link to={navPaths.projects} className="font-body text-sm text-muted-foreground underline">
               Все проекты
             </Link>
           </div>
@@ -35,160 +32,63 @@ const ProjectDetailPage = () => {
     );
   }
 
-  const usedProducts = products.filter((p) => project.products.includes(p.id));
-  const otherProjects = projects.filter((p) => p.id !== project.id).slice(0, 2);
+  const usedProducts = products.filter((product) => {
+    if (project.productSlugs?.length) return project.productSlugs.includes(product.slug);
+    return project.products.includes(product.id);
+  });
+
+  const otherProjects = projects.filter((item) => item.id !== project.id).slice(0, 2);
+  const meta = getDetailMetadata({ type: "project", value: project });
+  useAnalyticsView({ type: "detail", entity: "project", slug: project.slug });
 
   return (
-    <PageLayout title={project.seo.title} description={project.seo.description}>
-      {/* Breadcrumbs */}
+    <PageLayout title={meta.title} description={meta.description}>
       <div className="container-brand px-6 md:px-12 lg:px-24 pt-6">
         <Breadcrumbs
           items={[
-            { label: "Проекты", href: "/projects" },
+            { label: "Проекты", href: navPaths.projects },
             { label: project.title },
           ]}
         />
       </div>
 
-      {/* Cover */}
-      <div className="container-brand px-6 md:px-12 lg:px-24 mt-6">
-        <div className="aspect-[21/9] bg-secondary overflow-hidden">
-          <img
-            src={project.coverImage.src}
-            alt={project.coverImage.alt}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </div>
+      <ProjectHeroModule project={project} />
+      <TrustProofStrip />
 
-      <Section>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-20">
-          {/* Main content */}
-          <div className="lg:col-span-2">
-            <h1 className="font-display text-3xl md:text-5xl font-light text-foreground mb-8">
-              {project.title}
-            </h1>
-
-            <div className="space-y-10">
-              <div>
-                <h2 className="font-display text-xl font-medium text-foreground mb-3">Задача</h2>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                  {project.challenge}
-                </p>
-              </div>
-              <div>
-                <h2 className="font-display text-xl font-medium text-foreground mb-3">Решение</h2>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                  {project.solution}
-                </p>
-              </div>
-              <div>
-                <h2 className="font-display text-xl font-medium text-foreground mb-3">Результат</h2>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                  {project.result}
-                </p>
-              </div>
-            </div>
-
-            {/* Gallery */}
-            {project.gallery.length > 1 && (
-              <div className="grid grid-cols-2 gap-4 mt-10">
-                {project.gallery.map((img, i) => (
-                  <div key={i} className="aspect-[4/3] bg-secondary overflow-hidden">
-                    <img
-                      src={img.src}
-                      alt={img.alt}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-8">
-            <div className="bg-secondary p-6">
-              <h3 className="font-display text-lg font-medium text-foreground mb-4">О проекте</h3>
-              <div className="space-y-3 text-sm font-body">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Тип</span>
-                  <span className="text-foreground font-medium">
-                    {projectTypeLabels[project.projectType]}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Регион</span>
-                  <span className="text-foreground font-medium">{project.region}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Год</span>
-                  <span className="text-foreground font-medium">{project.year}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Used products */}
-            {usedProducts.length > 0 && (
-              <div>
-                <h3 className="font-display text-lg font-medium text-foreground mb-4">
-                  Использованные изделия
-                </h3>
-                <div className="space-y-4">
-                  {usedProducts.map((p) => (
-                    <Link
-                      key={p.id}
-                      to={`/catalog/${p.slug}`}
-                      className="flex items-center gap-4 group"
-                    >
-                      <div className="w-16 h-16 bg-secondary flex-shrink-0 overflow-hidden">
-                        <img
-                          src={p.images[0]?.src || "/placeholder.svg"}
-                          alt={p.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div>
-                        <p className="font-body text-sm font-medium text-foreground group-hover:text-accent transition-colors">
-                          {p.name}
-                        </p>
-                        <p className="font-body text-xs text-muted-foreground">{p.series}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-
+      <ProjectContentModule
+        project={project}
+        sidebar={
+          <>
+            <ProjectProductsModule products={usedProducts} />
             <Link
-              to="/request-project"
+              to={navPaths.requestProject}
               className="block text-center text-sm font-body font-medium tracking-wide bg-primary text-primary-foreground px-6 py-3.5 hover:bg-charcoal-light transition-colors"
             >
               Хочу подобное решение
             </Link>
-          </div>
-        </div>
-      </Section>
+          </>
+        }
+      />
 
-      {/* Other projects */}
       {otherProjects.length > 0 && (
         <Section variant="alt" eyebrow="Ещё проекты" title="Другие реализации">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {otherProjects.map((p) => (
-              <Link key={p.id} to={`/projects/${p.slug}`} className="group block">
+            {otherProjects.map((item) => (
+              <Link key={item.id} to={buildPath.project(item.slug)} className="group block">
                 <div className="aspect-[16/9] bg-secondary overflow-hidden mb-4">
                   <img
-                    src={p.coverImage.src}
-                    alt={p.coverImage.alt}
+                    src={item.coverImage.src}
+                    alt={item.coverImage.alt}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
                 </div>
                 <h3 className="font-display text-lg font-medium text-foreground group-hover:text-accent transition-colors">
-                  {p.title}
+                  {item.title}
                 </h3>
-                <p className="font-body text-sm text-muted-foreground mt-1">{p.region} · {p.year}</p>
+                <p className="font-body text-sm text-muted-foreground mt-1">
+                  {item.region} · {item.year}
+                </p>
               </Link>
             ))}
           </div>
@@ -198,8 +98,8 @@ const ProjectDetailPage = () => {
       <CTASection
         title="Хотите подобное решение?"
         subtitle="Обсудим ваш объект и подготовим предложение."
-        primaryCta={{ label: "Запросить проект", href: "/request-project" }}
-        secondaryCta={{ label: "Все проекты", href: "/projects" }}
+        primaryCta={{ label: "Запросить проект", href: navPaths.requestProject }}
+        secondaryCta={{ label: "Все проекты", href: navPaths.projects }}
       />
     </PageLayout>
   );

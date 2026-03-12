@@ -1,15 +1,17 @@
 import { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
 import ProductCard from "@/components/ui/product-card";
-import ChipTag from "@/components/ui/chip-tag";
 import EmptyState from "@/components/ui/empty-state";
+import ProductFilterBar from "@/components/products/ProductFilterBar";
 import { products } from "@/data/products";
-import type { ProductCategory, TextureType } from "@/types";
 import { navPaths } from "@/lib/route-helpers";
+import { defaultProductFilterQuery, parseProductFilterQuery, toProductFilterQuery } from "@/lib/filter-query";
+import { getListMetadata } from "@/lib/metadata-pipeline";
+import { useAnalyticsView } from "@/hooks/useAnalyticsView";
 
 type SortOption = "default" | "price-asc" | "price-desc" | "name";
 type EntryMode = "all" | "collection" | "task";
@@ -34,44 +36,22 @@ const tasks = [
   { key: "public", label: "Для общественных пространств", icon: "🏛", useCases: ["Парки", "Скверы", "Общественные пространства", "Набережные"] },
 ];
 
-const categoryLabels: Record<string, string> = {
-  all: "Все",
-  bollard: "Болларды",
-  "garden-light": "Садовые",
-  "accent-light": "Акцентные",
-  "small-form": "Малые формы",
-};
-
-const textureLabels: Record<string, string> = {
-  all: "Любая",
-  smooth: "Гладкая",
-  stone: "Текстурная",
-};
-
-const heightOptions = ["all", "350", "500", "700"] as const;
-const heightLabels: Record<string, string> = {
-  all: "Любая",
-  "350": "350 мм",
-  "500": "500 мм",
-  "700": "700 мм",
-};
-
-const sortLabels: Record<SortOption, string> = {
-  default: "По умолчанию",
-  "price-asc": "Цена ↑",
-  "price-desc": "Цена ↓",
-  name: "По названию",
-};
-
 const CatalogPage = () => {
+  const meta = getListMetadata("products");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialFilters = parseProductFilterQuery(searchParams);
   const [entryMode, setEntryMode] = useState<EntryMode>("all");
   const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
   const [selectedTask, setSelectedTask] = useState<string | null>(null);
 
-  const [category, setCategory] = useState<string>("all");
-  const [texture, setTexture] = useState<string>("all");
-  const [height, setHeight] = useState<string>("all");
-  const [sort, setSort] = useState<SortOption>("default");
+  const [category, setCategory] = useState<string>(initialFilters.category);
+  const [texture, setTexture] = useState<string>(initialFilters.texture);
+  const [height, setHeight] = useState<string>(initialFilters.height);
+  const [material, setMaterial] = useState<string>(initialFilters.material);
+  const [ip, setIp] = useState<string>(initialFilters.ip);
+  const [priceBand, setPriceBand] = useState<string>(initialFilters.priceBand);
+  const [sort, setSort] = useState<SortOption>(initialFilters.sort as SortOption);
+  useAnalyticsView({ type: "list", entity: "product" });
 
   const handleCollectionSelect = (key: string) => {
     setSelectedCollection(key);
@@ -98,7 +78,11 @@ const CatalogPage = () => {
     setCategory("all");
     setTexture("all");
     setHeight("all");
+    setMaterial("all");
+    setIp("all");
+    setPriceBand("all");
     setSort("default");
+    setSearchParams(new URLSearchParams());
   };
 
   const filtered = useMemo(() => {
@@ -131,6 +115,18 @@ const CatalogPage = () => {
       result = result.filter((p) => p.variants.some((v) => v.height === h));
     }
 
+    if (material !== "all") {
+      result = result.filter((p) => p.taxonomy?.material === material);
+    }
+
+    if (ip !== "all") {
+      result = result.filter((p) => p.taxonomy?.ip === ip);
+    }
+
+    if (priceBand !== "all") {
+      result = result.filter((p) => p.taxonomy?.priceBand === priceBand);
+    }
+
     switch (sort) {
       case "price-asc":
         result.sort((a, b) => {
@@ -152,7 +148,7 @@ const CatalogPage = () => {
     }
 
     return result;
-  }, [category, texture, height, sort, entryMode, selectedCollection, selectedTask]);
+  }, [category, texture, height, material, ip, priceBand, sort, entryMode, selectedCollection, selectedTask]);
 
   const activeLabel = entryMode === "collection"
     ? collections.find((c) => c.key === selectedCollection)?.label
@@ -160,10 +156,24 @@ const CatalogPage = () => {
       ? tasks.find((t) => t.key === selectedTask)?.label
       : null;
 
+  const updateFilterQuery = (next: Partial<typeof defaultProductFilterQuery>) => {
+    const params = toProductFilterQuery({
+      category,
+      texture,
+      height,
+      material,
+      ip,
+      priceBand,
+      sort,
+      ...next,
+    });
+    setSearchParams(params);
+  };
+
   return (
     <PageLayout
-      title="Продукты — STŌN"
-      description="Продукты STŌN: болларды и архитектурные уличные светильники из камня."
+      title={meta.title}
+      description={meta.description}
     >
       <PageHero
         eyebrow="Каталог"
@@ -230,80 +240,43 @@ const CatalogPage = () => {
         )}
 
         {/* Filters */}
-        <div className="space-y-6 mb-10 pb-8 border-b border-border">
-          {/* Category (hidden in task mode) */}
-          {entryMode !== "task" && (
-            <div>
-              <p className="text-xs font-body font-medium tracking-[0.1em] uppercase text-muted-foreground mb-3">
-                Тип
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {Object.entries(categoryLabels).map(([key, label]) => (
-                  <ChipTag
-                    key={key}
-                    label={label}
-                    active={category === key}
-                    onClick={() => setCategory(key)}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {/* Texture */}
-            <div>
-              <p className="text-xs font-body font-medium tracking-[0.1em] uppercase text-muted-foreground mb-3">
-                Фактура
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {Object.entries(textureLabels).map(([key, label]) => (
-                  <ChipTag
-                    key={key}
-                    label={label}
-                    active={texture === key}
-                    onClick={() => setTexture(key)}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Height */}
-            <div>
-              <p className="text-xs font-body font-medium tracking-[0.1em] uppercase text-muted-foreground mb-3">
-                Высота
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {heightOptions.map((key) => (
-                  <ChipTag
-                    key={key}
-                    label={heightLabels[key]}
-                    active={height === key}
-                    onClick={() => setHeight(key)}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Sort */}
-            <div>
-              <p className="text-xs font-body font-medium tracking-[0.1em] uppercase text-muted-foreground mb-3">
-                Сортировка
-              </p>
-              <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value as SortOption)}
-                className="font-body text-sm border border-border bg-background text-foreground px-4 py-2 focus:outline-none focus:ring-1 focus:ring-ring"
-              >
-                {Object.entries(sortLabels).map(([key, label]) => (
-                  <option key={key} value={key}>
-                    {label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
+        <ProductFilterBar
+          category={category}
+          texture={texture}
+          height={height}
+          material={material}
+          ip={ip}
+          priceBand={priceBand}
+          sort={sort}
+          onCategoryChange={(value) => {
+            setCategory(value);
+            updateFilterQuery({ category: value });
+          }}
+          onTextureChange={(value) => {
+            setTexture(value);
+            updateFilterQuery({ texture: value });
+          }}
+          onHeightChange={(value) => {
+            setHeight(value);
+            updateFilterQuery({ height: value });
+          }}
+          onMaterialChange={(value) => {
+            setMaterial(value);
+            updateFilterQuery({ material: value });
+          }}
+          onIpChange={(value) => {
+            setIp(value);
+            updateFilterQuery({ ip: value });
+          }}
+          onPriceBandChange={(value) => {
+            setPriceBand(value);
+            updateFilterQuery({ priceBand: value });
+          }}
+          onSortChange={(value) => {
+            setSort(value);
+            updateFilterQuery({ sort: value });
+          }}
+        />
 
         {/* Results count */}
         <p className="font-body text-sm text-muted-foreground mb-8">

@@ -8,11 +8,15 @@ import type { FormAnalyticsEventName } from "@/types/form-events";
  */
 
 type BaseAnalyticsEventName =
+  | "list_view"
+  | "detail_view"
+  | "cta_click"
   | "page_view"
   | "product_view"
   | "project_view"
   | "article_view"
   | "download_pdf"
+  | "download_intent"
   | "click_call"
   | "click_messenger"
   | "click_email"
@@ -100,6 +104,6 @@ export function trackClick(type: "call" | "messenger" | "email", target: string)
 export const GOALS_MAP = {
   primary: ["request_project", "architect_lead"],
   secondary: ["request_price", "request_consultation", "request_catalog", "request_custom"],
-  midFunnel: ["download_pdf", "form_start"],
+  midFunnel: ["download_pdf", "form_start", "form_submit_success", "form_submit_fail"],
   micro: ["product_view", "project_view", "article_view", "click_call", "click_messenger"],
 } as const;

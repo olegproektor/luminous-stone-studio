@@ -6,7 +6,11 @@ import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
 import ProjectCard from "@/components/ui/project-card";
 import ChipTag from "@/components/ui/chip-tag";
+import TrustProofStrip from "@/components/shared/TrustProofStrip";
 import { projects } from "@/data/projects";
+import { navPaths } from "@/lib/route-helpers";
+import { getListMetadata } from "@/lib/metadata-pipeline";
+import { useAnalyticsView } from "@/hooks/useAnalyticsView";
 
 const typeLabels: Record<string, string> = {
   all: "Все",
@@ -18,15 +22,17 @@ const typeLabels: Record<string, string> = {
 };
 
 const ProjectsPage = () => {
+  const meta = getListMetadata("projects");
   const [type, setType] = useState("all");
+  useAnalyticsView({ type: "list", entity: "project" });
 
   const filtered =
     type === "all" ? projects : projects.filter((p) => p.projectType === type);
 
   return (
     <PageLayout
-      title="Проекты — STŌN"
-      description="Реализованные проекты ландшафтного освещения: частные дома, глэмпинги, отели, общественные пространства."
+      title={meta.title}
+      description={meta.description}
     >
       <PageHero
         eyebrow="Проекты"
@@ -61,11 +67,13 @@ const ProjectsPage = () => {
         )}
       </Section>
 
+      <TrustProofStrip />
+
       <CTASection
         eyebrow="Ваш проект"
         title="Расскажите о вашем объекте"
         subtitle="Подготовим световое решение под ваши задачи и бюджет."
-        primaryCta={{ label: "Запросить проект", href: "/request-project" }}
+        primaryCta={{ label: "Запросить проект", href: navPaths.requestProject }}
       />
     </PageLayout>
   );

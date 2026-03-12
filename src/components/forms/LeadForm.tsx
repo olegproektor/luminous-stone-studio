@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { trackEvent, type AnalyticsEventName } from "@/lib/analytics";
 import { useUTM } from "@/hooks/use-utm";
 import type { LeadFormField } from "@/types/lead-form-contract";
+import { deliverForm } from "@/lib/form-delivery";
+import type { FormKind } from "@/types/form-delivery";
 
 export type FormField = LeadFormField;
 
 interface LeadFormProps {
-  formId: string;
+  formId: FormKind;
   fields: FormField[];
   submitLabel?: string;
   analyticsEvent: AnalyticsEventName;
@@ -31,6 +33,7 @@ const LeadForm = React.forwardRef<HTMLFormElement, LeadFormProps>(({
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState<string>("");
   const [formStarted, setFormStarted] = useState(false);
   const utm = useUTM();
 
@@ -96,16 +99,30 @@ const LeadForm = React.forwardRef<HTMLFormElement, LeadFormProps>(({
       if (onSubmit) {
         await onSubmit(payload);
       } else {
-        // Default: log to console (replace with API call in production)
-        console.log("[Lead Form]", payload);
-        await new Promise((r) => setTimeout(r, 800));
+        const delivery = await deliverForm({ formId, data: payload });
+        if (!delivery.ok) {
+          setStatus("error");
+          setStatusMessage(delivery.message);
+          trackEvent("form_error", {
+            form: formId,
+            status: delivery.status,
+            externalDependency: Boolean(delivery.externalDependency),
+          });
+          trackEvent("form_submit_fail", { form: formId, status: delivery.status });
+          return;
+        }
       }
       setStatus("success");
+      setStatusMessage("");
       trackEvent("form_submit", { form: formId });
+      trackEvent("form_submit_success", { form: formId });
       trackEvent(analyticsEvent, { form: formId });
-    } catch {
+    } catch (error) {
       setStatus("error");
+      const fallbackMessage = "Непредвиденная ошибка отправки формы";
+      setStatusMessage(error instanceof Error ? error.message : fallbackMessage);
       trackEvent("form_error", { form: formId });
+      trackEvent("form_submit_fail", { form: formId });
     }
   };
 
@@ -240,7 +257,7 @@ const LeadForm = React.forwardRef<HTMLFormElement, LeadFormProps>(({
       {status === "error" && (
         <div className="mt-4 p-4 bg-destructive/10 border border-destructive/20">
           <p className="font-body text-sm text-destructive">
-            Произошла ошибка. Попробуйте ещё раз или свяжитесь с нами по телефону.
+            {statusMessage || "Произошла ошибка. Попробуйте ещё раз или свяжитесь с нами по телефону."}
           </p>
         </div>
       )}

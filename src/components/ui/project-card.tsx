@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { Project } from "@/types";
+import { buildPath } from "@/lib/route-helpers";
 
 interface ProjectCardProps {
   project: Project;
@@ -18,7 +19,7 @@ const projectTypeLabels: Record<string, string> = {
 const ProjectCard = ({ project, className = "" }: ProjectCardProps) => {
   return (
     <Link
-      to={`/projects/${project.slug}`}
+      to={buildPath.project(project.slug)}
       className={`group block ${className}`}
     >
       <div className="relative aspect-[4/3] bg-secondary overflow-hidden mb-4">
