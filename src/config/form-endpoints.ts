@@ -11,4 +11,5 @@ export const formEndpoints: Partial<Record<FormKind, string>> = {
   request_consultation: import.meta.env.VITE_FORM_ENDPOINT_CONSULTATION,
   request_custom: import.meta.env.VITE_FORM_ENDPOINT_CUSTOM,
   architect_lead: import.meta.env.VITE_FORM_ENDPOINT_ARCHITECT,
+  download_gate: import.meta.env.VITE_FORM_ENDPOINT_DOWNLOAD_GATE,
 };

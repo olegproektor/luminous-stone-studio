@@ -7,7 +7,8 @@ export type FormKind =
   | "request_catalog"
   | "request_consultation"
   | "request_custom"
-  | "architect_lead";
+  | "architect_lead"
+  | "download_gate";
 
 export interface FormDeliveryPayload {
   formId: FormKind;

@@ -20,8 +20,11 @@ const ProductPage = lazy(() => import("./pages/ProductPage"));
 const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
 const ForArchitectsPage = lazy(() => import("./pages/ForArchitectsPage"));
-const CustomPage = lazy(() => import("./pages/CustomPage"));
+const ForObjectsPage = lazy(() => import("./pages/ForObjectsPage"));
 const MaterialsPage = lazy(() => import("./pages/MaterialsPage"));
+const TextureDetailPage = lazy(() => import("./pages/TextureDetailPage"));
+const DownloadsHubPage = lazy(() => import("./pages/DownloadsHubPage"));
+const DownloadCategoryPage = lazy(() => import("./pages/DownloadCategoryPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const BlogPage = lazy(() => import("./pages/BlogPage"));
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
@@ -63,10 +66,14 @@ const App = () => (
             <Route path={routes.productsDetailLegacyPattern} element={<ProductPage />} />
             <Route path={routes.projects} element={<ProjectsPage />} />
             <Route path={routes.projectDetailPattern} element={<ProjectDetailPage />} />
-            <Route path={routes.downloads} element={<ForArchitectsPage />} />
+            <Route path={routes.downloads} element={<DownloadsHubPage />} />
+            <Route path={routes.downloadsCategoryPattern} element={<DownloadCategoryPage />} />
             <Route path={routes.downloadsLegacy} element={<ForArchitectsPage />} />
-            <Route path="/custom" element={<CustomPage />} />
+            <Route path={routes.forObjects} element={<ForObjectsPage />} />
+            <Route path={routes.forObjectsLegacy} element={<ForObjectsPage />} />
             <Route path={routes.materials} element={<MaterialsPage />} />
+            <Route path={routes.textureDetailPattern} element={<TextureDetailPage />} />
+            <Route path={routes.materialsDetailLegacyPattern} element={<TextureDetailPage />} />
             <Route path={routes.company} element={<AboutPage />} />
             <Route path={routes.aboutLegacy} element={<AboutPage />} />
             <Route path="/blog" element={<BlogPage />} />

@@ -24,6 +24,11 @@ const CookieConsentBanner = React.forwardRef<HTMLDivElement>((_, ref) => {
     setState(getStoredConsent());
   }, []);
 
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.body.dataset.cookieBanner = state === "pending" ? "visible" : "hidden";
+  }, [state]);
+
   if (state !== "pending") return null;
 
   const accept = () => {

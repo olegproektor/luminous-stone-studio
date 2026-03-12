@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import { resolveCanonicalUrl } from "@/lib/canonical";
+import { resolveSchema } from "@/lib/schema";
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -64,19 +65,23 @@ const PageLayout = ({ children, title, description, canonical, jsonLd }: PageLay
       link.href = resolvedCanonical;
     }
 
-    // JSON-LD
-    if (jsonLd) {
-      const existingScript = document.querySelector('script[data-page-jsonld]');
-      if (existingScript) existingScript.remove();
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute("data-page-jsonld", "true");
-      script.textContent = JSON.stringify(jsonLd);
-      document.head.appendChild(script);
-      return () => { script.remove(); };
-    }
+    // JSON-LD schema (extends metadata/canonical foundation)
+    const schemaPayload = jsonLd ?? resolveSchema({
+      pathname: location.pathname,
+      title,
+      description,
+      canonical: resolvedCanonical,
+    });
+    const existingScript = document.querySelector('script[data-page-jsonld]');
+    if (existingScript) existingScript.remove();
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.setAttribute("data-page-jsonld", "true");
+    script.textContent = JSON.stringify(schemaPayload);
+    document.head.appendChild(script);
 
     window.scrollTo(0, 0);
+    return () => { script.remove(); };
   }, [title, description, canonical, jsonLd, location.pathname]);
 
   return (

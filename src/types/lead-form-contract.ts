@@ -1,4 +1,5 @@
 import type { FormAnalyticsEventName } from "@/types/form-events";
+import type { FormKind } from "@/types/form-delivery";
 
 export type LeadFieldType = "text" | "email" | "tel" | "textarea" | "select";
 
@@ -18,7 +19,7 @@ export interface LeadFormField {
 }
 
 export interface LeadFormPreset {
-  formId: string;
+  formId: FormKind;
   submitLabel: string;
   analyticsEvent: FormAnalyticsEventName;
   fields: LeadFormField[];

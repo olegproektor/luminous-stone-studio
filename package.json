@@ -5,6 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "generate:sitemap": "node scripts/generate-sitemap.mjs",
+    "generate:robots": "node scripts/generate-robots.mjs",
+    "generate:seo": "npm run generate:sitemap && npm run generate:robots",
+    "prebuild": "npm run generate:seo",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",

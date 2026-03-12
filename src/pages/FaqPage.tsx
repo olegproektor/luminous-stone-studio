@@ -3,18 +3,18 @@ import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
-import { faqItems } from "@/data/faq";
+import { faqSeed } from "@/data/faq.seed";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Link } from "react-router-dom";
+import { navPaths } from "@/lib/route-helpers";
 
 const FaqPage = () => {
   // Group by category
-  const categories = [...new Set(faqItems.map((item) => item.category).filter(Boolean))] as string[];
+  const categories = [...new Set(faqSeed.map((item) => item.category).filter(Boolean))] as string[];
 
   return (
     <PageLayout
@@ -34,7 +34,7 @@ const FaqPage = () => {
 
         <div className="max-w-3xl space-y-12">
           {categories.map((cat) => {
-            const items = faqItems.filter((f) => f.category === cat);
+            const items = faqSeed.filter((f) => f.category === cat);
             return (
               <div key={cat}>
                 <h2 className="font-display text-xl font-medium text-foreground mb-4">
@@ -66,7 +66,7 @@ const FaqPage = () => {
         eyebrow="Не нашли ответ?"
         title="Задайте нам вопрос"
         subtitle="Свяжитесь с нами — ответим в течение рабочего дня."
-        primaryCta={{ label: "Связаться", href: "/contacts" }}
+        primaryCta={{ label: "Связаться", href: navPaths.contacts }}
       />
     </PageLayout>
   );

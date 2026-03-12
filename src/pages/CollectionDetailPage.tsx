@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import PageLayout from "@/components/layout/PageLayout";
+import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
 import { collections, getCollectionBySlug } from "@/data/collections";

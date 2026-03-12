@@ -1,0 +1,40 @@
+import type { ObjectPackage } from "@/types/object-packages";
+
+export const objectPackagesSeed: ObjectPackage[] = [
+  {
+    id: "pkg-private-base",
+    slug: "private-landscape-base",
+    title: "Private Landscape Base",
+    segment: "private",
+    summary: "Базовый пакет освещения для частного участка.",
+    scope: ["Подбор изделий", "Схема размещения", "Базовая спецификация"],
+    deliverables: ["PDF-концепция", "Список SKU", "Рекомендации по монтажу"],
+    indicativeBudget: "от 250 000 ₽",
+    leadTime: "7-10 рабочих дней",
+    cta: { label: "Обсудить пакет", href: "/for-objects" },
+  },
+  {
+    id: "pkg-hospitality-pro",
+    slug: "hospitality-pro",
+    title: "Hospitality Pro",
+    segment: "hospitality",
+    summary: "Пакет для глэмпинга/отеля с усиленным сценарием и этапностью.",
+    scope: ["Световые сценарии", "Зоны навигации", "Акцентное освещение"],
+    deliverables: ["Сценарная матрица", "BOM", "План внедрения"],
+    indicativeBudget: "от 700 000 ₽",
+    leadTime: "10-15 рабочих дней",
+    cta: { label: "Получить квалификацию", href: "/for-objects" },
+  },
+  {
+    id: "pkg-developer-core",
+    slug: "developer-core",
+    title: "Developer Core",
+    segment: "developer",
+    summary: "Комплект для девелоперских проектов с фокусом на масштабируемость.",
+    scope: ["Типовые узлы", "Сметная структура", "Этапы ввода"],
+    deliverables: ["Пакет спецификаций", "Техкарта", "График поставок"],
+    indicativeBudget: "по запросу",
+    leadTime: "по ТЗ",
+    cta: { label: "Оставить заявку", href: "/for-objects" },
+  },
+];

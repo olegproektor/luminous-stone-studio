@@ -57,7 +57,7 @@ const CustomPage = () => {
             Подготовим предложение по кастомному решению в течение 3 рабочих дней.
           </p>
           <LeadForm
-            formId="custom_request"
+            formId="request_custom"
             fields={customFormFields}
             submitLabel="Запросить кастомизацию"
             analyticsEvent="request_custom"

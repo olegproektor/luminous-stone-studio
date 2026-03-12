@@ -4,6 +4,8 @@
 // =============================================
 import type { ProductTechGroup, ProductTechGroupId } from "./product-tech";
 import type { ProductTaxonomyState } from "./taxonomy";
+import type { DownloadAccessMode, DownloadCategorySlug, DownloadFileGovernance, DownloadTargetSegment } from "./downloads";
+import type { MaterialTextureKey } from "./materials";
 
 // ---- Common ----
 
@@ -95,6 +97,8 @@ export interface Product {
   createdAt: string;
   launchTier?: "primary" | "secondary";
   isHidden?: boolean;
+  collectionSlug?: string;
+  textureSlugs?: MaterialTextureKey[];
 }
 
 // ---- Collection ----
@@ -110,6 +114,7 @@ export interface Collection {
   seo: SeoFields;
   launchTier?: "primary" | "secondary";
   isHidden?: boolean;
+  textureSlugs?: MaterialTextureKey[];
 }
 
 // ---- Project / Case Study ----
@@ -201,6 +206,13 @@ export interface DownloadFile {
   fileType: "pdf" | "dwg" | "3d" | "image";
   category: "catalog" | "techsheet" | "drawing" | "certificate";
   productId?: string;
+  slug?: string;
+  categorySlug?: DownloadCategorySlug;
+  accessMode?: DownloadAccessMode;
+  targetSegment?: DownloadTargetSegment;
+  governance?: DownloadFileGovernance;
+  collectionSlug?: string;
+  productSlug?: string;
 }
 
 // ---- Lead Form ----

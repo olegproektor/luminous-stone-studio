@@ -2,18 +2,19 @@ import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
-import { pageContentSeed } from "@/data/page-content.seed";
+import { companySeed } from "@/data/company.seed";
+import { navPaths } from "@/lib/route-helpers";
 
 const AboutPage = () => {
   return (
     <PageLayout
-      title={pageContentSeed.company.title}
-      description={pageContentSeed.company.description}
+      title={companySeed.title}
+      description={companySeed.description}
     >
       <PageHero
-        eyebrow="О бренде"
-        title="STŌN"
-        subtitle="Мы проектируем и производим архитектурные уличные светильники из литьевого камня. Россия."
+        eyebrow={companySeed.hero.eyebrow}
+        title={companySeed.hero.title}
+        subtitle={companySeed.hero.subtitle}
       />
 
       <Section>
@@ -36,14 +37,10 @@ const AboutPage = () => {
 
       <Section variant="alt" eyebrow="Принципы" title="Как мы работаем">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { title: "Архитектурный подход", desc: "Каждое изделие проектируется как элемент среды, а не декоративный аксессуар." },
-            { title: "Российское производство", desc: "Полный цикл от разработки до производства — в России." },
-            { title: "Проектная работа", desc: "Работаем не только с продуктами, но и с задачами — от подбора до комплектации." },
-          ].map((item) => (
+          {companySeed.principles.map((item) => (
             <div key={item.title} className="p-8 bg-background">
               <h3 className="font-display text-xl font-medium text-foreground mb-3">{item.title}</h3>
-              <p className="font-body text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+              <p className="font-body text-sm text-muted-foreground leading-relaxed">{item.description}</p>
             </div>
           ))}
         </div>
@@ -52,7 +49,7 @@ const AboutPage = () => {
       <CTASection
         title="Давайте познакомимся"
         subtitle="Расскажите о вашем проекте — мы с удовольствием поможем."
-        primaryCta={{ label: "Связаться", href: "/contacts" }}
+        primaryCta={{ label: "Связаться", href: navPaths.contacts }}
       />
     </PageLayout>
   );
