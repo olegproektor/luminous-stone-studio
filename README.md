@@ -1,151 +1,233 @@
-# STŌN — Архитектурные уличные светильники из камня
+﻿# КАМЕНЬ И СВЕТ / Luminous Stone Studio
 
-Production-ready каталожный сайт бренда STŌN. React + Vite + Tailwind CSS + TypeScript.
+Frontend-репозиторий сайта о премиальных каменных уличных светильниках для российского рынка.
 
----
+Проект построен на `React + Vite + TypeScript + Tailwind CSS` и использует:
+- alias-first routing
+- canonical URL policy
+- seed/config-driven content architecture
+- единый `PageLayout` для meta / OG / canonical / JSON-LD
+- защищённые контракты форм, аналитики и download-gate
 
-## Архитектура
+## О проекте
 
-```
+КАМЕНЬ И СВЕТ — русскоязычный сайт о каменных уличных светильниках для частной и архитектурной среды.
+
+Ключевые принципы:
+- русскоязычный public UI по умолчанию
+- canonical-first SEO и алиасы для совместимости
+- seed-driven контентный слой с возможностью миграции на CMS
+- повторно используемые layout и page-модули
+- отдельные защищённые подсистемы для форм, аналитики, downloads и qualification flow
+
+## Текущая архитектура
+
+```text
 src/
-├── assets/            # Статические изображения (импортируются в компоненты)
 ├── components/
-│   ├── forms/         # LeadForm, RequestProjectForm, PriceRequestForm, etc.
-│   ├── layout/        # Header, Footer, PageLayout, Section, CTASection, Grid
-│   ├── sections/      # Секции главной страницы (Hero, Advantages, FAQ, etc.)
-│   └── ui/            # Переиспользуемые UI-компоненты (shadcn + кастомные)
-├── data/              # Контентная layer — товары, проекты, статьи, FAQ
-├── hooks/             # Хуки (use-mobile, use-toast, use-utm)
-├── lib/               # Утилиты (analytics, utils)
-├── pages/             # Страницы (1 файл = 1 маршрут)
-├── test/              # Тесты
-└── types/             # TypeScript типы и интерфейсы
+│   ├── collections/     # Модули страниц коллекций
+│   ├── downloads/       # Download gate и UI загрузок
+│   ├── for-objects/     # Qualification flow для объектов
+│   ├── forms/           # LeadForm, presets, wrappers
+│   ├── layout/          # Header, Footer, PageLayout, CTASection
+│   ├── products/        # Каталог, коллекции, product pages
+│   ├── sections/        # Секции главной страницы
+│   ├── shared/          # Общие контентные блоки
+│   └── ui/              # Базовые UI-компоненты
+├── config/              # routes, metadata maps, analytics maps
+├── data/                # seed/config файлы контента
+├── hooks/               # UTM, analytics view, media hooks
+├── lib/                 # canonical, route-helpers, analytics, schema, delivery
+├── pages/               # Route-level страницы
+├── test/                # Smoke и unit tests
+└── types/               # TypeScript-контракты
 ```
 
-### Ключевые принципы
-- **Контент отделён от кода**: все данные в `src/data/` — можно заменить на CMS API
-- **Компонентная архитектура**: Section, PageLayout, LeadForm — переиспользуемые блоки
-- **Семантические токены**: цвета через CSS custom properties, не хардкод
-- **Lazy loading**: все страницы кроме главной загружаются лениво
+Ключевые точки:
+- `src/config/routes.ts` — canonical routes и legacy aliases
+- `src/lib/route-helpers.ts` — генерация внутренних ссылок
+- `src/components/layout/PageLayout.tsx` — title / meta / canonical / JSON-LD
+- `scripts/generate-sitemap.mjs` — генерация sitemap
+- `scripts/generate-robots.mjs` — генерация robots.txt
 
----
+## Protected systems
 
-## Как добавить товар
+Без отдельного архитектурного решения не менять:
+- alias-first routing
+- canonical URL policy
+- metadata pipeline
+- JSON-LD / schema hooks
+- sitemap / robots generation policy
+- analytics event names и wiring
+- lead form contracts и wrappers
+- download gate logic
+- `/for-objects` qualification flow
+- sticky CTA policy
+- core data / entity shapes
+- seed/config-driven content architecture
 
-1. Откройте `src/data/products.ts`
-2. Добавьте объект в массив `products`, следуя типу `Product` из `src/types/index.ts`
-3. Обязательные поля: `id`, `slug`, `name`, `category`, `variants`, `images`, `seo`
-4. Товар автоматически появится в каталоге и будет доступен по `/catalog/{slug}`
+## Canonical routes и aliases
 
-## Как добавить страницу
+### Canonical
+- `/`
+- `/izdeliya`
+- `/izdeliya/:collectionSlug`
+- `/izdeliya/:collectionSlug/:productSlug`
+- `/izdeliya/faktura`
+- `/izdeliya/faktura/:slug`
+- `/komplekty`
+- `/proekty`
+- `/proekty/:slug`
+- `/skachat`
+- `/skachat/:category`
+- `/novosti`
+- `/novosti/:slug`
+- `/kontakty`
+- `/company`
+- `/voprosy`
 
-1. Создайте файл в `src/pages/YourPage.tsx`
-2. Используйте `<PageLayout title="..." description="...">` как обёртку
-3. Добавьте маршрут в `src/App.tsx` (lazy import + Route)
-4. При необходимости добавьте ссылку в Header (`src/components/layout/Header.tsx`)
+### Aliases / legacy compatibility
+- `/products` -> `/izdeliya`
+- `/catalog` -> `/izdeliya`
+- `/collections` -> `/izdeliya`
+- `/materials` -> `/izdeliya/faktura`
+- `/for-objects` -> `/komplekty`
+- `/custom` -> `/komplekty`
+- `/projects` -> `/proekty`
+- `/downloads` -> `/skachat`
+- `/for-architects` -> `/skachat`
+- `/blog` -> `/novosti`
+- `/contacts` -> `/kontakty`
+- `/faq` -> `/voprosy`
+- `/about` -> `/company`
 
-## Как добавить проект / кейс
+Важно:
+- в sitemap и canonical должны попадать только canonical routes
+- внутренние ссылки строить только через `buildPath` и route helpers
 
-1. Добавьте объект в `src/data/projects.ts` по типу `ProjectCase`
-2. Появится на `/projects` и `/projects/{slug}`
+## Контентная модель
 
-## Как добавить статью
+Контент хранится в seed/data слое и может быть заменён на CMS без поломки UI-контрактов.
 
-1. Добавьте объект в `src/data/articles.ts` по типу `Article`
-2. Появится на `/blog` и `/blog/{slug}`
+Основные источники:
+- `src/data/products.ts` — основная продуктовая база
+- `src/data/collections.ts` — legacy / общие коллекции
+- `src/data/izdeliya-architecture.seed.ts` — структура витрины `/izdeliya`, коллекций и вложенных product routes
+- `src/data/products-showcase.seed.ts` — showcase/view-layer данные
+- `src/data/projects.ts` — проекты
+- `src/data/articles.ts` — новости / статьи
+- `src/data/downloads.seed.ts` — загрузки
+- `src/data/faq.seed.ts`, `src/data/faq.ts` — FAQ
+- `src/data/legal.seed.ts` — юридические тексты
+- `src/data/company.seed.ts` — данные о компании
+- `src/data/home-layout.seed.ts`, `src/data/trust-content.seed.ts`, `src/data/trust-proofs.seed.ts` — layout и доверительный контент
 
----
+## Изделия, коллекции и модели
 
-## Аналитика
+Текущая IA для product layer:
+- `/izdeliya` — витрина коллекций
+- `/izdeliya/:collectionSlug` — страница коллекции
+- `/izdeliya/:collectionSlug/:productSlug` — страница модели внутри коллекции
+- `/products/:slug` и `/catalog/:slug` — legacy/general product detail
 
-### Яндекс Метрика
-1. Получите ID счётчика в Метрике
-2. Добавьте код счётчика в `index.html` (перед `</head>`)
-3. Установите `window.__METRIKA_ID__ = YOUR_ID` — события будут отправляться автоматически
+При добавлении коллекции или модели:
+1. обновляйте данные в `src/data/izdeliya-architecture.seed.ts` и связанных seed-файлах
+2. следите, чтобы `slug` совпадал с route conventions
+3. все переходы на страницы изделий стройте через `buildPath.collectionProduct(...)`
+4. не добавляйте прямые hardcoded URL в компоненты
 
-### Карта целей
-| Приоритет | Событие | Описание |
-|-----------|---------|----------|
-| Primary | `request_project` | Заявка на проект |
-| Primary | `architect_lead` | Лид от архитектора |
-| Secondary | `request_price` | Запрос цены |
-| Secondary | `request_consultation` | Запрос консультации |
-| Secondary | `request_catalog` | Запрос каталога |
-| Secondary | `request_custom` | Кастомный запрос |
-| Mid-funnel | `form_start` | Начало заполнения формы |
-| Mid-funnel | `download_pdf` | Скачивание PDF |
-| Micro | `product_view`, `project_view`, `article_view` | Просмотры контента |
+## Формы, аналитика, downloads
 
-### CRM интеграция
-Все формы собирают данные через `LeadForm` → `onSubmit`. Для подключения CRM:
-1. Замените `onSubmit` на API-вызов к вашему CRM (amoCRM, Bitrix24, etc.)
-2. UTM-метки (`utm_source`, `utm_medium`, `utm_campaign`, `yclid`) автоматически прикрепляются
+### Формы
+Все формы используют единый контракт через:
+- `LeadForm`
+- form presets
+- `deliverForm`
 
----
+Нельзя ломать:
+- event names
+- success / fail states
+- UTM-поля
+- consent / privacy wrappers
 
-## Подключение CMS
+### Аналитика
+Проект подготовлен под подключение Яндекс.Метрики и внутренних событий.
 
-Текущая архитектура готова к миграции на headless CMS:
-1. Замените данные из `src/data/*.ts` на API-вызовы (через React Query)
-2. Типы в `src/types/index.ts` — это ваш контракт между CMS и фронтендом
-3. `PageLayout` поддерживает `canonical` и `jsonLd` для динамического SEO
+Основные группы событий:
+- page/list/detail views
+- CTA clicks
+- product / project / article views
+- download intent / download success
+- form start / submit / success / fail / error
+- contact clicks
+- cookie consent events
 
-Рекомендуемые CMS: Strapi, Directus, Payload CMS, Sanity
+### Download gate
+Раздел загрузок поддерживает открытые и gated assets.
 
----
+Ключевые точки:
+- `src/components/downloads/DownloadGateForm.tsx`
+- `src/lib/download-access.ts`
+- `src/data/downloads.seed.ts`
+
+## SEO и metadata
+
+SEO-слой строится через `PageLayout` и metadata pipeline:
+- document title
+- meta description
+- OG title / description
+- canonical URL с учётом alias mapping
+- JSON-LD / schema hooks
+- sitemap.xml и robots.txt generation
+
+Любые UI-правки не должны ломать этот слой.
 
 ## Запуск
 
 ```bash
 npm install
-npm run dev       # Разработка
-npm run build     # Production сборка
-npm run preview   # Предпросмотр сборки
+npm run dev
+npm run build
+npm run preview
+npm test
 ```
 
----
+Отдельно:
 
-## 🚀 Checklist запуска
+```bash
+npm run generate:seo
+```
 
-### SEO
-- [ ] Заменить `ston.ru` на реальный домен в `robots.txt`, `sitemap.xml`, `index.html`
-- [ ] Добавить `og:image` (рекомендуется 1200×630)
-- [ ] Добавить `yandex-verification` мета-тег
-- [ ] Проверить все страницы в Яндекс.Вебмастере
-- [ ] Добавить продуктовые и проектные URL в `sitemap.xml`
+Важно:
+- `prebuild` запускает генерацию `sitemap.xml` и `robots.txt`
 
-### Аналитика
-- [ ] Подключить Яндекс Метрику (код + `__METRIKA_ID__`)
-- [ ] Настроить цели в Метрике по карте выше
-- [ ] Подключить Яндекс Директ (если нужен)
-- [ ] Проверить отправку событий в реальном времени
+## Проверки после изменений
 
-### Формы
-- [ ] Подключить API для отправки форм (CRM / email / webhook)
-- [ ] Протестировать все 7 форм (general, project, consultation, price, catalog, architect, custom)
-- [ ] Проверить антиспам (honeypot)
-- [ ] Проверить UTM-передачу
+Минимум:
+- `npx tsc --noEmit`
+- `npm run build`
+- `npm test`
 
-### Юридическое
-- [ ] Проверить тексты политики конфиденциальности (юрист)
-- [ ] Проверить cookie policy
-- [ ] Проверить согласие на обработку ПД
-- [ ] Проверить пользовательское соглашение
-- [ ] Убедиться в корректности cookie баннера
+Если менялись routes, формы, SEO, downloads или page shell, дополнительно проверить:
+- alias behavior
+- canonical tags
+- JSON-LD
+- sitemap / robots
+- `/izdeliya`
+- страницы коллекций
+- страницы моделей коллекций
+- `/izdeliya/faktura`
+- `/skachat`
+- gated download flow
+- `/komplekty`
+- `/custom` alias behavior
+- `/company`
+- `/voprosy`
+- success / fail states форм
+- sticky CTA и cookie banner на mobile
 
-### Технические
-- [ ] Подключить реальный домен
-- [ ] Настроить SSL
-- [ ] Проверить favicon
-- [ ] Добавить social preview image
-- [ ] Проверить 404 страницу
-- [ ] Проверить мобильную версию всех страниц
-- [ ] Заменить placeholder-контент на реальные фото
-- [ ] Заменить тестовые телефоны/email на реальные
-- [ ] Убрать console.log из production (analytics DEV-режим отключится автоматически)
+## Текущий статус
 
-### Контент
-- [ ] Загрузить реальные фотографии товаров
-- [ ] Заполнить реальные описания и характеристики
-- [ ] Добавить реальные проекты / кейсы
-- [ ] Написать реальные статьи для блога
+Репозиторий production-oriented, но активно развивается на уровне UI, контента и визуальной системы.
+
+README должен описывать текущее состояние кода, а не историческую архитектуру. Если меняется IA, routing, metadata layer или seed-структура, обновляйте README вместе с кодом.

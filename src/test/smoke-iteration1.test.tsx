@@ -20,7 +20,7 @@ describe("iteration1 smoke routes", () => {
   });
 
   it("renders core routes", async () => {
-    for (const path of ["/", "/collections", "/contacts", "/request-project", "/company", "/products", "/downloads"]) {
+    for (const path of ["/", "/izdeliya", "/kontakty", "/request-project", "/company", "/skachat", "/proekty", "/novosti", "/voprosy", "/komplekty"]) {
       await renderApp(path);
       expect(document.querySelector("main")).toBeTruthy();
     }
@@ -35,24 +35,24 @@ describe("iteration1 smoke routes", () => {
 
   it("sets canonical tags for alias paths", async () => {
     await renderApp("/catalog");
-    expect(document.querySelector('link[rel="canonical"]')?.getAttribute("href") || "").toContain("/products");
+    expect(document.querySelector('link[rel="canonical"]')?.getAttribute("href") || "").toContain("/izdeliya");
 
     await renderApp("/about");
     expect(document.querySelector('link[rel="canonical"]')?.getAttribute("href") || "").toContain("/company");
 
     await renderApp("/for-architects");
-    expect(document.querySelector('link[rel="canonical"]')?.getAttribute("href") || "").toContain("/downloads");
+    expect(document.querySelector('link[rel="canonical"]')?.getAttribute("href") || "").toContain("/skachat");
   });
 
   it("has header/footer primary links and CTA", async () => {
     await renderApp("/");
-    expect(screen.getAllByRole("link", { name: "Продукты" }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "Изделия" }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("link", { name: "О компании" }).length).toBeGreaterThan(0);
-    expect(screen.getAllByRole("link", { name: /Запросить проект/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: /Запросить проект|Обсудить проект/i }).length).toBeGreaterThan(0);
   });
 
   it("has forms on contacts and request-project", async () => {
-    await renderApp("/contacts");
+    await renderApp("/kontakty");
     expect(screen.getByRole("button", { name: /Отправить/i })).toBeTruthy();
     expect(screen.getByRole("checkbox")).toBeTruthy();
 
@@ -62,9 +62,10 @@ describe("iteration1 smoke routes", () => {
 
   it("quick desktop/mobile indicators on home and collections", async () => {
     await renderApp("/");
-    expect(document.querySelector(".lg\\:hidden")).toBeTruthy();
+    expect(document.querySelector(".xl\\:hidden") || document.querySelector(".lg\\:hidden")).toBeTruthy();
 
-    await renderApp("/collections");
-    expect(document.querySelector(".md\\:grid-cols-3")).toBeTruthy();
+    await renderApp("/izdeliya");
+    expect(screen.getAllByRole("button", { name: /Воздух/i }).length).toBeGreaterThan(0);
+    expect(document.querySelector('[aria-controls="desktop-collection-vozduh"], [aria-controls="mobile-collection-vozduh"]')).toBeTruthy();
   });
 });

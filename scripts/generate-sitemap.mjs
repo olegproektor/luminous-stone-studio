@@ -2,13 +2,67 @@ import { writeFileSync } from "node:fs";
 import { sitemapConfig } from "./sitemap.config.mjs";
 
 const now = new Date().toISOString();
-const urls = [
-  ...sitemapConfig.staticPaths,
-  ...sitemapConfig.collectionSlugs.map((slug) => `/collections/${slug}`),
-  ...sitemapConfig.productSlugs.map((slug) => `/products/${slug}`),
-  ...sitemapConfig.textureSlugs.map((slug) => `/texture/${slug}`),
-  ...sitemapConfig.downloadCategories.map((category) => `/downloads/${category}`),
+
+const staticPathMap = {
+  "/products": "/izdeliya",
+  "/catalog": "/izdeliya",
+  "/collections": "/izdeliya",
+  "/materials": "/izdeliya/faktura",
+  "/for-objects": "/komplekty",
+  "/custom": "/komplekty",
+  "/projects": "/proekty",
+  "/faq": "/voprosy",
+  "/downloads": "/skachat",
+  "/for-architects": "/skachat",
+  "/blog": "/novosti",
+  "/contacts": "/kontakty",
+};
+
+function canonicalize(path) {
+  return staticPathMap[path] || path;
+}
+
+const requiredCanonicalPaths = [
+  "/",
+  "/izdeliya",
+  "/izdeliya/vozduh",
+  "/izdeliya/zemlya",
+  "/izdeliya/maya",
+  "/izdeliya/faktura",
+  "/komplekty",
+  "/proekty",
+  "/voprosy",
+  "/skachat",
+  "/novosti",
+  "/kontakty",
+  "/company",
+  "/izdeliya/vozduh/feya",
+  "/izdeliya/vozduh/mengir",
+  "/izdeliya/zemlya/fokus",
+  "/izdeliya/zemlya/mayak",
 ];
+
+const urls = Array.from(new Set([
+  ...requiredCanonicalPaths,
+  ...sitemapConfig.staticPaths.map(canonicalize),
+  ...((sitemapConfig.collectionSlugs || []).map((slug) => {
+    const mapped =
+      slug === "bollards-core" || slug === "ston-classic"
+        ? "vozduh"
+        : slug === "ston-texture"
+          ? "zemlya"
+          : slug === "lira-garden"
+            ? "maya"
+            : slug;
+    return `/izdeliya/${mapped}`;
+  })),
+  ...((sitemapConfig.nestedProductPaths || [])),
+  ...((sitemapConfig.productSlugs || []).map((slug) => `/products/${slug}`)),
+  ...((sitemapConfig.projectSlugs || []).map((slug) => `/proekty/${slug}`)),
+  ...((sitemapConfig.newsSlugs || []).map((slug) => `/novosti/${slug}`)),
+  ...sitemapConfig.textureSlugs.map((slug) => `/izdeliya/faktura/${slug}`),
+  ...sitemapConfig.downloadCategories.map((category) => `/skachat/${category}`),
+]));
 
 const xml = [
   '<?xml version="1.0" encoding="UTF-8"?>',

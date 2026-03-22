@@ -1,4 +1,4 @@
-import { schemaPathMap, type SchemaPageType } from "@/config/schema-map";
+﻿import { schemaPathMap, type SchemaPageType } from "@/config/schema-map";
 
 interface SchemaInput {
   pathname: string;
@@ -25,7 +25,7 @@ export function resolveSchema(input: SchemaInput): Record<string, unknown> {
       return {
         ...base,
         "@type": "Organization",
-        name: "STON",
+        name: "КАМЕНЬ И СВЕТ",
       };
     case "faq":
       return {

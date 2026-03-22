@@ -2,12 +2,13 @@ export type SchemaPageType = "website" | "organization" | "faq" | "collection" |
 
 export const schemaPathMap: Array<{ test: RegExp; type: SchemaPageType }> = [
   { test: /^\/$/, type: "website" },
-  { test: /^\/company$/, type: "organization" },
-  { test: /^\/faq$/, type: "faq" },
-  { test: /^\/collections(\/[^/]+)?$/, type: "collection" },
-  { test: /^\/(products|catalog)(\/[^/]+)?$/, type: "product" },
-  { test: /^\/projects(\/[^/]+)?$/, type: "project" },
-  { test: /^\/downloads(\/[^/]+)?$/, type: "download" },
-  { test: /^\/(materials|texture\/[^/]+)$/, type: "material" },
-  { test: /^\/contacts$/, type: "contact" },
+  { test: /^\/(company|about)$/, type: "organization" },
+  { test: /^\/(voprosy|faq)$/, type: "faq" },
+  { test: /^\/(izdeliya\/(vozduh|zemlya|maya)|collections\/[^/]+)$/, type: "collection" },
+  { test: /^\/izdeliya\/(vozduh|zemlya)\/[^/]+$/, type: "product" },
+  { test: /^\/(izdeliya|products|catalog(\/[^/]+)?)$/, type: "product" },
+  { test: /^\/(proekty|projects)(\/[^/]+)?$/, type: "project" },
+  { test: /^\/(skachat|downloads)(\/[^/]+)?$|^\/for-architects$/, type: "download" },
+  { test: /^\/(izdeliya\/faktura(\/[^/]+)?|materials|texture\/[^/]+)$/, type: "material" },
+  { test: /^\/(kontakty|contacts)$/, type: "contact" },
 ];

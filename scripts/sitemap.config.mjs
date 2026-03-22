@@ -18,11 +18,12 @@ export const sitemapConfig = {
     "/terms",
   ],
   collectionSlugs: ["bollards-core"],
-  productSlugs: [
-    "bollard-400-cast-stone",
-    "bollard-600-cast-stone",
-    "bollard-600-natural-stone",
-    "bollard-800-cast-stone",
+  productSlugs: [],
+  nestedProductPaths: [
+    "/izdeliya/vozduh/feya",
+    "/izdeliya/vozduh/mengir",
+    "/izdeliya/zemlya/fokus",
+    "/izdeliya/zemlya/mayak",
   ],
   textureSlugs: ["smooth", "stone"],
   downloadCategories: ["catalogue", "bim"],
