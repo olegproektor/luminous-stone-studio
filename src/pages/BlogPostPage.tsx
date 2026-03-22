@@ -5,6 +5,7 @@ import CTASection from "@/components/layout/CTASection";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
 import ArticleCard from "@/components/ui/article-card";
 import { getArticleBySlug, getRelatedArticles, articleCategories } from "@/data/articles";
+import { navPaths } from "@/lib/route-helpers";
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -16,7 +17,7 @@ const BlogPostPage = () => {
         <Section>
           <div className="text-center py-20">
             <h1 className="font-display text-3xl text-foreground mb-4">Статья не найдена</h1>
-            <Link to="/blog" className="font-body text-sm text-muted-foreground underline">
+            <Link to={navPaths.news} className="font-body text-sm text-muted-foreground underline">
               Все статьи
             </Link>
           </div>
@@ -101,7 +102,7 @@ const BlogPostPage = () => {
       <div className="container-brand px-6 md:px-12 lg:px-24 pt-6">
         <Breadcrumbs
           items={[
-            { label: "Журнал", href: "/blog" },
+            { label: "Новости", href: navPaths.news },
             { label: article.title },
           ]}
         />
@@ -170,8 +171,8 @@ const BlogPostPage = () => {
 
       <CTASection
         title="Нужна консультация?"
-        primaryCta={{ label: "Связаться", href: "/contacts" }}
-        secondaryCta={{ label: "Все статьи", href: "/blog" }}
+        primaryCta={{ label: "Связаться", href: navPaths.contacts }}
+        secondaryCta={{ label: "Все статьи", href: navPaths.news }}
       />
     </PageLayout>
   );

@@ -1,4 +1,4 @@
-import PageLayout from "@/components/layout/PageLayout";
+﻿import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import LeadFormWrapper from "@/components/forms/LeadFormWrapper";
 import ObjectPackagesModule from "@/components/for-objects/modules/ObjectPackagesModule";
@@ -9,7 +9,7 @@ import { trackEvent } from "@/lib/analytics";
 
 const ForObjectsPage = () => {
   return (
-    <PageLayout title="Для объектов — STON" description="Пакетные решения STON для коммерческих и частных объектов.">
+    <PageLayout title="Для объектов — КАМЕНЬ И СВЕТ" description="Пакетные решения КАМЕНЬ И СВЕТ для коммерческих и частных объектов.">
       <PageHero
         eyebrow="For Objects"
         title="Для объектов"

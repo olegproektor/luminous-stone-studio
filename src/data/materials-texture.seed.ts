@@ -1,4 +1,4 @@
-import type { MaterialTexture } from "@/types/materials";
+﻿import type { MaterialTexture } from "@/types/materials";
 
 export const materialsTextureSeed: MaterialTexture[] = [
   {
@@ -12,10 +12,10 @@ export const materialsTextureSeed: MaterialTexture[] = [
     recommendedUseCases: ["private-house", "developer"],
     relatedCollectionSlugs: ["ston-classic"],
     relatedProductSlugs: ["solis", "ray"],
-    image: { src: "/images/textures/smooth.jpg", alt: "Гладкая текстура STON" },
+    image: { src: "/images/textures/smooth.jpg", alt: "Гладкая текстура КАМЕНЬ И СВЕТ" },
     seo: {
-      title: "Smooth texture — STON",
-      description: "Гладкая текстура STON для современных уличных светильников.",
+      title: "Smooth texture — КАМЕНЬ И СВЕТ",
+      description: "Гладкая текстура КАМЕНЬ И СВЕТ для современных уличных светильников.",
     },
   },
   {
@@ -29,10 +29,10 @@ export const materialsTextureSeed: MaterialTexture[] = [
     recommendedUseCases: ["hospitality", "private-house"],
     relatedCollectionSlugs: ["ston-texture"],
     relatedProductSlugs: ["aura", "nova"],
-    image: { src: "/images/textures/stone.jpg", alt: "Каменная текстура STON" },
+    image: { src: "/images/textures/stone.jpg", alt: "Каменная текстура КАМЕНЬ И СВЕТ" },
     seo: {
-      title: "Stone texture — STON",
-      description: "Каменная текстура STON для ландшафтного и архитектурного освещения.",
+      title: "Stone texture — КАМЕНЬ И СВЕТ",
+      description: "Каменная текстура КАМЕНЬ И СВЕТ для ландшафтного и архитектурного освещения.",
     },
   },
 ];

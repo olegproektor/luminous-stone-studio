@@ -1,4 +1,4 @@
-export interface FaqSeedItem {
+﻿export interface FaqSeedItem {
   id: string;
   category: string;
   question: string;
@@ -15,7 +15,7 @@ export const faqSeed: FaqSeedItem[] = [
   {
     id: "faq-tech-1",
     category: "Технические характеристики",
-    question: "Какие материалы используются в продукции STON?",
+    question: "Какие материалы используются в продукции КАМЕНЬ И СВЕТ?",
     answer: "Используются архитектурные композиты и фактурные поверхности, адаптированные к уличной эксплуатации.",
   },
   {

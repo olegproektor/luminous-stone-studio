@@ -9,21 +9,23 @@ export interface NavigationItem {
 
 export const headerNavigation: NavigationItem[] = [
   {
-    label: "Коллекции",
-    href: navPaths.collections,
+    label: "О компании",
+    href: navPaths.company,
+  },
+  {
+    label: "Изделия",
+    href: navPaths.products,
     children: [
-      { label: "STŌN Classic", href: "/collections/ston-classic", description: "Гладкая форма, чистый свет" },
-      { label: "STŌN Texture", href: "/collections/ston-texture", description: "Природная фактура камня" },
-      { label: "Bollards Core", href: buildPath.collection("bollards-core"), description: "Стартовая линейка запуска" },
-      { label: "Все коллекции", href: navPaths.collections },
+      { label: "Воздух", href: buildPath.collection("vozduh"), description: "Основная линейка боллардов" },
+      { label: "Земля", href: buildPath.collection("zemlya"), description: "Текстурные формы и природная пластика" },
+      { label: "Майа", href: buildPath.collection("maya"), description: "Акцентные и декоративные решения" },
+      { label: "Фактура", href: navPaths.materials, description: "Материалы и текстуры" },
     ],
   },
-  { label: "Продукты", href: navPaths.products },
+  { label: "Комплекты", href: navPaths.forObjects },
   { label: "Проекты", href: navPaths.projects },
-  { label: "Материалы", href: navPaths.materials },
-  { label: "Загрузки", href: navPaths.downloads },
-  { label: "Для объектов", href: navPaths.forObjects },
-  { label: "О компании", href: navPaths.company },
-  { label: "FAQ", href: navPaths.faq },
+  { label: "Вопросы", href: navPaths.faq },
+  { label: "Скачать", href: navPaths.downloads },
+  { label: "Новости", href: navPaths.news },
   { label: "Контакты", href: navPaths.contacts },
 ];

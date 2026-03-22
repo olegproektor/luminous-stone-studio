@@ -1,8 +1,9 @@
-import { useParams, Link } from "react-router-dom";
+﻿import { useParams, Link } from "react-router-dom";
 import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
+import Breadcrumbs from "@/components/ui/breadcrumbs";
 import TextureDetailModule from "@/components/materials/modules/TextureDetailModule";
 import { materialsTextureSeed } from "@/data/materials-texture.seed";
 import { navPaths } from "@/lib/route-helpers";
@@ -13,7 +14,7 @@ const TextureDetailPage = () => {
 
   if (!texture) {
     return (
-      <PageLayout title="Текстура не найдена — STON">
+      <PageLayout title="Текстура не найдена — КАМЕНЬ И СВЕТ">
         <Section>
           <div className="text-center py-20">
             <h1 className="font-display text-3xl mb-4">Текстура не найдена</h1>
@@ -28,7 +29,16 @@ const TextureDetailPage = () => {
 
   return (
     <PageLayout title={texture.seo.title} description={texture.seo.description}>
-      <PageHero eyebrow="Texture" title={texture.name} subtitle={texture.shortDescription} />
+      <div className="container-brand px-6 md:px-12 lg:px-24 pt-6">
+        <Breadcrumbs
+          items={[
+            { label: "Изделия", href: navPaths.products },
+            { label: "Фактура", href: navPaths.materials },
+            { label: texture.name },
+          ]}
+        />
+      </div>
+      <PageHero eyebrow="Фактура" title={texture.name} subtitle={texture.shortDescription} />
       <TextureDetailModule texture={texture} />
       <CTASection
         title="Нужна консультация по материалам?"

@@ -1,4 +1,4 @@
-import PageLayout from "@/components/layout/PageLayout";
+﻿import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import DownloadsCategoriesModule from "@/components/downloads/modules/DownloadsCategoriesModule";
 import CTASection from "@/components/layout/CTASection";
@@ -8,13 +8,13 @@ import { navPaths } from "@/lib/route-helpers";
 const DownloadsHubPage = () => {
   return (
     <PageLayout
-      title="Загрузки — STON"
-      description="Каталоги и BIM-материалы STON для проектирования и подбора решений."
+      title="Загрузки — КАМЕНЬ И СВЕТ"
+      description="Каталоги и BIM-материалы КАМЕНЬ И СВЕТ для проектирования и подбора решений."
     >
       <PageHero
         eyebrow="Downloads"
         title="Загрузки"
-        subtitle="Каталоги и BIM-файлы для работы с продуктами STON."
+        subtitle="Каталоги и BIM-файлы для работы с продуктами КАМЕНЬ И СВЕТ."
       />
       <DownloadsCategoriesModule categories={downloadsCategoriesSeed} />
       <CTASection

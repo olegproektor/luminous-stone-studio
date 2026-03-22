@@ -1,9 +1,10 @@
-import { useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import CTASection from "@/components/layout/CTASection";
 import Section from "@/components/layout/Section";
+import Breadcrumbs from "@/components/ui/breadcrumbs";
 import DownloadAssetsModule from "@/components/downloads/modules/DownloadAssetsModule";
 import DownloadGateForm from "@/components/downloads/DownloadGateForm";
 import { downloadsCategoriesSeed, downloadsSeed } from "@/data/downloads.seed";
@@ -22,7 +23,7 @@ const DownloadCategoryPage = () => {
 
   if (!categoryData) {
     return (
-      <PageLayout title="Категория не найдена — STON" description="Запрошенная категория загрузок не найдена.">
+      <PageLayout title="Категория не найдена — КАМЕНЬ И СВЕТ" description="Запрошенная категория загрузок не найдена.">
         <Section>
           <p className="font-body text-sm text-muted-foreground">Категория загрузок не найдена.</p>
         </Section>
@@ -54,7 +55,15 @@ const DownloadCategoryPage = () => {
   };
 
   return (
-    <PageLayout title={`${categoryData.title} — STON`} description={categoryData.description}>
+    <PageLayout title={`${categoryData.title} — КАМЕНЬ И СВЕТ`} description={categoryData.description}>
+      <div className="container-brand px-6 md:px-12 lg:px-24 pt-6">
+        <Breadcrumbs
+          items={[
+            { label: "Скачать", href: navPaths.downloads },
+            { label: categoryData.title },
+          ]}
+        />
+      </div>
       <PageHero eyebrow="Downloads" title={categoryData.title} subtitle={categoryData.description} />
 
       {successAsset && (
