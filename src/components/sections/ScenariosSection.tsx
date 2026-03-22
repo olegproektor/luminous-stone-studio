@@ -14,7 +14,7 @@ const scenarios = [
   {
     title: "Глэмпинг · Отель",
     description: "Тропинки, зоны отдыха, территория. Свет, который не нарушает природную среду.",
-    href: "/projects",
+    href: navPaths.projects,
     image: "/placeholder.svg",
     span: "",
     aspect: "aspect-[4/5]",

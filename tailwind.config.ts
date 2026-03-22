@@ -15,8 +15,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Cormorant Garamond', 'Georgia', 'serif'],
-        body: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['HCT', 'Georgia', 'serif'],
+        body: ['Roboto', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -63,6 +63,19 @@ export default {
         cream: {
           DEFAULT: "hsl(var(--cream))",
           dark: "hsl(var(--cream-dark))",
+        },
+        monolith: {
+          deep: "hsl(var(--bg-deep))",
+          surface: "hsl(var(--bg-surface))",
+          surface2: "hsl(var(--bg-surface-2))",
+          float: "hsl(var(--bg-float))",
+          text: "hsl(var(--text-primary))",
+          soft: "hsl(var(--text-secondary))",
+          muted: "hsl(var(--text-muted))",
+          accent: "hsl(var(--accent-core))",
+          accentLight: "hsl(var(--accent-light))",
+          accentSoft: "hsl(var(--accent-soft))",
+          ghost: "hsl(var(--ghost-border))",
         },
         "warm-glow": "hsl(var(--warm-glow))",
         sidebar: {

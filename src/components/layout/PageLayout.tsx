@@ -19,6 +19,7 @@ interface PageLayoutProps {
  */
 const PageLayout = ({ children, title, description, canonical, jsonLd }: PageLayoutProps) => {
   const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     if (title) document.title = title;
@@ -87,7 +88,9 @@ const PageLayout = ({ children, title, description, canonical, jsonLd }: PageLay
   return (
     <>
       <Header />
-      <main className="min-h-screen pt-16 md:pt-20">{children}</main>
+      <main className={isHomePage ? "min-h-screen pt-0" : "min-h-screen pt-16 md:pt-20"}>
+        {children}
+      </main>
       <Footer />
     </>
   );

@@ -25,7 +25,7 @@ const PageHero = ({
 
   return (
     <section
-      className={`relative flex items-end ${compact ? "py-20 md:py-28" : "min-h-[70vh] md:min-h-[80vh]"}`}
+      className={`relative flex items-end ${compact ? "py-20 md:py-28" : "min-h-[62vh] md:min-h-[72vh] xl:min-h-[80vh]"}`}
     >
       {hasImage && (
         <div className="absolute inset-0">
@@ -40,7 +40,7 @@ const PageHero = ({
       )}
 
       <div
-        className={`relative z-10 container-brand px-6 md:px-12 lg:px-24 ${compact ? "" : "pb-20 md:pb-0"}`}
+        className={`relative z-10 container-brand px-6 md:px-12 lg:px-24 ${compact ? "" : "pb-14 md:pb-8 xl:pb-0"}`}
       >
         <div className="max-w-2xl">
           {eyebrow && (

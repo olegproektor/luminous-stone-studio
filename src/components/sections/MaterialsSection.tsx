@@ -1,5 +1,6 @@
 import MetricBlock from "@/components/ui/metric-block";
 import { Link } from "react-router-dom";
+import { navPaths } from "@/lib/route-helpers";
 
 const MaterialsSection = () => {
   return (
@@ -34,7 +35,7 @@ const MaterialsSection = () => {
             </div>
 
             <Link
-              to="/materials"
+              to={navPaths.materials}
               className="inline-flex mt-10 text-xs font-body font-medium tracking-brand uppercase text-foreground border-b border-foreground/30 pb-1 hover:border-foreground transition-colors"
             >
               Подробнее о материалах

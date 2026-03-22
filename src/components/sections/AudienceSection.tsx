@@ -1,21 +1,24 @@
+import { Link } from "react-router-dom";
+import { navPaths } from "@/lib/route-helpers";
+
 const audiences = [
   {
     title: "Частным клиентам",
     description: "Для загородного дома, террасы, сада. Подберём решение под ваш ландшафт и стиль.",
     cta: "Подобрать светильник",
-    href: "/catalog",
+    href: navPaths.products,
   },
   {
     title: "Архитекторам",
     description: "3D-модели, спецификации, кастомизация под проект. Работаем напрямую с проектными бюро.",
     cta: "Запросить материалы",
-    href: "/contacts",
+    href: navPaths.contacts,
   },
   {
     title: "Бизнесу",
     description: "Глэмпинги, отели, рестораны, девелоперы. Комплектация проектов любого масштаба.",
     cta: "Обсудить проект",
-    href: "/contacts",
+    href: navPaths.contacts,
   },
 ];
 
@@ -44,12 +47,12 @@ const AudienceSection = () => {
               <p className="font-body text-sm text-muted-foreground leading-relaxed mb-8 flex-grow">
                 {item.description}
               </p>
-              <a
-                href={item.href}
+              <Link
+                to={item.href}
                 className="inline-flex text-sm font-body font-medium tracking-wide text-foreground border-b border-foreground/30 pb-1 hover:border-foreground transition-colors self-start"
               >
                 {item.cta}
-              </a>
+              </Link>
             </div>
           ))}
         </div>

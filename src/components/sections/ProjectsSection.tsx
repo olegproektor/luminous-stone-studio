@@ -2,6 +2,7 @@ import ProjectCard from "@/components/ui/project-card";
 import { projects } from "@/data/projects";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { navPaths } from "@/lib/route-helpers";
 
 const ProjectsSection = () => {
   return (
@@ -20,7 +21,7 @@ const ProjectsSection = () => {
             </p>
           </div>
           <Link
-            to="/projects"
+            to={navPaths.projects}
             className="mt-6 md:mt-0 inline-flex items-center gap-2 text-xs font-body font-medium tracking-brand uppercase text-foreground border-b border-foreground/30 pb-1 hover:border-foreground transition-colors"
           >
             Все проекты <ArrowRight size={14} />

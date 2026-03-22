@@ -8,9 +8,9 @@ const Footer = () => {
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="container-brand px-6 md:px-12 lg:px-24 py-16 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-10 md:gap-8">
           {/* Brand */}
-          <div className="md:col-span-4">
+          <div className="xl:col-span-4">
             <Link to="/" className="font-display text-xl font-medium tracking-[0.08em]">STŌN</Link>
             <p className="mt-5 text-xs font-body text-primary-foreground/40 leading-relaxed max-w-xs">
               Архитектурные уличные светильники из литьевого камня. Проектируем свет для ландшафта — от частного сада до территории курорта.
@@ -18,7 +18,7 @@ const Footer = () => {
           </div>
 
           {/* Navigation */}
-          <div className="md:col-span-2">
+          <div className="xl:col-span-2">
             <h4 className="text-[10px] font-body font-medium tracking-brand-wide uppercase text-primary-foreground/30 mb-5">
               Навигация
             </h4>
@@ -36,7 +36,7 @@ const Footer = () => {
           </div>
 
           {/* Info */}
-          <div className="md:col-span-2">
+          <div className="xl:col-span-2">
             <h4 className="text-[10px] font-body font-medium tracking-brand-wide uppercase text-primary-foreground/30 mb-5">
               Информация
             </h4>
@@ -54,7 +54,7 @@ const Footer = () => {
           </div>
 
           {/* Contacts */}
-          <div className="md:col-span-4">
+          <div className="xl:col-span-4">
             <h4 className="text-[10px] font-body font-medium tracking-brand-wide uppercase text-primary-foreground/30 mb-5">
               Контакты
             </h4>
@@ -77,7 +77,7 @@ const Footer = () => {
           <p className="text-[10px] font-body text-primary-foreground/25">
             © {currentYear} STŌN. Все права защищены.
           </p>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2">
             <Link to={routes.privacy} className="text-[10px] font-body text-primary-foreground/25 hover:text-primary-foreground/40 transition-colors">
               Конфиденциальность
             </Link>
