@@ -16,16 +16,36 @@ export const headerNavigation: NavigationItem[] = [
     label: "Изделия",
     href: navPaths.products,
     children: [
-      { label: "Воздух", href: buildPath.collection("vozduh"), description: "Основная линейка боллардов" },
-      { label: "Земля", href: buildPath.collection("zemlya"), description: "Текстурные формы и природная пластика" },
-      { label: "Майа", href: buildPath.collection("maya"), description: "Акцентные и декоративные решения" },
-      { label: "Фактура", href: navPaths.materials, description: "Материалы и текстуры" },
+      { label: "Воздух", href: buildPath.collection("vozduh"), description: "Мягкая навигация в пространстве" },
+      { label: "Земля", href: buildPath.collection("zemlya"), description: "Акцент на материале и рельефе" },
+      { label: "Майа", href: buildPath.collection("maya"), description: "Новые акценты в пространстве" },
+      { label: "Фактура", href: navPaths.materials, description: "Материал как часть сценария" },
     ],
   },
   { label: "Комплекты", href: navPaths.forObjects },
   { label: "Проекты", href: navPaths.projects },
   { label: "Вопросы", href: navPaths.faq },
-  { label: "Скачать", href: navPaths.downloads },
+  {
+    label: "Скачать",
+    href: navPaths.downloads,
+    children: [
+      {
+        label: "Каталоги",
+        href: buildPath.downloadCategory("catalogue"),
+        description: "PDF-материалы по решениям и коллекциям",
+      },
+      {
+        label: "BIM и 3D",
+        href: buildPath.downloadCategory("bim"),
+        description: "Материалы для проектирования и координации",
+      },
+      {
+        label: "Техническая поддержка",
+        href: buildPath.downloadCategory("support"),
+        description: "Видео по подключению, монтажу и обслуживанию",
+      },
+    ],
+  },
   { label: "Новости", href: navPaths.news },
   { label: "Контакты", href: navPaths.contacts },
 ];

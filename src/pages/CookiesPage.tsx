@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const CookiesPage = () => (
   <PageLayout
-    title="Политика cookie — STŌN"
-    description="Информация об использовании файлов cookie на сайте STŌN."
+    title="Политика cookie — Форма Света"
+    description="Информация об использовании файлов cookie на сайте Форма Света."
   >
     <Section>
       <div className="max-w-3xl">

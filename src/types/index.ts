@@ -38,6 +38,7 @@ export type ProductCategory =
   | "accent-light"
   | "small-form"
   | "custom";
+export type ProductStatus = "draft" | "coming-soon" | "active";
 
 export type TextureType = "smooth" | "stone";
 export type MountingType = "surface" | "embedded";
@@ -74,6 +75,7 @@ export interface ProductSpec {
 export interface Product {
   id: string;
   slug: string;
+  status: ProductStatus;
   name: string;
   series: string;
   category: ProductCategory;

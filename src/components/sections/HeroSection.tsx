@@ -5,52 +5,50 @@ import { navPaths } from "@/lib/route-helpers";
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-end">
-      {/* Background Image */}
       <div className="absolute inset-0">
         <img
           src={heroBollard}
-          alt="Архитектурный боллард из литьевого камня с вертикальной световой щелью в вечернем саду"
+          alt="Архитектурное световое решение для ландшафта в вечернем пространстве"
           className="w-full h-full object-cover"
           loading="eager"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/30 to-foreground/10" />
       </div>
 
-      {/* Content */}
       <div className="relative z-10 w-full">
         <div className="container-brand px-6 md:px-12 lg:px-24 pb-16 md:pb-24">
           <div className="max-w-3xl">
             <p className="text-xs font-body font-medium tracking-brand-wide uppercase text-background/50 mb-6 animate-fade-up">
-              Архитектурное ландшафтное освещение
+              Архитектурные световые решения для ландшафта
             </p>
             <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-light text-background leading-[0.95] mb-8 animate-fade-up">
-              Камень.
+              Свет как часть
               <br />
-              Свет.
+              архитектуры
               <br />
-              Среда.
+              ландшафта
             </h1>
             <p className="font-body text-sm md:text-base text-background/60 leading-relaxed mb-12 max-w-md animate-fade-up-delay">
-              Болларды и светильники из литьевого камня, которые становятся частью архитектуры ландшафта. Для частных резиденций, отелей и общественных пространств.
+              Форма Света создаёт световые решения для частных и архитектурных пространств.
+              Подбираем сценарий света под задачу и интегрируем его в архитектуру.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-up-delay-2">
               <Link
-                to={navPaths.collections}
+                to={navPaths.requestProject}
                 className="inline-flex items-center justify-center text-xs font-body font-medium tracking-brand uppercase bg-background text-foreground px-10 py-4 hover:bg-background/90 transition-colors duration-300"
               >
-                Коллекции
+                Обсудить проект
               </Link>
               <Link
-                to={navPaths.requestProject}
+                to={navPaths.collections}
                 className="inline-flex items-center justify-center text-xs font-body font-medium tracking-brand uppercase border border-background/30 text-background px-10 py-4 hover:bg-background/10 transition-colors duration-300"
               >
-                Обсудить проект
+                Смотреть решения
               </Link>
             </div>
           </div>
         </div>
 
-        {/* Bottom metrics bar — iGuzzini-inspired system feel */}
         <div className="border-t border-background/10">
           <div className="container-brand px-6 md:px-12 lg:px-24">
             <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-background/10">

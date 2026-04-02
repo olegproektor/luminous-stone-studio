@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const TermsPage = () => (
   <PageLayout
-    title="Пользовательское соглашение — STŌN"
-    description="Пользовательское соглашение сайта STŌN. Условия использования сайта."
+    title="Пользовательское соглашение — Форма Света"
+    description="Пользовательское соглашение сайта Форма Света. Условия использования сайта."
   >
     <Section>
       <div className="max-w-3xl">

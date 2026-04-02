@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const PrivacyPage = () => (
   <PageLayout
-    title="Политика конфиденциальности — STŌN"
-    description="Политика конфиденциальности и обработки персональных данных сайта STŌN."
+    title="Политика конфиденциальности — Форма Света"
+    description="Политика конфиденциальности и обработки персональных данных сайта Форма Света."
   >
     <Section>
       <div className="max-w-3xl">

@@ -4,23 +4,23 @@ import { navPaths } from "@/lib/route-helpers";
 const steps = [
   {
     number: "01",
-    title: "Обсуждение",
-    description: "Расскажите о вашем объекте и задачах. Поможем определить тип, количество и расположение светильников.",
+    title: "Обсуждение задачи",
+    description: "Определяем тип пространства, сценарий света и ключевые ограничения проекта.",
   },
   {
     number: "02",
     title: "Подбор решения",
-    description: "Предложим модели из каталога или кастомное решение. Подготовим визуализацию и спецификацию.",
+    description: "Сопоставляем коллекцию, модель, материал и фактуру под конкретный объект.",
   },
   {
     number: "03",
     title: "Производство",
-    description: "Изготовим изделия на собственном производстве. Стандартные модели — от 5 дней, кастом — от 3 недель.",
+    description: "Готовим стандартное или адаптированное решение в согласованные сроки.",
   },
   {
     number: "04",
-    title: "Доставка и монтаж",
-    description: "Доставим по России. Предоставим инструкции и схемы монтажа. Поддержка на всех этапах.",
+    title: "Поставка и монтаж",
+    description: "Передаём схемы, инструкции и поддержку для аккуратной интеграции на объекте.",
   },
 ];
 
@@ -28,27 +28,21 @@ const ProcessSection = () => {
   return (
     <section className="section-padding bg-card">
       <div className="container-brand">
-        <div className="max-w-xl mb-16">
-          <p className="text-xs font-body font-medium tracking-brand-wide uppercase text-muted-foreground mb-4">
+        <div className="mb-16 max-w-xl">
+          <p className="mb-4 text-xs font-body font-medium uppercase tracking-brand-wide text-muted-foreground">
             Как мы работаем
           </p>
-          <h2 className="font-display text-3xl md:text-5xl font-light text-foreground leading-tight">
+          <h2 className="font-display text-3xl font-light leading-tight text-foreground md:text-5xl">
             От обсуждения до установки
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-border">
+        <div className="grid grid-cols-1 gap-px bg-border md:grid-cols-2 lg:grid-cols-4">
           {steps.map((step) => (
             <div key={step.number} className="bg-card p-8 lg:p-10">
-              <span className="font-display text-4xl font-light text-accent/40 block mb-6">
-                {step.number}
-              </span>
-              <h3 className="font-display text-lg font-medium text-foreground mb-3">
-                {step.title}
-              </h3>
-              <p className="font-body text-xs text-muted-foreground leading-relaxed">
-                {step.description}
-              </p>
+              <span className="mb-6 block font-display text-4xl font-light text-accent/40">{step.number}</span>
+              <h3 className="mb-3 font-display text-lg font-medium text-foreground">{step.title}</h3>
+              <p className="font-body text-xs leading-relaxed text-muted-foreground">{step.description}</p>
             </div>
           ))}
         </div>
@@ -56,7 +50,7 @@ const ProcessSection = () => {
         <div className="mt-12 text-center">
           <Link
             to={navPaths.requestProject}
-            className="inline-flex text-xs font-body font-medium tracking-brand uppercase text-primary-foreground bg-primary px-10 py-4 hover:bg-charcoal-light transition-colors duration-300"
+            className="inline-flex bg-primary px-10 py-4 text-xs font-body font-medium uppercase tracking-brand text-primary-foreground transition-colors duration-300 hover:bg-charcoal-light"
           >
             Начать проект
           </Link>

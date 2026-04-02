@@ -24,7 +24,7 @@ const customFormFields = [
 const CustomPage = () => {
   return (
     <PageLayout
-      title="Индивидуальные решения — STŌN"
+      title="Индивидуальные решения — Форма Света"
       description="Кастомные архитектурные светильники: нестандартные размеры, формы, фактуры, цвета и типы монтажа."
     >
       <PageHero

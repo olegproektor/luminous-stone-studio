@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const ConsentPage = () => (
   <PageLayout
-    title="Согласие на обработку персональных данных — STŌN"
-    description="Условия согласия на обработку персональных данных на сайте STŌN."
+    title="Согласие на обработку персональных данных — Форма Света"
+    description="Условия согласия на обработку персональных данных на сайте Форма Света."
   >
     <Section>
       <div className="max-w-3xl">

@@ -25,7 +25,7 @@ export function resolveSchema(input: SchemaInput): Record<string, unknown> {
       return {
         ...base,
         "@type": "Organization",
-        name: "КАМЕНЬ И СВЕТ",
+        name: "Форма Света",
       };
     case "faq":
       return {

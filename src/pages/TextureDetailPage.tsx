@@ -1,24 +1,33 @@
-﻿import { useParams, Link } from "react-router-dom";
+import { useMemo } from "react";
+import { Link, useParams } from "react-router-dom";
 import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
 import TextureDetailModule from "@/components/materials/modules/TextureDetailModule";
-import { materialsTextureSeed } from "@/data/materials-texture.seed";
-import { navPaths } from "@/lib/route-helpers";
+import { getMaterialFamilyBySlug, resolveMaterialFamilySlug } from "@/data/materials-texture.seed";
+import { navPaths, buildPath } from "@/lib/route-helpers";
 
 const TextureDetailPage = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const texture = materialsTextureSeed.find((item) => item.slug === slug);
+  const { slug = "" } = useParams<{ slug: string }>();
+  const material = getMaterialFamilyBySlug(slug);
+  const canonicalSlug = resolveMaterialFamilySlug(slug);
+  const canonical = canonicalSlug ? buildPath.texture(canonicalSlug) : undefined;
+  const isLegacyAlias = canonicalSlug !== undefined && slug !== canonicalSlug;
 
-  if (!texture) {
+  const pageTitle = useMemo(() => {
+    if (!material) return "Материал не найден — Форма Света";
+    return material.seo.title;
+  }, [material]);
+
+  if (!material) {
     return (
-      <PageLayout title="Текстура не найдена — КАМЕНЬ И СВЕТ">
+      <PageLayout title={pageTitle}>
         <Section>
-          <div className="text-center py-20">
-            <h1 className="font-display text-3xl mb-4">Текстура не найдена</h1>
-            <Link to={navPaths.materials} className="font-body text-sm underline text-muted-foreground">
+          <div className="py-20 text-center">
+            <h1 className="mb-4 font-display text-3xl">Материал не найден</h1>
+            <Link to={navPaths.materials} className="font-body text-sm text-muted-foreground underline">
               Вернуться к материалам
             </Link>
           </div>
@@ -28,25 +37,32 @@ const TextureDetailPage = () => {
   }
 
   return (
-    <PageLayout title={texture.seo.title} description={texture.seo.description}>
-      <div className="container-brand px-6 md:px-12 lg:px-24 pt-6">
+    <PageLayout title={material.seo.title} description={material.seo.description} canonical={canonical}>
+      <div className="container-brand px-6 pt-6 md:px-12 lg:px-24">
         <Breadcrumbs
           items={[
             { label: "Изделия", href: navPaths.products },
             { label: "Фактура", href: navPaths.materials },
-            { label: texture.name },
+            { label: material.name },
           ]}
         />
       </div>
-      <PageHero eyebrow="Фактура" title={texture.name} subtitle={texture.shortDescription} />
-      <TextureDetailModule texture={texture} />
+      <PageHero
+        eyebrow={isLegacyAlias ? "Материал" : "Материалы"}
+        title={material.name}
+        subtitle={material.summary}
+      />
+      <TextureDetailModule material={material} />
       <CTASection
-        title="Нужна консультация по материалам?"
-        subtitle="Подберем фактуру и решение под ваш проект."
-        primaryCta={{ label: "Связаться", href: navPaths.contacts }}
+        eyebrow="Обсуждение проекта"
+        title="Подберём материал под ваш проект"
+        subtitle="Обсудим характер пространства, подскажем подходящую поверхность и согласуем специальные решения под задачу."
+        primaryCta={{ label: "Обсудить проект", href: navPaths.requestProject }}
+        secondaryCta={{ label: "Получить подбор решения", href: navPaths.requestProject }}
       />
     </PageLayout>
   );
 };
 
 export default TextureDetailPage;
+

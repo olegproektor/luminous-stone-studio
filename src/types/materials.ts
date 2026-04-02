@@ -1,17 +1,39 @@
-export type MaterialTextureKey = "smooth" | "stone" | "sand";
+export type MaterialTextureKey =
+  | "smooth"
+  | "stone"
+  | "sand"
+  | "natural-stone"
+  | "composite"
+  | "special-materials";
 
-export interface MaterialTexture {
-  id: string;
-  slug: string;
-  key: MaterialTextureKey;
+export type MaterialFamilySlug = "natural-stone" | "composite" | "special-materials";
+
+export interface MaterialFinish {
+  key: string;
   name: string;
-  shortDescription: string;
   description: string;
+  applicableTo: MaterialFamilySlug[];
+}
+
+export interface SpecialMaterialVariant {
+  slug: string;
+  name: string;
+  description: string;
+}
+
+export interface MaterialFamily {
+  id: string;
+  slug: MaterialFamilySlug;
+  name: string;
+  tagline: string;
+  summary: string;
   properties: string[];
   recommendedUseCases: string[];
-  relatedCollectionSlugs: string[];
-  relatedProductSlugs: string[];
-  image: {
+  availableFinishes: MaterialFinish[];
+  specialVariants: SpecialMaterialVariant[];
+  customAvailable: boolean;
+  legacySlugs?: string[];
+  heroImage: {
     src: string;
     alt: string;
   };
@@ -20,3 +42,4 @@ export interface MaterialTexture {
     description: string;
   };
 }
+

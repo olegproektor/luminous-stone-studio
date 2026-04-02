@@ -11,13 +11,23 @@ interface PageLayoutProps {
   description?: string;
   canonical?: string;
   jsonLd?: Record<string, unknown>;
+  noIndex?: boolean;
+  suppressCanonical?: boolean;
 }
 
 /**
  * Base layout wrapper for all pages.
  * Handles document title, meta, canonical, JSON-LD, Header, Footer, scroll reset.
  */
-const PageLayout = ({ children, title, description, canonical, jsonLd }: PageLayoutProps) => {
+const PageLayout = ({
+  children,
+  title,
+  description,
+  canonical,
+  jsonLd,
+  noIndex = false,
+  suppressCanonical = false,
+}: PageLayoutProps) => {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
@@ -55,7 +65,8 @@ const PageLayout = ({ children, title, description, canonical, jsonLd }: PageLay
     }
 
     // Canonical (single source, alias-aware)
-    const resolvedCanonical = resolveCanonicalUrl(location.pathname, canonical);
+    const resolvedCanonical = suppressCanonical ? undefined : resolveCanonicalUrl(location.pathname, canonical);
+    const existingCanonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
     if (resolvedCanonical) {
       let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
       if (!link) {
@@ -64,7 +75,17 @@ const PageLayout = ({ children, title, description, canonical, jsonLd }: PageLay
         document.head.appendChild(link);
       }
       link.href = resolvedCanonical;
+    } else if (existingCanonical) {
+      existingCanonical.remove();
     }
+
+    let robotsMeta = document.querySelector('meta[name="robots"]');
+    if (!robotsMeta) {
+      robotsMeta = document.createElement("meta");
+      robotsMeta.setAttribute("name", "robots");
+      document.head.appendChild(robotsMeta);
+    }
+    robotsMeta.setAttribute("content", noIndex ? "noindex, nofollow" : "index, follow");
 
     // JSON-LD schema (extends metadata/canonical foundation)
     const schemaPayload = jsonLd ?? resolveSchema({
@@ -83,7 +104,7 @@ const PageLayout = ({ children, title, description, canonical, jsonLd }: PageLay
 
     window.scrollTo(0, 0);
     return () => { script.remove(); };
-  }, [title, description, canonical, jsonLd, location.pathname]);
+  }, [title, description, canonical, jsonLd, noIndex, suppressCanonical, location.pathname]);
 
   return (
     <>

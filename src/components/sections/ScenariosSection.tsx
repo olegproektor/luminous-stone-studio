@@ -5,23 +5,26 @@ import { navPaths } from "@/lib/route-helpers";
 const scenarios = [
   {
     title: "Загородная резиденция",
-    description: "Дорожки, терраса, входная группа, сад. Камерный свет, который подчёркивает архитектуру участка и создаёт вечернюю атмосферу.",
+    description:
+      "Дорожки, терраса, входная группа, сад. Камерный свет, который подчёркивает архитектуру участка и создаёт вечернюю атмосферу.",
     href: navPaths.products,
     image: "/placeholder.svg",
     span: "md:col-span-2",
     aspect: "aspect-[16/9]",
   },
   {
-    title: "Глэмпинг · Отель",
-    description: "Тропинки, зоны отдыха, территория. Свет, который не нарушает природную среду.",
+    title: "Глэмпинг и отель",
+    description:
+      "Тропинки, зоны отдыха и территория. Свет, который не нарушает природную среду и поддерживает сценарий пребывания.",
     href: navPaths.projects,
     image: "/placeholder.svg",
     span: "",
     aspect: "aspect-[4/5]",
   },
   {
-    title: "Ресторан · Терраса",
-    description: "Мягкий периферийный свет для открытых зон. Камерность и стиль заведения.",
+    title: "Ресторан и терраса",
+    description:
+      "Мягкий периферийный свет для открытых зон. Камерность, ритм и выразительная атмосфера пространства.",
     href: navPaths.products,
     image: "/placeholder.svg",
     span: "",
@@ -29,7 +32,8 @@ const scenarios = [
   },
   {
     title: "Общественное пространство",
-    description: "Парки, скверы, набережные. Масштабируемые решения с единым визуальным языком для всей территории.",
+    description:
+      "Парки, скверы и набережные. Масштабируемые решения с единым визуальным языком для всей территории.",
     href: navPaths.downloads,
     image: "/placeholder.svg",
     span: "md:col-span-2",
@@ -47,10 +51,11 @@ const ScenariosSection = () => {
               Сценарии
             </p>
             <h2 className="font-display text-3xl md:text-5xl font-light text-foreground leading-tight">
-              Где работает STŌN
+              Где работает свет
             </h2>
             <p className="font-body text-sm text-muted-foreground leading-relaxed mt-4">
-              Свет как часть маршрута, пространства и атмосферы — не просто освещение, а инструмент среды.
+              Свет как часть маршрута, пространства и атмосферы — не просто освещение, а
+              инструмент среды.
             </p>
           </div>
           <Link

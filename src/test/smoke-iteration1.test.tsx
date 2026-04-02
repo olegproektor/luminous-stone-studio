@@ -17,6 +17,7 @@ describe("iteration1 smoke routes", () => {
   beforeEach(() => {
     window.scrollTo = () => undefined;
     document.head.querySelector('link[rel="canonical"]')?.remove();
+    document.head.querySelector('meta[name="robots"]')?.remove();
   });
 
   it("renders core routes", async () => {
@@ -44,28 +45,28 @@ describe("iteration1 smoke routes", () => {
     expect(document.querySelector('link[rel="canonical"]')?.getAttribute("href") || "").toContain("/skachat");
   });
 
-  it("has header/footer primary links and CTA", async () => {
+  it("does not show legacy bollards on the home page", async () => {
     await renderApp("/");
-    expect(screen.getAllByRole("link", { name: "Изделия" }).length).toBeGreaterThan(0);
-    expect(screen.getAllByRole("link", { name: "О компании" }).length).toBeGreaterThan(0);
-    expect(screen.getAllByRole("link", { name: /Запросить проект|Обсудить проект/i }).length).toBeGreaterThan(0);
+
+    expect(screen.queryByText("Bollard 400")).toBeNull();
+    expect(screen.queryByText("Bollard 600 Cast Stone")).toBeNull();
+    expect(screen.queryByText("Bollard 600 Natural Stone")).toBeNull();
+    expect(screen.queryByText("Bollard 800")).toBeNull();
   });
 
-  it("has forms on contacts and request-project", async () => {
-    await renderApp("/kontakty");
-    expect(screen.getByRole("button", { name: /Отправить/i })).toBeTruthy();
-    expect(screen.getByRole("checkbox")).toBeTruthy();
+  it("replaces the old flagship block with the vozduh collection spotlight", async () => {
+    await renderApp("/");
 
-    await renderApp("/request-project");
-    expect(screen.getByRole("button", { name: /Далее/i })).toBeTruthy();
+    expect(screen.getAllByText("Воздух").length).toBeGreaterThan(0);
+    expect(screen.queryByText(/Боллард STŌN/i)).toBeNull();
+    expect(screen.getAllByRole("link", { name: /Открыть коллекцию/i }).length).toBeGreaterThan(0);
   });
 
-  it("quick desktop/mobile indicators on home and collections", async () => {
-    await renderApp("/");
-    expect(document.querySelector(".xl\\:hidden") || document.querySelector(".lg\\:hidden")).toBeTruthy();
+  it("keeps legacy product routes as non-indexable alias fallbacks", async () => {
+    await renderApp("/products/bollard-600-natural-stone");
 
-    await renderApp("/izdeliya");
-    expect(screen.getAllByRole("button", { name: /Воздух/i }).length).toBeGreaterThan(0);
-    expect(document.querySelector('[aria-controls="desktop-collection-vozduh"], [aria-controls="mobile-collection-vozduh"]')).toBeTruthy();
+    expect(screen.getByText(/Изделие доступно в основном каталоге/i)).toBeTruthy();
+    expect(document.querySelector('link[rel="canonical"]')).toBeNull();
+    expect(document.querySelector('meta[name="robots"]')?.getAttribute("content")).toBe("noindex, nofollow");
   });
 });

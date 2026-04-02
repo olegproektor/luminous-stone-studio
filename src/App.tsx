@@ -74,10 +74,7 @@ const App = () => (
               <Route path={routes.collectionVozduh} element={<CollectionDetailPage />} />
               <Route path={routes.collectionZemlya} element={<CollectionDetailPage />} />
               <Route path={routes.collectionMaya} element={<CollectionDetailPage />} />
-              <Route path={routes.collectionProductFeya} element={<CollectionProductPage />} />
-              <Route path={routes.collectionProductMengir} element={<CollectionProductPage />} />
-              <Route path={routes.collectionProductFokus} element={<CollectionProductPage />} />
-              <Route path={routes.collectionProductMayak} element={<CollectionProductPage />} />
+              <Route path={routes.collectionProductPattern} element={<CollectionProductPage />} />
               <Route path={routes.materials} element={<MaterialsPage />} />
               <Route path={routes.textureDetailPattern} element={<TextureDetailPage />} />
               <Route path={routes.projectDetailPattern} element={<ProjectDetailPage />} />

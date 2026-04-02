@@ -1,38 +1,26 @@
 export type HomeSectionKey =
   | "hero"
   | "advantages"
-  | "aboutProduct"
   | "collections"
-  | "scenarios"
-  | "featuredProducts"
   | "projects"
   | "materials"
   | "architects"
   | "process"
-  | "custom"
-  | "trust"
-  | "faq"
   | "finalCta";
 
 export const homeLayoutSeed = {
-  title: "STŌN — Архитектурные уличные светильники из камня",
+  title: "Форма Света — архитектурные световые решения для ландшафта",
   description:
-    "Болларды и светильники из литьевого камня для архитектурного ландшафта. Премиальное качество, российское производство.",
-  featuredSections: ["collections", "featuredProducts", "projects"] as HomeSectionKey[],
+    "Создаём световые решения для частных и архитектурных пространств. Помогаем определить сценарий света и подобрать решение под конкретную задачу.",
+  featuredSections: ["collections", "projects", "materials"] as HomeSectionKey[],
   order: [
     "hero",
     "advantages",
-    "aboutProduct",
     "collections",
-    "scenarios",
-    "featuredProducts",
     "projects",
     "materials",
     "architects",
     "process",
-    "custom",
-    "trust",
-    "faq",
     "finalCta",
   ] as HomeSectionKey[],
 } as const;

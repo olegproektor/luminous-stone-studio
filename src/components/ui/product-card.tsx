@@ -10,6 +10,7 @@ interface ProductCardProps {
 const ProductCard = ({ product, className = "" }: ProductCardProps) => {
   const priceFrom = Math.min(...product.variants.map((v) => v.price ?? Infinity));
   const firstVariant = product.variants[0];
+  const isComingSoon = product.status === "coming-soon";
 
   return (
     <Link
@@ -28,6 +29,11 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
             Под заказ
           </span>
         )}
+        {isComingSoon && (
+          <span className="absolute top-4 left-4 text-[10px] font-body font-medium tracking-brand uppercase bg-background/90 text-foreground px-3 py-1.5">
+            Скоро
+          </span>
+        )}
         {/* Subtle material indicator */}
         <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-foreground/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
@@ -41,11 +47,12 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
         <p className="font-body text-xs text-muted-foreground mt-1.5 line-clamp-2 leading-relaxed">
           {product.tagline}
         </p>
-        {priceFrom !== Infinity && (
+        {!isComingSoon && priceFrom !== Infinity && (
           <p className="font-body text-sm font-medium text-foreground mt-3">
             от {priceFrom.toLocaleString("ru-RU")} ₽
           </p>
         )}
+        {isComingSoon && <p className="font-body text-sm font-medium text-foreground mt-3">Скоро в каталоге</p>}
       </div>
     </Link>
   );

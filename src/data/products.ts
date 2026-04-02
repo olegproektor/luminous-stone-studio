@@ -1,7 +1,9 @@
-import type { Product } from "@/types";
+import type { Product, ProductStatus } from "@/types";
 import { toTechGroups } from "@/lib/product-tech";
 
-const legacyProducts: Product[] = [
+type ProductSeed = Omit<Product, "status"> & { status?: ProductStatus };
+
+const legacyProducts: ProductSeed[] = [
   {
     id: "p1",
     slug: "bollard-ston-500-smooth",
@@ -400,10 +402,11 @@ const legacyProducts: Product[] = [
   },
 ];
 
-const launchProducts: Product[] = [
+const launchProducts: ProductSeed[] = [
   {
     id: "lp1",
     slug: "bollard-400-cast-stone",
+    status: "active",
     name: "Bollard 400",
     series: "Bollards Core",
     category: "bollard",
@@ -433,6 +436,7 @@ const launchProducts: Product[] = [
   {
     id: "lp2",
     slug: "bollard-600-cast-stone",
+    status: "active",
     name: "Bollard 600 Cast Stone",
     series: "Bollards Core",
     category: "bollard",
@@ -462,6 +466,7 @@ const launchProducts: Product[] = [
   {
     id: "lp3",
     slug: "bollard-600-natural-stone",
+    status: "coming-soon",
     name: "Bollard 600 Natural Stone",
     series: "Bollards Core",
     category: "bollard",
@@ -491,6 +496,7 @@ const launchProducts: Product[] = [
   {
     id: "lp4",
     slug: "bollard-800-cast-stone",
+    status: "coming-soon",
     name: "Bollard 800",
     series: "Bollards Core",
     category: "bollard",
@@ -524,6 +530,7 @@ export const products: Product[] = [
   ...legacyProducts.map((item) =>
     normalizeProduct({
       ...item,
+      status: "draft",
       launchTier: "secondary" as const,
       isHidden: true,
     })
@@ -534,15 +541,27 @@ export function getProductBySlug(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);
 }
 
+export function getVisibleProducts(): Product[] {
+  return products.filter((product) => !product.isHidden && product.status !== "draft");
+}
+
+export function getActiveProducts(): Product[] {
+  return products.filter((product) => !product.isHidden && product.status === "active");
+}
+
+export function getComingSoonProducts(): Product[] {
+  return products.filter((product) => !product.isHidden && product.status === "coming-soon");
+}
+
 export function getProductsByCategory(category: Product["category"]): Product[] {
-  return products.filter((p) => p.category === category);
+  return getVisibleProducts().filter((p) => p.category === category);
 }
 
 export function getRelatedProducts(product: Product): Product[] {
-  return products.filter((p) => product.relatedProductIds.includes(p.id));
+  return getVisibleProducts().filter((p) => product.relatedProductIds.includes(p.id));
 }
 
-function normalizeProduct(product: Product): Product {
+function normalizeProduct(product: ProductSeed): Product {
   const firstPrice = Math.min(...product.variants.map((variant) => variant.price ?? Infinity));
   const priceBand =
     firstPrice === Infinity ? "request" : firstPrice < 15000 ? "entry" : firstPrice <= 20000 ? "mid" : "premium";
@@ -566,6 +585,7 @@ function normalizeProduct(product: Product): Product {
 
   return {
     ...product,
+    status: product.status ?? (product.isHidden ? "draft" : "active"),
     techGroups: toTechGroups(product.specs),
     taxonomy: {
       category: product.category,

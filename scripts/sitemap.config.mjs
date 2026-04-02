@@ -25,6 +25,6 @@ export const sitemapConfig = {
     "/izdeliya/zemlya/fokus",
     "/izdeliya/zemlya/mayak",
   ],
-  textureSlugs: ["smooth", "stone"],
-  downloadCategories: ["catalogue", "bim"],
+  textureSlugs: ["natural-stone", "composite", "special-materials"],
+  downloadCategories: ["catalogue", "bim", "support"],
 };

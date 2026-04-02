@@ -5,7 +5,7 @@ import { navPaths } from "@/lib/route-helpers";
 const NotFound = () => {
   return (
     <PageLayout
-      title="Страница не найдена — STŌN"
+      title="Страница не найдена — Форма Света"
       description="Запрашиваемая страница не существует."
     >
       <section className="section-padding">

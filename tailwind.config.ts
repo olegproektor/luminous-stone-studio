@@ -15,7 +15,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['HCT', 'Georgia', 'serif'],
+        display: ['Cormorant Garamond', 'Georgia', 'serif'],
         body: ['Roboto', 'system-ui', 'sans-serif'],
       },
       colors: {

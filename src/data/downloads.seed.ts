@@ -1,29 +1,36 @@
-﻿import type { DownloadAsset, DownloadCategory } from "@/types/downloads";
+import type { DownloadAsset, DownloadCategory } from "@/types/downloads";
 
 export const downloadsCategoriesSeed: DownloadCategory[] = [
   {
     id: "dl-cat-catalogue",
     slug: "catalogue",
     title: "Каталоги",
-    description: "Актуальные PDF-каталоги по линейке КАМЕНЬ И СВЕТ.",
+    description: "Актуальные PDF-каталоги по решениям Форма Света.",
     accessMode: "open",
   },
   {
     id: "dl-cat-bim",
     slug: "bim",
     title: "BIM и 3D",
-    description: "BIM/3D материалы для проектирования.",
+    description: "BIM и 3D-материалы для проектирования и рабочей координации.",
     accessMode: "gated",
+  },
+  {
+    id: "dl-cat-support",
+    slug: "support",
+    title: "Техническая поддержка",
+    description: "Видео по подключению, монтажу и сервисному сопровождению световых решений.",
+    accessMode: "open",
   },
 ];
 
 export const downloadsSeed: DownloadAsset[] = [
   {
     id: "dl-catalogue-main",
-    slug: "ston-catalogue-2026",
+    slug: "forma-sveta-catalogue-2026",
     category: "catalogue",
-    title: "Каталог КАМЕНЬ И СВЕТ 2026",
-    description: "Полный каталог стартового ассортимента.",
+    title: "Каталог Форма Света 2026",
+    description: "Базовый каталог решений и коллекций для частных и объектных пространств.",
     fileType: "pdf",
     fileUrl: "/downloads/ston-catalogue-2026.pdf",
     accessMode: "open",
@@ -38,10 +45,10 @@ export const downloadsSeed: DownloadAsset[] = [
   },
   {
     id: "dl-bim-pack-main",
-    slug: "ston-bim-pack-2026",
+    slug: "forma-sveta-bim-pack-2026",
     category: "bim",
-    title: "КАМЕНЬ И СВЕТ BIM Pack 2026",
-    description: "Семейства и модели для архитектурных проектов.",
+    title: "BIM Pack 2026",
+    description: "Семейства и модели для архитектурных и девелоперских проектов.",
     fileType: "zip",
     fileUrl: "/downloads/ston-bim-pack-2026.zip",
     accessMode: "gated",
@@ -55,3 +62,4 @@ export const downloadsSeed: DownloadAsset[] = [
     },
   },
 ];
+

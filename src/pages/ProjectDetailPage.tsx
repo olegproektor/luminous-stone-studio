@@ -8,10 +8,12 @@ import ProjectHeroModule from "@/components/projects/modules/ProjectHeroModule";
 import ProjectContentModule from "@/components/projects/modules/ProjectContentModule";
 import ProjectProductsModule from "@/components/projects/modules/ProjectProductsModule";
 import { getProjectBySlug, projects } from "@/data/projects";
-import { products } from "@/data/products";
 import { buildPath, navPaths } from "@/lib/route-helpers";
 import { getDetailMetadata } from "@/lib/metadata-pipeline";
 import { useAnalyticsView } from "@/hooks/useAnalyticsView";
+import { getIzdeliyaCollectionBySlug, getIzdeliyaProductsByCollection } from "@/data/izdeliya-architecture.seed";
+import { resolveCanonicalCollectionSlug } from "@/config/routes";
+import type { Product } from "@/types";
 
 const ProjectDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -19,7 +21,7 @@ const ProjectDetailPage = () => {
 
   if (!project) {
     return (
-      <PageLayout title="Проект не найден — STŌN">
+      <PageLayout title="Проект не найден — Форма Света">
         <Section>
           <div className="text-center py-20">
             <h1 className="font-display text-3xl text-foreground mb-4">Проект не найден</h1>
@@ -32,10 +34,38 @@ const ProjectDetailPage = () => {
     );
   }
 
-  const usedProducts = products.filter((product) => {
-    if (project.productSlugs?.length) return project.productSlugs.includes(product.slug);
-    return project.products.includes(product.id);
-  });
+  const usedProducts: Product[] = (project.collectionSlugs ?? [])
+    .map((slugValue) => resolveCanonicalCollectionSlug(slugValue))
+    .filter((slugValue): slugValue is "vozduh" | "zemlya" | "maya" => Boolean(slugValue))
+    .map((slugValue) => getIzdeliyaCollectionBySlug(slugValue))
+    .filter((item): item is NonNullable<typeof item> => Boolean(item))
+    .map((item) => {
+      const primaryProduct = getIzdeliyaProductsByCollection(item.slug)[0];
+
+      return {
+      id: `project-${item.slug}`,
+      slug: primaryProduct?.slug ?? item.slug,
+      status: "active",
+      name: item.name,
+      series: "Коллекция",
+      category: "custom",
+      tagline: item.tagline,
+      description: item.description,
+      features: [],
+      specs: [],
+      variants: [],
+      images: [{ src: "/placeholder.svg", alt: item.name }],
+      nightImages: [],
+      environmentImages: [],
+      materials: [],
+      ipRating: "",
+      lightTemp: "",
+      relatedProductIds: [],
+      useCases: [],
+      seo: item.seo,
+      createdAt: "2026-01-01",
+      };
+    });
 
   const otherProjects = projects.filter((item) => item.id !== project.id).slice(0, 2);
   const meta = getDetailMetadata({ type: "project", value: project });

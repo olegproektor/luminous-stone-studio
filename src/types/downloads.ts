@@ -1,6 +1,6 @@
 export type DownloadAccessMode = "open" | "gated";
 
-export type DownloadCategorySlug = "catalogue" | "bim";
+export type DownloadCategorySlug = "catalogue" | "bim" | "support";
 
 export type DownloadFileType = "pdf" | "dwg" | "3d" | "zip" | "doc";
 

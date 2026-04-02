@@ -35,6 +35,7 @@ export interface ProductsShowcasePanelItem {
   collectionSlug: IzdeliyaCollectionSlug;
   title: string;
   subtitle: string;
+  description?: string;
   models: Array<{
     productSlug: IzdeliyaProductSlug;
     title: string;
@@ -103,6 +104,7 @@ export const productsShowcaseSeed: ProductsShowcaseSeed = {
     collectionSlug: collection.slug,
     title: collection.name,
     subtitle: collection.tagline,
+    description: collection.description,
     models: (productsByCollection.get(collection.slug) ?? []).map((product) => ({
       productSlug: product.slug,
       title: product.name,

@@ -53,7 +53,7 @@ const launchCollections: Collection[] = [
     id: "lc1",
     slug: "bollards-core",
     name: "Bollards Core",
-    tagline: "Стартовая линейка боллардов для частных и коммерческих объектов",
+    tagline: "Мягкая навигация в пространстве",
     description:
       "Фокусная коллекция первого релиза: 400 / 600 Cast / 600 Natural / 800. Единая световая логика, совместимые сценарии применения, прозрачная ценовая структура.",
     coverImage: { src: "/placeholder.svg", alt: "Коллекция Bollards Core" },

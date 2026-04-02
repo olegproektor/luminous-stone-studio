@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useCallback } from "react";
+﻿import { useState, useEffect, useCallback, useRef, useLayoutEffect } from "react";
 import { Menu, X, Sun, Moon, ChevronRight, ArrowRight, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "next-themes";
@@ -226,7 +226,12 @@ const Header = () => {
   const [isWideDesktop, setIsWideDesktop] = useState(false);
   const [canShowDesktopActions, setCanShowDesktopActions] = useState(false);
   const [isCompactDesktop, setIsCompactDesktop] = useState(false);
+  const [homeReturnAnimating, setHomeReturnAnimating] = useState(false);
+  const suppressScrollSyncRef = useRef(false);
   const location = useLocation();
+  const previousPathnameRef = useRef<string | null>(
+    typeof window !== "undefined" ? window.sessionStorage.getItem("header-last-pathname") : null
+  );
   const { resolvedTheme, setTheme } = useTheme();
   const currentTheme = resolvedTheme ?? "light";
   const isHomePage = location.pathname === navPaths.home;
@@ -234,11 +239,38 @@ const Header = () => {
   const headerCompression = isHomePage ? scrollCompression : 1;
   const isTransparent = isHomePage ? !headerScrolled : false;
   const nonHomeThickened = !isHomePage && scrolled;
+  const previousPathname = previousPathnameRef.current;
+  const shouldAnimateHomeReturn =
+    location.pathname === navPaths.home &&
+    previousPathname !== null &&
+    previousPathname !== navPaths.home;
+
+  useLayoutEffect(() => {
+    if (!shouldAnimateHomeReturn) {
+      suppressScrollSyncRef.current = false;
+      setHomeReturnAnimating(false);
+      return;
+    }
+
+    suppressScrollSyncRef.current = true;
+    setScrolled(false);
+    setScrollCompression(0);
+    setHomeReturnAnimating(true);
+
+    const firstFrame = window.requestAnimationFrame(() => {
+      const secondFrame = window.requestAnimationFrame(() => {
+        setHomeReturnAnimating(false);
+        suppressScrollSyncRef.current = false;
+      });
+
+      return () => window.cancelAnimationFrame(secondFrame);
+    });
+
+    return () => window.cancelAnimationFrame(firstFrame);
+  }, [location.pathname]);
 
   useEffect(() => {
     let rafId: number | null = null;
-    // One-step wheel behavior: trigger the whole header animation
-    // as soon as the page leaves the top.
     const ANIMATION_TRIGGER = 1;
 
     const onScroll = () => {
@@ -246,6 +278,11 @@ const Header = () => {
         return;
       }
       rafId = window.requestAnimationFrame(() => {
+        if (suppressScrollSyncRef.current) {
+          rafId = null;
+          return;
+        }
+
         const y = window.scrollY;
         const isAnimated = y >= ANIMATION_TRIGGER;
         const compression = isAnimated ? 1 : 0;
@@ -254,6 +291,7 @@ const Header = () => {
         rafId = null;
       });
     };
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
@@ -279,6 +317,17 @@ const Header = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!shouldAnimateHomeReturn) {
+      setHomeReturnAnimating(false);
+    }
+
+    previousPathnameRef.current = location.pathname;
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem("header-last-pathname", location.pathname);
+    }
+  }, [shouldAnimateHomeReturn, location.pathname]);
+
   // Close mobile on route change
   useEffect(() => {
     setMobileOpen(false);
@@ -295,14 +344,12 @@ const Header = () => {
     setMegaOpen((current) => (current === label ? null : label));
   }, []);
 
-  const productsNavItem = navItems.find(n => n.label === "Изделия" && n.children);
-  const megaItems = productsNavItem?.children ?? [];
   const desktopNavGap = isCompactDesktop ? 14 : 18;
   const desktopNavFinalOffsetX = isWideDesktop ? 273 : isCompactDesktop ? 129 : 110;
-  const desktopNavCenterOffsetX = headerScrolled || !isHomePage ? desktopNavFinalOffsetX : 0;
+  const desktopNavCenterOffsetX =
+    headerScrolled || !isHomePage || shouldAnimateHomeReturn || homeReturnAnimating ? desktopNavFinalOffsetX : 0;
   const desktopNavShiftX = 0;
   const desktopNavShiftY = isHomePage ? (6 + headerCompression * -6) : 0;
-  const shouldCenterDesktopNav = true;
 
   const renderDesktopNavItems = () =>
     navItems.map((item) => {
@@ -448,23 +495,23 @@ const Header = () => {
                 headerScrolled ? "text-[0.8rem] md:text-[0.95rem]" : "text-[0.88rem] md:text-[1.05rem]"
               )}
             >
-              КАМЕНЬ И СВЕТ
+              Форма Света
             </span>
           </Link>
 
           {/* Desktop Nav */}
           <nav
             className={cn(
-              "hidden xl:flex items-center shrink-0 menu-main transition-[transform,left] ease-[cubic-bezier(0.3,0,0.15,1)]",
+              "hidden xl:flex items-center shrink-0 menu-main ease-[cubic-bezier(0.3,0,0.15,1)]",
               "xl:absolute xl:left-1/2",
-              "duration-[242ms]"
+              isHomePage ? "transition-[transform,left] duration-[242ms]" : "transition-none"
             )}
             style={{
               gap: `${desktopNavGap}px`,
-              transform: `translate3d(calc(-50% + ${desktopNavShiftX}px), calc(-50% + ${desktopNavShiftY}px), 0)`,
+              transform: `translate3d(calc(-50% + ${0}px), calc(-50% + ${desktopNavShiftY}px), 0)`,
               left: `calc(50% + ${desktopNavCenterOffsetX}px)`,
               transitionDelay: isHomePage && headerScrolled ? "120ms" : "0ms",
-              transitionDuration: isHomePage ? "910ms" : "242ms",
+              transitionDuration: isHomePage ? "910ms" : "0ms",
               transitionTimingFunction: "cubic-bezier(0.3, 0, 0.15, 1)",
               top: "50%",
             }}
@@ -489,13 +536,16 @@ const Header = () => {
         </div>
 
         {/* Mega Menu */}
-        {megaItems.length > 0 && (
-          <MegaMenu
-            items={megaItems}
-            isOpen={megaOpen === productsNavItem?.label}
-            onClose={() => setMegaOpen(null)}
-          />
-        )}
+        {navItems
+          .filter((item) => item.children && item.children.length > 0)
+          .map((item) => (
+            <MegaMenu
+              key={item.label}
+              items={item.children ?? []}
+              isOpen={megaOpen === item.label}
+              onClose={() => setMegaOpen(null)}
+            />
+          ))}
       </header>
 
       {/* Mobile Off-Canvas */}

@@ -9,6 +9,7 @@ export const routes = {
   collectionProductMengir: "/izdeliya/vozduh/mengir",
   collectionProductFokus: "/izdeliya/zemlya/fokus",
   collectionProductMayak: "/izdeliya/zemlya/mayak",
+  collectionProductPattern: "/izdeliya/:collectionSlug/:productSlug",
   collectionProduct: (collectionSlug: string, productSlug: string) =>
     `/izdeliya/${collectionSlug}/${productSlug}`,
   materials: "/izdeliya/faktura",

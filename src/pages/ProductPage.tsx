@@ -1,66 +1,59 @@
-import { useParams, Link } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import PageLayout from "@/components/layout/PageLayout";
 import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
-import Breadcrumbs from "@/components/ui/breadcrumbs";
-import TrustProofStrip from "@/components/shared/TrustProofStrip";
-import ProductHeroModule from "@/components/products/modules/ProductHeroModule";
-import ProductTechModule from "@/components/products/modules/ProductTechModule";
-import ProductApplicationsModule from "@/components/products/modules/ProductApplicationsModule";
-import ProductRelatedModule from "@/components/products/modules/ProductRelatedModule";
-import { getProductBySlug, getRelatedProducts } from "@/data/products";
-import { navPaths } from "@/lib/route-helpers";
-import { resolveProductCta } from "@/lib/product-cta";
-import { getDetailMetadata } from "@/lib/metadata-pipeline";
-import { useAnalyticsView } from "@/hooks/useAnalyticsView";
+import { getIzdeliyaProductBySlug } from "@/data/izdeliya-architecture.seed";
+import { buildPath, navPaths } from "@/lib/route-helpers";
+
+const LegacyProductFallback = ({ productName }: { productName?: string }) => (
+  <>
+    <Section>
+      <div className="mx-auto max-w-3xl border border-border bg-secondary/30 px-6 py-14 text-center md:px-10">
+        <p className="font-body text-xs uppercase tracking-brand-wide text-muted-foreground">Маршрут-алиас</p>
+        <h1 className="mt-4 font-display text-3xl text-foreground md:text-4xl">
+          Изделие доступно в основном каталоге
+        </h1>
+        <p className="mt-4 font-body text-sm leading-relaxed text-muted-foreground md:text-base">
+          {productName
+            ? `Решение ${productName} ведётся через canonical-раздел «Изделия».`
+            : "Старый маршрут product detail больше не используется как самостоятельная публичная страница."}{" "}
+          Перейдите в основной каталог, чтобы открыть актуальные коллекции и решения.
+        </p>
+      </div>
+    </Section>
+
+    <CTASection
+      title="Продолжить в каталоге"
+      subtitle="Все актуальные решения и коллекции теперь собраны внутри canonical-раздела «Изделия»."
+      primaryCta={{ label: "Открыть каталог", href: navPaths.products }}
+      secondaryCta={{ label: "Обсудить проект", href: navPaths.requestProject }}
+    />
+  </>
+);
 
 const ProductPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const product = slug ? getProductBySlug(slug) : undefined;
+  const canonicalProduct = slug ? getIzdeliyaProductBySlug(slug) : undefined;
 
-  if (!product) {
-    return (
-      <PageLayout title="Продукт не найден — STŌN">
-        <Section>
-          <div className="text-center py-20">
-            <h1 className="font-display text-3xl text-foreground mb-4">Продукт не найден</h1>
-            <Link to={navPaths.products} className="font-body text-sm text-muted-foreground underline">
-              Вернуться в каталог
-            </Link>
-          </div>
-        </Section>
-      </PageLayout>
-    );
+  if (canonicalProduct) {
+    return <Navigate to={buildPath.collectionProduct(canonicalProduct.collectionSlug, canonicalProduct.slug)} replace />;
   }
 
-  const related = getRelatedProducts(product);
-  const cta = resolveProductCta({ productSlug: product.slug, audience: "b2c" });
-  const meta = getDetailMetadata({ type: "product", value: product });
-  useAnalyticsView({ type: "detail", entity: "product", slug: product.slug });
-
   return (
-    <PageLayout title={meta.title} description={meta.description}>
-      <div className="container-brand px-6 md:px-12 lg:px-24 pt-6">
-        <Breadcrumbs
-          items={[
-            { label: "Каталог", href: navPaths.products },
-            { label: product.name },
-          ]}
-        />
-      </div>
-
-      <ProductHeroModule product={product} cta={cta} />
-      <TrustProofStrip />
-      <ProductTechModule product={product} />
-      <ProductApplicationsModule product={product} />
-      <ProductRelatedModule products={related} />
-
-      <CTASection
-        title="Обсудим ваш проект"
-        subtitle="Подберём оптимальное решение под задачи вашего объекта."
-        primaryCta={{ label: "Запросить проект", href: navPaths.requestProject }}
-        secondaryCta={{ label: "Позвонить", href: "tel:+74951234567" }}
-      />
+    <PageLayout
+      title="Изделие доступно в каталоге — Форма Света"
+      description="Старый маршрут товара переведён в alias-режим. Актуальный каталог доступен в разделе «Изделия»."
+      noIndex
+      suppressCanonical
+    >
+      <Section>
+        <div className="pt-10 text-center">
+          <Link to={navPaths.products} className="font-body text-sm text-muted-foreground underline">
+            Вернуться в каталог
+          </Link>
+        </div>
+      </Section>
+      <LegacyProductFallback productName={slug} />
     </PageLayout>
   );
 };

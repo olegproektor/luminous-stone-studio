@@ -4,7 +4,7 @@ import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
 import CollectionCard from "@/components/ui/collection-card";
 import TrustProofStrip from "@/components/shared/TrustProofStrip";
-import { collections } from "@/data/collections";
+import { izdeliyaCollectionsSeed } from "@/data/izdeliya-architecture.seed";
 import { navPaths } from "@/lib/route-helpers";
 import { collectionsIndexSeed } from "@/data/collections-index.seed";
 import { getListMetadata } from "@/lib/metadata-pipeline";
@@ -12,14 +12,10 @@ import { useAnalyticsView } from "@/hooks/useAnalyticsView";
 
 const CollectionsPage = () => {
   const meta = getListMetadata("collections");
-  const visibleCollections = collections.filter((item) => item.launchTier === "primary" && !item.isHidden);
   useAnalyticsView({ type: "list", entity: "collection" });
 
   return (
-    <PageLayout
-      title={meta.title}
-      description={meta.description}
-    >
+    <PageLayout title={meta.title} description={meta.description}>
       <PageHero
         eyebrow={collectionsIndexSeed.eyebrow}
         title={collectionsIndexSeed.title}
@@ -28,8 +24,8 @@ const CollectionsPage = () => {
 
       <Section>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-          {visibleCollections.map((col) => (
-            <CollectionCard key={col.id} collection={col} />
+          {izdeliyaCollectionsSeed.map((collection) => (
+            <CollectionCard key={collection.slug} collection={collection} />
           ))}
         </div>
       </Section>
@@ -39,9 +35,9 @@ const CollectionsPage = () => {
       <CTASection
         eyebrow="Не нашли подходящее?"
         title="Обсудим ваш проект"
-        subtitle="Мы проектируем кастомные решения под задачи любого масштаба."
+        subtitle="Подберём коллекцию, сценарий света и состав моделей под задачи вашего объекта."
         primaryCta={{ label: "Запросить проект", href: navPaths.requestProject }}
-        secondaryCta={{ label: "Смотреть продукты", href: navPaths.products }}
+        secondaryCta={{ label: "Смотреть каталог", href: navPaths.products }}
       />
     </PageLayout>
   );

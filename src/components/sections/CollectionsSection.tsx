@@ -1,12 +1,10 @@
 import CollectionCard from "@/components/ui/collection-card";
-import { collections } from "@/data/collections";
+import { izdeliyaCollectionsSeed } from "@/data/izdeliya-architecture.seed";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { navPaths } from "@/lib/route-helpers";
 
 const CollectionsSection = () => {
-  const featuredCollections = collections.filter((item) => item.launchTier === "primary" && !item.isHidden);
-
   return (
     <section className="section-padding bg-secondary">
       <div className="container-brand">
@@ -16,7 +14,7 @@ const CollectionsSection = () => {
               Коллекции
             </p>
             <h2 className="font-display text-3xl md:text-5xl font-light text-foreground leading-tight">
-              Линейки продуктов
+              Линейки изделий
             </h2>
           </div>
           <Link
@@ -28,8 +26,8 @@ const CollectionsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-          {featuredCollections.map((c) => (
-            <CollectionCard key={c.id} collection={c} />
+          {izdeliyaCollectionsSeed.map((collection) => (
+            <CollectionCard key={collection.slug} collection={collection} />
           ))}
         </div>
       </div>
