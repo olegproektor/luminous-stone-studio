@@ -22,7 +22,7 @@ const ProjectCard = ({ project, className = "" }: ProjectCardProps) => {
       to={buildPath.project(project.slug)}
       className={`group block ${className}`}
     >
-      <div className="relative aspect-[4/3] bg-secondary overflow-hidden mb-4">
+      <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-[var(--radius-md)] bg-secondary">
         <img
           src={project.coverImage.src}
           alt={project.coverImage.alt}

@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import type { CTA } from "@/types";
 
 interface PageHeroProps {
@@ -9,10 +10,6 @@ interface PageHeroProps {
   compact?: boolean;
 }
 
-/**
- * Reusable hero section for all pages.
- * Supports full-height (landing) and compact (inner pages) modes.
- */
 const PageHero = ({
   eyebrow,
   title,
@@ -21,31 +18,22 @@ const PageHero = ({
   backgroundImage,
   compact = true,
 }: PageHeroProps) => {
-  const hasImage = !!backgroundImage;
+  const hasImage = Boolean(backgroundImage);
 
   return (
-    <section
-      className={`relative flex items-end ${compact ? "py-20 md:py-28" : "min-h-[62vh] md:min-h-[72vh] xl:min-h-[80vh]"}`}
-    >
+    <section className={`relative flex items-end ${compact ? "py-20 md:py-28" : "min-h-[62vh] md:min-h-[72vh] xl:min-h-[80vh]"}`}>
       {hasImage && (
         <div className="absolute inset-0">
-          <img
-            src={backgroundImage}
-            alt=""
-            className="w-full h-full object-cover"
-            loading="eager"
-          />
+          <img src={backgroundImage} alt="" className="h-full w-full object-cover" loading="eager" />
           <div className="absolute inset-0 bg-gradient-to-r from-foreground/70 via-foreground/40 to-transparent" />
         </div>
       )}
 
-      <div
-        className={`relative z-10 container-brand px-6 md:px-12 lg:px-24 ${compact ? "" : "pb-14 md:pb-8 xl:pb-0"}`}
-      >
+      <div className={`container-brand relative z-10 px-6 md:px-12 lg:px-24 ${compact ? "" : "pb-14 md:pb-8 xl:pb-0"}`}>
         <div className="max-w-2xl">
           {eyebrow && (
             <p
-              className={`text-sm font-body font-medium tracking-[0.15em] uppercase mb-4 ${
+              className={`mb-4 text-sm font-body font-medium uppercase tracking-[0.15em] ${
                 hasImage ? "text-background/60" : "text-muted-foreground"
               }`}
             >
@@ -53,7 +41,7 @@ const PageHero = ({
             </p>
           )}
           <h1
-            className={`font-display text-3xl md:text-5xl lg:text-6xl font-light leading-tight mb-4 ${
+            className={`mb-4 font-display text-3xl font-light leading-tight md:text-5xl lg:text-6xl ${
               hasImage ? "text-background" : "text-foreground"
             }`}
           >
@@ -61,7 +49,7 @@ const PageHero = ({
           </h1>
           {subtitle && (
             <p
-              className={`font-body text-base md:text-lg leading-relaxed max-w-lg ${
+              className={`max-w-lg font-body text-base leading-relaxed md:text-lg ${
                 hasImage ? "text-background/70" : "text-muted-foreground"
               }`}
             >
@@ -69,23 +57,16 @@ const PageHero = ({
             </p>
           )}
           {ctas && ctas.length > 0 && (
-            <div className="flex flex-col sm:flex-row gap-4 mt-8">
-              {ctas.map((cta, i) => (
-                <a
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+              {ctas.map((cta, index) => (
+                <Button
                   key={cta.href}
-                  href={cta.href}
-                  className={`inline-flex items-center justify-center text-sm font-body font-medium tracking-wide px-8 py-3.5 transition-colors duration-200 ${
-                    i === 0
-                      ? hasImage
-                        ? "bg-background text-foreground hover:bg-background/90"
-                        : "bg-primary text-primary-foreground hover:bg-charcoal-light"
-                      : hasImage
-                        ? "border border-background/40 text-background hover:bg-background/10"
-                        : "border border-border text-foreground hover:bg-secondary"
-                  }`}
+                  asChild
+                  variant={index === 0 ? (hasImage ? "siteInverse" : "sitePrimary") : (hasImage ? "siteInverseOutline" : "siteOutline")}
+                  size="site"
                 >
-                  {cta.label}
-                </a>
+                  <a href={cta.href}>{cta.label}</a>
+                </Button>
               ))}
             </div>
           )}

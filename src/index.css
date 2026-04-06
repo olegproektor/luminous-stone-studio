@@ -67,7 +67,11 @@
     --input: 36 12% 87%;
     --ring: 25 12% 12%;
 
-    --radius: 0px;
+    --radius: 6px;
+    --radius-none: 0px;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
 
     /* Brand tokens */
     --stone: 34 18% 58%;
@@ -91,6 +95,11 @@
     --accent-soft: 35 24% 82%;
     --ghost-border: 30 10% 42%;
     --ambient-shadow-rgb: 34 28 18;
+    --hero-overlay: 24 8% 8%;
+    --hero-surface: 26 9% 12%;
+    --hero-line: 33 14% 34%;
+    --hero-text: 40 30% 96%;
+    --hero-text-muted: 34 16% 73%;
 
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-body: 'Roboto', system-ui, sans-serif;
@@ -139,6 +148,11 @@
     --accent-soft: 43 45% 27%;
     --ghost-border: 30 5% 53%;
     --ambient-shadow-rgb: 0 0 0;
+    --hero-overlay: 24 8% 8%;
+    --hero-surface: 26 9% 12%;
+    --hero-line: 33 14% 34%;
+    --hero-text: 40 30% 96%;
+    --hero-text-muted: 34 16% 73%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -207,10 +221,27 @@
     background: linear-gradient(180deg, hsl(var(--bg-float) / 0.72), hsl(var(--bg-surface) / 0.68));
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius-lg);
   }
 
   .ghost-outline {
     border: 1px solid hsl(var(--ghost-border) / 0.15);
+  }
+
+  .radius-none {
+    border-radius: var(--radius-none);
+  }
+
+  .radius-control {
+    border-radius: var(--radius-sm);
+  }
+
+  .radius-panel {
+    border-radius: var(--radius-md);
+  }
+
+  .radius-float {
+    border-radius: var(--radius-lg);
   }
 
   .ambient-occlusion {

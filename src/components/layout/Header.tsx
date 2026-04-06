@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { headerNavigation } from "@/config/navigation.config";
 import { navPaths } from "@/lib/route-helpers";
+import { buttonVariants } from "@/components/ui/button";
 
 /* ─── Navigation Data ─── */
 interface SubItem {
@@ -50,22 +51,22 @@ const MegaMenu = ({
                 to={item.href}
                 onClick={onClose}
                 className={cn(
-                  "group p-5 transition-all duration-300 hover:bg-white/[0.04]",
+                  "group p-5 transition-all duration-300 hover:bg-[hsl(var(--hero-surface)/0.2)]",
                   isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"
                 )}
                 style={{
                   transitionDelay: isOpen ? `${420 + i * 120}ms` : "0ms",
                 }}
               >
-                <span className="relative inline-block text-sm font-body font-medium text-white/88 transition-[color] duration-300 group-hover:text-[#e2c36a] after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:w-full after:h-px after:bg-current after:origin-center after:scale-x-0 after:[transition:transform_1000ms_cubic-bezier(0.77,0,0.175,1)] group-hover:after:scale-x-100">
+                <span className="relative inline-block text-sm font-body font-medium text-[hsl(var(--hero-text))] transition-[color] duration-300 group-hover:text-[hsl(var(--accent-light))] after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:w-full after:h-px after:bg-current after:origin-center after:scale-x-0 after:[transition:transform_1000ms_cubic-bezier(0.77,0,0.175,1)] group-hover:after:scale-x-100">
                   {item.label}
                 </span>
                 {item.description && (
-                  <span className="block text-xs font-body text-white/52 mt-1.5 leading-relaxed">
+                  <span className="mt-1.5 block text-xs font-body leading-relaxed text-[hsl(var(--hero-text-muted))]">
                     {item.description}
                   </span>
                 )}
-                <span className="flex items-center gap-1 text-[10px] font-body font-medium tracking-brand-wide uppercase text-white/0 group-hover:text-[#d7bc72] mt-3 transition-all duration-300">
+                <span className="mt-3 flex items-center gap-1 text-[10px] font-body font-medium uppercase tracking-brand-wide text-transparent transition-all duration-300 group-hover:text-[hsl(var(--accent-light))]">
                   <ArrowRight size={10} className="transition-transform duration-300 group-hover:translate-x-0.5" />
                   Перейти
                 </span>
@@ -101,7 +102,7 @@ const MobileMenu = ({
   return (
     <div
       className={cn(
-        "fixed inset-0 z-50 bg-[rgba(15,15,14,0.92)] backdrop-blur-[20px] transition-transform duration-700 ease-[cubic-bezier(0.77,0,0.175,1)]",
+        "fixed inset-0 z-50 bg-[hsl(var(--hero-overlay)/0.92)] backdrop-blur-[20px] transition-transform duration-700 ease-[cubic-bezier(0.77,0,0.175,1)]",
         isOpen ? "translate-x-0 pointer-events-auto" : "translate-x-full pointer-events-none"
       )}
       aria-hidden={!isOpen}
@@ -110,7 +111,7 @@ const MobileMenu = ({
         <button
           onClick={onClose}
           aria-label="Закрыть меню"
-          className="absolute right-4 top-6 z-20 p-2 text-white/90 hover:text-white transition-colors"
+          className="absolute right-4 top-6 z-20 p-2 text-[hsl(var(--hero-text-muted))] transition-colors hover:text-[hsl(var(--hero-text))]"
         >
           <X size={22} />
         </button>
@@ -131,20 +132,20 @@ const MobileMenu = ({
                 {item.children ? (
                   <button
                     onClick={() => setDrillDown(item.label)}
-                    className="flex w-full items-center justify-between border-b border-white/10 py-4 text-left"
+                    className="flex w-full items-center justify-between border-b border-[hsl(var(--hero-line)/0.35)] py-4 text-left"
                   >
-                    <span className="text-sm font-body font-medium uppercase tracking-[0.08em] text-white">
+                    <span className="text-sm font-body font-medium uppercase tracking-[0.08em] text-[hsl(var(--hero-text))]">
                       {item.label}
                     </span>
-                    <ChevronRight size={14} className="text-white/60" />
+                    <ChevronRight size={14} className="text-[hsl(var(--hero-text-muted))]" />
                   </button>
                 ) : (
                   <Link
                     to={item.href}
                     onClick={onClose}
-                    className="flex w-full items-center justify-between border-b border-white/10 py-4"
+                    className="flex w-full items-center justify-between border-b border-[hsl(var(--hero-line)/0.35)] py-4"
                   >
-                    <span className="text-sm font-body font-medium uppercase tracking-[0.08em] text-white">
+                    <span className="text-sm font-body font-medium uppercase tracking-[0.08em] text-[hsl(var(--hero-text))]">
                       {item.label}
                     </span>
                   </Link>
@@ -155,7 +156,7 @@ const MobileMenu = ({
             <div className="mt-8 space-y-5">
               <button
                 onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
-                className="flex items-center gap-3 text-xs font-body font-medium uppercase tracking-[0.08em] text-white/75"
+                className="flex items-center gap-3 text-xs font-body font-medium uppercase tracking-[0.08em] text-[hsl(var(--hero-text-muted))]"
               >
                 {currentTheme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
                 {currentTheme === "dark" ? "Светлая тема" : "Тёмная тема"}
@@ -163,7 +164,7 @@ const MobileMenu = ({
               <Link
                 to={navPaths.requestProject}
                 onClick={onClose}
-                className="inline-flex items-center justify-center text-xs font-body font-medium tracking-[0.08em] uppercase text-white border border-white/14 bg-white/[0.03] px-6 py-3 transition-colors hover:bg-white/10 hover:border-[#d8b24a]/40"
+                className={cn(buttonVariants({ variant: "siteInverseOutline", size: "site" }), "px-6 py-3 text-xs tracking-[0.08em]")}
               >
                 Обсудить проект
               </Link>
@@ -175,13 +176,13 @@ const MobileMenu = ({
           <div
             key={item.label}
             className={cn(
-              "absolute inset-0 bg-[rgba(22,21,20,0.97)] px-6 py-20 overflow-y-auto transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)]",
+              "absolute inset-0 bg-[hsl(var(--hero-surface)/0.97)] px-6 py-20 overflow-y-auto transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)]",
               drillDown === item.label ? "translate-x-0" : "translate-x-full pointer-events-none"
             )}
           >
             <button
               onClick={() => setDrillDown(null)}
-              className="mb-6 flex items-center gap-2 text-xs font-body font-medium tracking-[0.08em] uppercase text-white/52"
+              className="mb-6 flex items-center gap-2 text-xs font-body font-medium uppercase tracking-[0.08em] text-[hsl(var(--hero-text-muted))]"
             >
               <ChevronRight size={12} className="rotate-180" />
               Назад
@@ -190,23 +191,23 @@ const MobileMenu = ({
             <button
               onClick={onClose}
               aria-label="Закрыть раздел"
-              className="absolute right-4 top-6 p-2 text-white/65 hover:text-white transition-colors"
+              className="absolute right-4 top-6 p-2 text-[hsl(var(--hero-text-muted))] transition-colors hover:text-[hsl(var(--hero-text))]"
             >
               <X size={20} />
             </button>
 
-            <h3 className="mb-6 font-display text-xl font-light text-white">{item.label}</h3>
+            <h3 className="mb-6 font-display text-xl font-light text-[hsl(var(--hero-text))]">{item.label}</h3>
             {item.children!.map((sub, i) => (
               <Link
                 key={sub.href}
                 to={sub.href}
                 onClick={onClose}
-                className="block border-b border-white/10 py-3.5 opacity-0 animate-[slideInRight_0.3s_ease-out_forwards]"
+                className="block border-b border-[hsl(var(--hero-line)/0.35)] py-3.5 opacity-0 animate-[slideInRight_0.3s_ease-out_forwards]"
                 style={{ animationDelay: `${70 + i * 40}ms` }}
               >
-                <span className="text-sm font-body font-medium text-white">{sub.label}</span>
+                <span className="text-sm font-body font-medium text-[hsl(var(--hero-text))]">{sub.label}</span>
                 {sub.description && (
-                  <span className="mt-1 block text-xs text-white/52">{sub.description}</span>
+                  <span className="mt-1 block text-xs text-[hsl(var(--hero-text-muted))]">{sub.description}</span>
                 )}
               </Link>
             ))}
@@ -348,7 +349,7 @@ const Header = () => {
   const desktopNavFinalOffsetX = isWideDesktop ? 273 : isCompactDesktop ? 129 : 110;
   const desktopNavCenterOffsetX =
     headerScrolled || !isHomePage || shouldAnimateHomeReturn || homeReturnAnimating ? desktopNavFinalOffsetX : 0;
-  const desktopNavShiftX = 0;
+  const desktopNavShiftX = desktopNavCenterOffsetX;
   const desktopNavShiftY = isHomePage ? (6 + headerCompression * -6) : 0;
 
   const renderDesktopNavItems = () =>
@@ -365,10 +366,12 @@ const Header = () => {
             className={cn(
               "relative whitespace-nowrap font-body font-medium tracking-[0.08em] uppercase py-4 transition-all duration-[600ms] ease-[cubic-bezier(0.77,0,0.175,1)]",
               isCompactDesktop ? "text-[10px]" : "text-[11px]",
-              "before:content-[''] before:absolute before:left-0 before:top-0 before:w-full before:border-t-[2px] before:border-[#967d5e] before:origin-center before:scale-x-0 before:[transition:transform_1000ms_cubic-bezier(0.77,0,0.175,1)]",
-              "after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:border-b-[2px] after:border-[#967d5e] after:origin-center after:scale-x-0 after:[transition:transform_1000ms_cubic-bezier(0.77,0,0.175,1)]",
+              "before:content-[''] before:absolute before:left-0 before:top-0 before:w-full before:border-t-[2px] before:border-[hsl(var(--accent-light))] before:origin-center before:scale-x-0 before:[transition:transform_1000ms_cubic-bezier(0.77,0,0.175,1)]",
+              "after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:border-b-[2px] after:border-[hsl(var(--accent-light))] after:origin-center after:scale-x-0 after:[transition:transform_1000ms_cubic-bezier(0.77,0,0.175,1)]",
               "hover:before:scale-x-100 hover:after:scale-x-100 group-hover:before:scale-x-100 group-hover:after:scale-x-100",
-              isActive ? "text-white before:scale-x-100 after:scale-x-100" : "text-white hover:text-[#d5cbbf]"
+              isActive
+                ? "text-[hsl(var(--hero-text))] before:scale-x-100 after:scale-x-100"
+                : "text-[hsl(var(--hero-text-muted))] hover:text-[hsl(var(--hero-text))]"
             )}
           >
             {item.label}
@@ -384,7 +387,7 @@ const Header = () => {
                 event.stopPropagation();
                 handleMegaToggle(item.label);
               }}
-              className="mt-[1px] p-0.5 leading-none text-white/80 transition-colors duration-200 hover:text-white"
+              className="mt-[1px] p-0.5 leading-none text-[hsl(var(--hero-text-muted))] transition-colors duration-200 hover:text-[hsl(var(--hero-text))]"
             >
               <ChevronDown
                 size={12}
@@ -419,7 +422,7 @@ const Header = () => {
           isCompactDesktop ? "p-1.5" : "p-2",
           headerScrolled ? "opacity-100 translate-x-0" : "opacity-0 pointer-events-none translate-x-2",
           isTransparent
-            ? "text-white/60 hover:text-white"
+            ? "text-[hsl(var(--hero-text-muted))] hover:text-[hsl(var(--hero-text))]"
             : "text-muted-foreground hover:text-foreground"
         )}
         aria-label="Переключить тему"
@@ -429,6 +432,7 @@ const Header = () => {
       <Link
         to={navPaths.requestProject}
         className={cn(
+          buttonVariants({ variant: isTransparent ? "siteInverseOutline" : "sitePrimary", size: "site" }),
           `font-body font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-[800ms] ${headerScrolled ? 'ease-[cubic-bezier(0.7,0,1,0.5)]' : 'ease-linear'}`,
           isCompactDesktop ? "text-[10px]" : "text-[11px]",
           headerScrolled
@@ -436,9 +440,6 @@ const Header = () => {
                 ? "opacity-100 max-w-[170px] px-4 py-2"
                 : "opacity-100 max-w-[200px] px-5 2xl:px-7 py-2.5")
             : "opacity-0 max-w-0 overflow-hidden px-0 py-0 pointer-events-none",
-          isTransparent
-            ? "text-white border border-white/25 hover:bg-white/8 hover:border-white/40"
-            : "text-primary-foreground bg-primary hover:bg-charcoal-light"
         )}
       >
         Обсудить проект
@@ -454,7 +455,7 @@ const Header = () => {
            "transition-[background-color,backdrop-filter,box-shadow,border-color] duration-[2520ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
           isTransparent
             ? "bg-transparent border-b border-transparent"
-            : "bg-[rgba(15,15,14,0.58)] backdrop-blur-[20px] border-b border-transparent shadow-[0_0_40px_rgba(0,0,0,0.58)]"
+            : "bg-[hsl(var(--hero-overlay)/0.58)] backdrop-blur-[20px] border-b border-transparent shadow-[0_0_40px_rgba(0,0,0,0.58)]"
         )}
         style={{
           transitionDuration: "2520ms",
@@ -491,7 +492,7 @@ const Header = () => {
           >
             <span
               className={cn(
-                "block font-display uppercase tracking-[0.16em] text-white transition-[font-size,line-height] duration-[2520ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+                "block font-display uppercase tracking-[0.16em] text-[hsl(var(--hero-text))] transition-[font-size,line-height] duration-[2520ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
                 headerScrolled ? "text-[0.8rem] md:text-[0.95rem]" : "text-[0.88rem] md:text-[1.05rem]"
               )}
             >
@@ -504,13 +505,13 @@ const Header = () => {
             className={cn(
               "hidden xl:flex items-center shrink-0 menu-main ease-[cubic-bezier(0.3,0,0.15,1)]",
               "xl:absolute xl:left-1/2",
-              isHomePage ? "transition-[transform,left] duration-[242ms]" : "transition-none"
+              isHomePage ? "transition-transform duration-[242ms]" : "transition-none"
             )}
             style={{
               gap: `${desktopNavGap}px`,
-              transform: `translate3d(calc(-50% + ${0}px), calc(-50% + ${desktopNavShiftY}px), 0)`,
-              left: `calc(50% + ${desktopNavCenterOffsetX}px)`,
-              transitionDelay: isHomePage && headerScrolled ? "120ms" : "0ms",
+              transform: `translate3d(calc(-50% + ${desktopNavShiftX}px), calc(-50% + ${desktopNavShiftY}px), 0)`,
+              left: "50%",
+              transitionDelay: "0ms",
               transitionDuration: isHomePage ? "910ms" : "0ms",
               transitionTimingFunction: "cubic-bezier(0.3, 0, 0.15, 1)",
               top: "50%",
@@ -527,7 +528,7 @@ const Header = () => {
             onClick={() => setMobileOpen(true)}
             className={cn(
               "xl:hidden p-2 transition-colors duration-500",
-              isTransparent ? "text-white" : "text-foreground"
+              isTransparent ? "text-[hsl(var(--hero-text))]" : "text-foreground"
             )}
             aria-label="Открыть меню"
           >

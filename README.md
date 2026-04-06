@@ -109,6 +109,9 @@ src/
 
 Контент хранится в seed/data слое и может быть заменён на CMS без поломки UI-контрактов.
 
+Подробная схема:
+- `CONTENT_ARCHITECTURE.md` — правила разделения `core entities`, `presentation/storytelling` и `layout/config`
+
 Основные источники:
 - `src/data/products.ts` — основная продуктовая база
 - `src/data/collections.ts` — legacy / общие коллекции
@@ -120,7 +123,15 @@ src/
 - `src/data/faq.seed.ts`, `src/data/faq.ts` — FAQ
 - `src/data/legal.seed.ts` — юридические тексты
 - `src/data/company.seed.ts` — данные о компании
-- `src/data/home-layout.seed.ts`, `src/data/trust-content.seed.ts`, `src/data/trust-proofs.seed.ts` — layout и доверительный контент
+- `src/data/product-page-content.seed.ts` — product-page storytelling
+- `src/data/page-content.seed.ts`, `src/data/trust-content.seed.ts`, `src/data/trust-proofs.seed.ts` — editorial / page-level контент
+- `src/data/home-layout.seed.ts` — layout composition
+
+Правило:
+- factual data хранить в `core entity seeds`
+- page storytelling хранить отдельно
+- layout/config не смешивать с factual content
+- публичный контент не хранить напрямую в JSX
 
 ## Изделия, коллекции и модели
 

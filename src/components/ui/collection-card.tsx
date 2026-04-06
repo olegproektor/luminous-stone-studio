@@ -11,8 +11,8 @@ const CollectionCard = ({ collection, className = "" }: CollectionCardProps) => 
   const models = getIzdeliyaProductsByCollection(collection.slug);
 
   return (
-    <Link to={buildPath.collection(collection.slug)} className={`group block relative overflow-hidden ${className}`}>
-      <div className="relative aspect-[3/4] bg-card">
+    <Link to={buildPath.collection(collection.slug)} className={`group block relative overflow-hidden rounded-[var(--radius-md)] ${className}`}>
+      <div className="relative aspect-[3/4] overflow-hidden rounded-[var(--radius-md)] bg-card">
         <img
           src="/placeholder.svg"
           alt={`Коллекция ${collection.name}`}
@@ -29,7 +29,7 @@ const CollectionCard = ({ collection, className = "" }: CollectionCardProps) => 
           </h3>
           <p className="font-body text-xs text-background/50 mt-2 leading-relaxed">{collection.tagline}</p>
           {collection.status === "in-development" && (
-            <p className="mt-4 inline-flex border border-background/30 px-3 py-1 text-[10px] font-body uppercase tracking-brand-wide text-background/80">
+            <p className="mt-4 inline-flex rounded-[var(--radius-sm)] border border-background/30 px-3 py-1 text-[10px] font-body uppercase tracking-brand-wide text-background/80">
               В разработке
             </p>
           )}

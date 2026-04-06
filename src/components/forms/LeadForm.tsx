@@ -1,10 +1,12 @@
 import React, { useState, type FormEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { buttonVariants } from "@/components/ui/button";
 import { trackEvent, type AnalyticsEventName } from "@/lib/analytics";
 import { useUTM } from "@/hooks/use-utm";
 import type { LeadFormField } from "@/types/lead-form-contract";
 import { deliverForm } from "@/lib/form-delivery";
 import type { FormKind } from "@/types/form-delivery";
+import { cn } from "@/lib/utils";
 
 export type FormField = LeadFormField;
 
@@ -265,7 +267,7 @@ const LeadForm = React.forwardRef<HTMLFormElement, LeadFormProps>(({
       <button
         type="submit"
         disabled={status === "submitting" || formData.consent !== "true"}
-        className="mt-6 w-full inline-flex items-center justify-center text-sm font-body font-medium tracking-wide bg-primary text-primary-foreground px-8 py-3.5 hover:bg-charcoal-light transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        className={cn(buttonVariants({ variant: "sitePrimary", size: "site" }), "mt-6 w-full")}
       >
         {status === "submitting" ? "Отправка..." : submitLabel}
       </button>

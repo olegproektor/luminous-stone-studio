@@ -13,6 +13,8 @@ import { getDetailMetadata } from "@/lib/metadata-pipeline";
 import { useAnalyticsView } from "@/hooks/useAnalyticsView";
 import { getIzdeliyaCollectionBySlug, getIzdeliyaProductsByCollection } from "@/data/izdeliya-architecture.seed";
 import { resolveCanonicalCollectionSlug } from "@/config/routes";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import type { Product } from "@/types";
 
 const ProjectDetailPage = () => {
@@ -92,7 +94,7 @@ const ProjectDetailPage = () => {
             <ProjectProductsModule products={usedProducts} />
             <Link
               to={navPaths.requestProject}
-              className="block text-center text-sm font-body font-medium tracking-wide bg-primary text-primary-foreground px-6 py-3.5 hover:bg-charcoal-light transition-colors"
+              className={cn(buttonVariants({ variant: "sitePrimary", size: "site" }), "block text-center")}
             >
               Хочу подобное решение
             </Link>

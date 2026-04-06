@@ -12,6 +12,8 @@ import {
 import { productsShowcaseSeed } from "@/data/products-showcase.seed";
 import { useAnalyticsView } from "@/hooks/useAnalyticsView";
 import { buildPath, navPaths } from "@/lib/route-helpers";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const t = {
   notFoundTitle: "Изделие не найдено",
@@ -99,13 +101,13 @@ const CollectionProductPage = () => {
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <Link
                 to={navPaths.requestProject}
-                className="inline-flex items-center justify-center bg-primary px-8 py-4 text-xs font-body font-medium uppercase tracking-brand text-primary-foreground transition-colors duration-300 hover:bg-charcoal-light"
+                className={cn(buttonVariants({ variant: "sitePrimary", size: "siteLg" }))}
               >
                 {t.discussProject}
               </Link>
               <Link
                 to={navPaths.requestProject}
-                className="inline-flex items-center justify-center border border-border px-8 py-4 text-xs font-body font-medium uppercase tracking-brand text-foreground transition-colors duration-300 hover:bg-secondary"
+                className={cn(buttonVariants({ variant: "siteOutline", size: "siteLg" }))}
               >
                 {t.getSelection}
               </Link>

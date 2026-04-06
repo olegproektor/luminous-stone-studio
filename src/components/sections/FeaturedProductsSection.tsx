@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from 'lucide-react';
+import { buttonVariants } from '@/components/ui/button';
 import { buildPath, navPaths } from "@/lib/route-helpers";
-import { izdeliyaProductsSeed } from "@/data/izdeliya-architecture.seed";
+import { izdeliyaProductsSeed } from '@/data/izdeliya-architecture.seed';
+import { cn } from '@/lib/utils';
 
 const featuredProducts = izdeliyaProductsSeed.slice(0, 4);
 
@@ -20,7 +22,7 @@ const FeaturedProductsSection = () => {
           </div>
           <Link
             to={navPaths.products}
-            className="mt-6 md:mt-0 inline-flex items-center gap-2 text-xs font-body font-medium tracking-brand uppercase text-primary-foreground bg-primary px-8 py-3.5 hover:bg-charcoal-light transition-colors duration-300"
+            className={cn(buttonVariants({ variant: "sitePrimary", size: "site" }), "mt-6 md:mt-0")}
           >
             Смотреть решения <ArrowRight size={14} />
           </Link>

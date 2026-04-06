@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 interface EmptyStateProps {
   icon?: string;
@@ -7,25 +8,15 @@ interface EmptyStateProps {
   action?: { label: string; href: string };
 }
 
-/**
- * Empty state for lists/grids with no items.
- */
 const EmptyState = ({ icon = "∅", title, description, action }: EmptyStateProps) => (
-  <div className="text-center py-16">
-    <span className="text-4xl mb-4 block">{icon}</span>
-    <h3 className="font-display text-xl font-medium text-foreground mb-2">{title}</h3>
-    {description && (
-      <p className="font-body text-sm text-muted-foreground max-w-sm mx-auto mb-6">
-        {description}
-      </p>
-    )}
+  <div className="py-16 text-center">
+    <span className="mb-4 block text-4xl">{icon}</span>
+    <h3 className="mb-2 font-display text-xl font-medium text-foreground">{title}</h3>
+    {description && <p className="mx-auto mb-6 max-w-sm font-body text-sm text-muted-foreground">{description}</p>}
     {action && (
-      <Link
-        to={action.href}
-        className="inline-flex items-center justify-center text-sm font-body font-medium tracking-wide bg-primary text-primary-foreground px-8 py-3 hover:bg-charcoal-light transition-colors"
-      >
-        {action.label}
-      </Link>
+      <Button asChild variant="sitePrimary" size="site">
+        <Link to={action.href}>{action.label}</Link>
+      </Button>
     )}
   </div>
 );

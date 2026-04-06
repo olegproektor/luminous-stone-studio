@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { trackEvent } from "@/lib/analytics";
+import { Button } from "@/components/ui/button";
 import LeadFormWrapper from "./LeadFormWrapper";
 import { requestProjectFinalPreset, requestProjectStep1Fields } from "@/data/lead-form-presets";
 import { deliverForm } from "@/lib/form-delivery";
@@ -156,12 +157,9 @@ const RequestProjectForm = () => {
         ))}
       </div>
 
-      <button
-        onClick={handleNext}
-        className="mt-6 inline-flex items-center justify-center text-sm font-body font-medium tracking-wide bg-primary text-primary-foreground px-8 py-3.5 hover:bg-charcoal-light transition-colors duration-200"
-      >
+      <Button onClick={handleNext} variant="sitePrimary" size="site" className="mt-6">
         Далее →
-      </button>
+      </Button>
     </div>
   );
 };

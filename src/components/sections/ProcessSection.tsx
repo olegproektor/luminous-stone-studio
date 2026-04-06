@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { navPaths } from "@/lib/route-helpers";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const steps = [
   {
@@ -50,7 +52,7 @@ const ProcessSection = () => {
         <div className="mt-12 text-center">
           <Link
             to={navPaths.requestProject}
-            className="inline-flex bg-primary px-10 py-4 text-xs font-body font-medium uppercase tracking-brand text-primary-foreground transition-colors duration-300 hover:bg-charcoal-light"
+            className={cn(buttonVariants({ variant: "sitePrimary", size: "siteLg" }))}
           >
             Начать проект
           </Link>

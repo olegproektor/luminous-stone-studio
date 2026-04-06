@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+
 interface CTASectionProps {
   eyebrow?: string;
   title: string;
@@ -18,13 +20,11 @@ const CTASection = ({
   const isDark = variant === "dark";
 
   return (
-    <section
-      className={`section-padding ${isDark ? "bg-primary grain-overlay" : "bg-background"}`}
-    >
-      <div className="container-brand text-center relative z-10">
+    <section className={`section-padding ${isDark ? "bg-primary grain-overlay" : "bg-background"}`}>
+      <div className="container-brand relative z-10 text-center">
         {eyebrow && (
           <p
-            className={`text-xs font-body font-medium tracking-brand-wide uppercase mb-4 ${
+            className={`mb-4 text-xs font-body font-medium uppercase tracking-brand-wide ${
               isDark ? "text-primary-foreground/40" : "text-muted-foreground"
             }`}
           >
@@ -32,7 +32,7 @@ const CTASection = ({
           </p>
         )}
         <h2
-          className={`font-display text-3xl md:text-5xl font-light max-w-2xl mx-auto mb-6 leading-tight ${
+          className={`mx-auto mb-6 max-w-2xl font-display text-3xl font-light leading-tight md:text-5xl ${
             isDark ? "text-primary-foreground" : "text-foreground"
           }`}
         >
@@ -40,35 +40,21 @@ const CTASection = ({
         </h2>
         {subtitle && (
           <p
-            className={`font-body text-sm max-w-md mx-auto mb-10 ${
+            className={`mx-auto mb-10 max-w-md font-body text-sm ${
               isDark ? "text-primary-foreground/50" : "text-muted-foreground"
             }`}
           >
             {subtitle}
           </p>
         )}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href={primaryCta.href}
-            className={`inline-flex items-center justify-center text-xs font-body font-medium tracking-brand uppercase px-10 py-4 transition-colors duration-300 ${
-              isDark
-                ? "bg-primary-foreground text-primary hover:bg-primary-foreground/90"
-                : "bg-primary text-primary-foreground hover:bg-charcoal-light"
-            }`}
-          >
-            {primaryCta.label}
-          </a>
+        <div className="flex flex-col justify-center gap-4 sm:flex-row">
+          <Button asChild variant={isDark ? "siteInverse" : "sitePrimary"} size="siteLg">
+            <a href={primaryCta.href}>{primaryCta.label}</a>
+          </Button>
           {secondaryCta && (
-            <a
-              href={secondaryCta.href}
-              className={`inline-flex items-center justify-center text-xs font-body font-medium tracking-brand uppercase px-10 py-4 border transition-colors duration-300 ${
-                isDark
-                  ? "border-primary-foreground/20 text-primary-foreground/70 hover:text-primary-foreground hover:border-primary-foreground/40"
-                  : "border-border text-foreground hover:bg-secondary"
-              }`}
-            >
-              {secondaryCta.label}
-            </a>
+            <Button asChild variant={isDark ? "siteInverseOutline" : "siteOutline"} size="siteLg">
+              <a href={secondaryCta.href}>{secondaryCta.label}</a>
+            </Button>
           )}
         </div>
       </div>

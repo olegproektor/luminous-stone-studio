@@ -1,7 +1,9 @@
 import { Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getIzdeliyaCollectionBySlug, getIzdeliyaProductsByCollection } from "@/data/izdeliya-architecture.seed";
-import { buildPath } from "@/lib/route-helpers";
+import { buttonVariants } from '@/components/ui/button';
+import { buildPath } from '@/lib/route-helpers';
+import { cn } from '@/lib/utils';
 
 const collection = getIzdeliyaCollectionBySlug("vozduh");
 const collectionProducts = getIzdeliyaProductsByCollection("vozduh");
@@ -55,7 +57,7 @@ const AboutProductSection = () => {
 
             <Link
               to={buildPath.collection(collection.slug)}
-              className="inline-flex text-xs font-body font-medium tracking-brand uppercase text-primary-foreground bg-primary px-10 py-4 hover:bg-charcoal-light transition-colors duration-300"
+              className={cn(buttonVariants({ variant: "sitePrimary", size: "site" }))}
             >
               Открыть коллекцию
             </Link>
