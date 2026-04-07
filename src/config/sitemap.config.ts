@@ -5,15 +5,13 @@ import { materialsTextureSeed } from "@/data/materials-texture.seed";
 import { projects } from "@/data/projects";
 import { articles } from "@/data/articles";
 import { izdeliyaProductsSeed } from "@/data/izdeliya-architecture.seed";
+import { getIndexableCollectionSlugs, getIndexableProductPaths } from "@/data/public-catalog-state";
 
 export const sitemapConfig = {
   siteUrl: "https://ston.ru",
   staticPaths: [
     routes.home,
     routes.products,
-    routes.collectionVozduh,
-    routes.collectionZemlya,
-    routes.collectionMaya,
     routes.materials,
     routes.forObjects,
     routes.projects,
@@ -22,15 +20,10 @@ export const sitemapConfig = {
     routes.news,
     routes.contacts,
     routes.company,
-    routes.requestProject,
-    routes.privacy,
-    routes.cookies,
-    routes.consent,
-    routes.terms,
   ],
-  collectionSlugs: ["vozduh", "zemlya", "maya"],
+  collectionSlugs: getIndexableCollectionSlugs(),
   productSlugs: launchSetSeed.primaryProductSlugs,
-  nestedProductPaths: izdeliyaProductsSeed.map((item) => routes.collectionProduct(item.collectionSlug, item.slug)),
+  nestedProductPaths: getIndexableProductPaths(),
   projectSlugs: projects.map((item) => item.slug),
   newsSlugs: articles.map((item) => item.slug),
   downloadCategories: downloadsCategoriesSeed.map((item) => item.slug),

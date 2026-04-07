@@ -2,6 +2,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
+import TrustProofStrip from "@/components/shared/TrustProofStrip";
 import { companySeed } from "@/data/company.seed";
 import { navPaths } from "@/lib/route-helpers";
 
@@ -17,25 +18,22 @@ const AboutPage = () => {
         subtitle={companySeed.hero.subtitle}
       />
 
+      <TrustProofStrip />
+
       <Section>
         <div className="max-w-3xl space-y-8">
-          <p className="font-body text-base text-muted-foreground leading-relaxed">
-            Форма Света — это бренд архитектурных световых решений для ландшафта. Мы создаём
-            световые объекты из литьевого камня и композита для частных и объектных пространств.
+          <p className="font-body text-lg leading-relaxed text-foreground/80">
+            {companySeed.storyLead}
           </p>
-          <p className="font-body text-base text-muted-foreground leading-relaxed">
-            Наша цель — сделать уличный свет не просто функцией, а частью архитектуры.
-            Каждое изделие — это пересечение формы, материала и света,
-            спроектированное для конкретных сценариев использования.
-          </p>
-          <p className="font-body text-base text-muted-foreground leading-relaxed">
-            Мы работаем с частными клиентами, архитекторами, ландшафтными дизайнерами,
-            глэмпингами, отелями и девелоперами по всей России.
-          </p>
+          {companySeed.story.map((paragraph) => (
+            <p key={paragraph} className="font-body text-base text-muted-foreground leading-relaxed">
+              {paragraph}
+            </p>
+          ))}
         </div>
       </Section>
 
-      <Section variant="alt" eyebrow="Принципы" title="Как мы работаем">
+      <Section variant="alt" eyebrow="Принципы" title={companySeed.principlesTitle}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {companySeed.principles.map((item) => (
             <div key={item.title} className="p-8 bg-background">
@@ -47,9 +45,12 @@ const AboutPage = () => {
       </Section>
 
       <CTASection
-        title="Давайте познакомимся"
-        subtitle="Расскажите о вашем проекте — мы с удовольствием поможем."
-        primaryCta={{ label: "Связаться", href: navPaths.contacts }}
+        eyebrow={companySeed.cta.eyebrow}
+        title={companySeed.cta.title}
+        subtitle={companySeed.cta.subtitle}
+        primaryCta={{ label: "Обсудить проект", href: navPaths.requestProject }}
+        secondaryCta={{ label: "Контакты", href: navPaths.contacts }}
+        context="company_final"
       />
     </PageLayout>
   );

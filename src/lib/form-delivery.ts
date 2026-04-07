@@ -1,9 +1,18 @@
-import { formDeliveryMode, formEndpoints } from "@/config/form-endpoints";
+import { formDeliveryMode, formEndpoints, isProductionMockMode } from "@/config/form-endpoints";
 import type { FormDeliveryPayload, FormDeliveryResult } from "@/types/form-delivery";
 
 const MOCK_DELAY_MS = 700;
 
 export async function deliverForm(payload: FormDeliveryPayload): Promise<FormDeliveryResult> {
+  if (isProductionMockMode()) {
+    return {
+      ok: false,
+      status: 503,
+      message: "Mock form delivery is disabled in production",
+      externalDependency: false,
+    };
+  }
+
   if (formDeliveryMode === "mock") {
     await wait(MOCK_DELAY_MS);
     return {

@@ -11,6 +11,7 @@ import SupportVideoLibraryModule from "@/components/downloads/modules/SupportVid
 import SupportInfoModule from "@/components/downloads/modules/SupportInfoModule";
 import SupportRequestModule from "@/components/downloads/modules/SupportRequestModule";
 import { downloadsCategoriesSeed, downloadsSeed } from "@/data/downloads.seed";
+import { siteStrategy } from "@/config/site-strategy";
 import { supportInfoBlocks, supportPageContent, supportVideosSeed, type SupportVideoItem } from "@/data/support-videos.seed";
 import { trackEvent } from "@/lib/analytics";
 import { startAssetDownload, isGatedAsset } from "@/lib/download-access";
@@ -18,6 +19,29 @@ import { navPaths } from "@/lib/route-helpers";
 import type { DownloadAsset } from "@/types/downloads";
 
 const supportRoute = "/skachat/support";
+
+const categoryPageCopy = {
+  catalogue: {
+    eyebrow: "Каталоги",
+    title: "Каталоги для выбора и согласования решения",
+    subtitle:
+      "Материалы для архитекторов, дизайнеров и проектных команд, которым нужно быстро выбрать направление, сверить коллекции и подготовить следующий шаг по проекту.",
+    finalTitle: "Нужен дополнительный комплект для согласования?",
+    finalSubtitle:
+      "Если одного каталога недостаточно, подберём релевантные материалы под тип проекта, стадию работы и состав команды.",
+    primaryLabel: "Получить комплект материалов",
+  },
+  bim: {
+    eyebrow: "BIM и 3D",
+    title: "Материалы для проектирования и координации",
+    subtitle:
+      "BIM и 3D-файлы для архитектурных, объектных и девелоперских сценариев, где решение уже входит в проектирование, рабочую координацию и спецификацию.",
+    finalTitle: "Нужны дополнительные проектные материалы?",
+    finalSubtitle:
+      "Если BIM-пакета недостаточно, поможем собрать релевантный набор файлов и вводных под стадию проекта и формат команды.",
+    primaryLabel: "Запросить проектные материалы",
+  },
+} as const;
 
 const DownloadCategoryPage = () => {
   const { category } = useParams<{ category: string }>();
@@ -96,11 +120,14 @@ const DownloadCategoryPage = () => {
           title={supportPageContent.ctaTitle}
           subtitle={supportPageContent.ctaSubtitle}
           primaryCta={{ label: "Запросить поддержку", href: "#support-request" }}
-          secondaryCta={{ label: "Обсудить проект", href: navPaths.requestProject }}
+          secondaryCta={{ label: siteStrategy.primaryConversion.label, href: siteStrategy.primaryConversion.href }}
+          context="downloads_support_final"
         />
       </PageLayout>
     );
   }
+
+  const pageCopy = categoryPageCopy[categoryData.slug as keyof typeof categoryPageCopy];
 
   return (
     <PageLayout title={`${categoryData.title} — Форма Света`} description={categoryData.description}>
@@ -112,12 +139,12 @@ const DownloadCategoryPage = () => {
           ]}
         />
       </div>
-      <PageHero eyebrow="Скачать" title={categoryData.title} subtitle={categoryData.description} />
+      <PageHero eyebrow={pageCopy.eyebrow} title={pageCopy.title} subtitle={pageCopy.subtitle} />
 
       {successAsset && (
         <div className="container-brand mt-8 px-6 md:px-12 lg:px-24">
           <div className="border border-accent/20 bg-accent/10 p-4 font-body text-sm text-foreground">
-            Доступ открыт: файл <strong>{successAsset.title}</strong> отправлен на скачивание.
+            Материал открыт: файл <strong>{successAsset.title}</strong> отправлен на скачивание. Если нужен смежный комплект для проекта, можно запросить его следующим шагом.
           </div>
         </div>
       )}
@@ -126,10 +153,11 @@ const DownloadCategoryPage = () => {
 
       <CTASection
         eyebrow="Материалы"
-        title="Нужны дополнительные материалы?"
-        subtitle="Оставьте запрос, и мы подберём релевантный набор документов под ваш объект и тип задачи."
-        primaryCta={{ label: "Связаться", href: navPaths.contacts }}
-        secondaryCta={{ label: "Обсудить проект", href: navPaths.requestProject }}
+        title={pageCopy.finalTitle}
+        subtitle={pageCopy.finalSubtitle}
+        primaryCta={{ label: pageCopy.primaryLabel, href: navPaths.forObjects }}
+        secondaryCta={{ label: siteStrategy.primaryConversion.label, href: siteStrategy.primaryConversion.href }}
+        context={`downloads_${categoryData.slug}_final`}
       />
 
       {gatedAsset && (

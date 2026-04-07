@@ -4,6 +4,7 @@ import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
 import TrustProofStrip from "@/components/shared/TrustProofStrip";
+import { siteStrategy } from "@/config/site-strategy";
 import ProjectHeroModule from "@/components/projects/modules/ProjectHeroModule";
 import ProjectContentModule from "@/components/projects/modules/ProjectContentModule";
 import ProjectProductsModule from "@/components/projects/modules/ProjectProductsModule";
@@ -87,6 +88,12 @@ const ProjectDetailPage = () => {
       <ProjectHeroModule project={project} />
       <TrustProofStrip />
 
+      <div className="container-brand px-6 md:px-12 lg:px-24 pt-10">
+        <p className="max-w-3xl font-body text-base leading-relaxed text-muted-foreground">
+          {project.summary}
+        </p>
+      </div>
+
       <ProjectContentModule
         project={project}
         sidebar={
@@ -103,7 +110,7 @@ const ProjectDetailPage = () => {
       />
 
       {otherProjects.length > 0 && (
-        <Section variant="alt" eyebrow="Ещё проекты" title="Другие реализации">
+        <Section variant="alt" eyebrow="Ещё кейсы" title="Другие сценарии применения">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {otherProjects.map((item) => (
               <Link key={item.id} to={buildPath.project(item.slug)} className="group block">
@@ -128,10 +135,11 @@ const ProjectDetailPage = () => {
       )}
 
       <CTASection
-        title="Хотите подобное решение?"
-        subtitle="Обсудим ваш объект и подготовим предложение."
-        primaryCta={{ label: "Запросить проект", href: navPaths.requestProject }}
+        title="Если вам близок этот кейс, подберём похожий сценарий"
+        subtitle="Переведём логику этого проекта в ваш объект, сопоставим коллекции и предложим следующий рабочий шаг."
+        primaryCta={{ label: siteStrategy.primaryConversion.label, href: siteStrategy.primaryConversion.href }}
         secondaryCta={{ label: "Все проекты", href: navPaths.projects }}
+        context={`project_${project.slug}_final`}
       />
     </PageLayout>
   );

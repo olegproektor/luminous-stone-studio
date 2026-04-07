@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
+import heroBollard from "@/assets/hero-bollard.jpg";
 import { getIzdeliyaProductsByCollection, type IzdeliyaCollectionSeed } from "@/data/izdeliya-architecture.seed";
+import { getCollectionLaunchStatus } from "@/data/public-catalog-state";
 import { buildPath } from "@/lib/route-helpers";
 
 interface CollectionCardProps {
@@ -14,7 +16,7 @@ const CollectionCard = ({ collection, className = "" }: CollectionCardProps) => 
     <Link to={buildPath.collection(collection.slug)} className={`group block relative overflow-hidden rounded-[var(--radius-md)] ${className}`}>
       <div className="relative aspect-[3/4] overflow-hidden rounded-[var(--radius-md)] bg-card">
         <img
-          src="/placeholder.svg"
+          src={heroBollard}
           alt={`Коллекция ${collection.name}`}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           loading="lazy"
@@ -28,9 +30,9 @@ const CollectionCard = ({ collection, className = "" }: CollectionCardProps) => 
             {collection.name}
           </h3>
           <p className="font-body text-xs text-background/50 mt-2 leading-relaxed">{collection.tagline}</p>
-          {collection.status === "in-development" && (
+          {getCollectionLaunchStatus(collection.slug) === "coming-soon" && (
             <p className="mt-4 inline-flex rounded-[var(--radius-sm)] border border-background/30 px-3 py-1 text-[10px] font-body uppercase tracking-brand-wide text-background/80">
-              В разработке
+              Скоро в запуске
             </p>
           )}
         </div>

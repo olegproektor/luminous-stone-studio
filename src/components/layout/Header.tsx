@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { headerNavigation } from "@/config/navigation.config";
 import { navPaths } from "@/lib/route-helpers";
 import { buttonVariants } from "@/components/ui/button";
+import { trackEvent } from "@/lib/analytics";
 
 /* ─── Navigation Data ─── */
 interface SubItem {
@@ -164,6 +165,7 @@ const MobileMenu = ({
               <Link
                 to={navPaths.requestProject}
                 onClick={onClose}
+                onMouseDown={() => trackEvent("cta_click", { context: "header_mobile_primary", target: navPaths.requestProject })}
                 className={cn(buttonVariants({ variant: "siteInverseOutline", size: "site" }), "px-6 py-3 text-xs tracking-[0.08em]")}
               >
                 Обсудить проект
@@ -431,6 +433,7 @@ const Header = () => {
       </button>
       <Link
         to={navPaths.requestProject}
+        onClick={() => trackEvent("cta_click", { context: "header_desktop_primary", target: navPaths.requestProject })}
         className={cn(
           buttonVariants({ variant: isTransparent ? "siteInverseOutline" : "sitePrimary", size: "site" }),
           `font-body font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-[800ms] ${headerScrolled ? 'ease-[cubic-bezier(0.7,0,1,0.5)]' : 'ease-linear'}`,

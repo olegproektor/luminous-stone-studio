@@ -4,6 +4,8 @@ import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
 import CTASection from "@/components/layout/CTASection";
 import CollectionsPanel, { collectionsRailOffsetClass } from "@/components/products/CollectionsPanel";
+import { siteStrategy } from "@/config/site-strategy";
+import { getCollectionLaunchStatus } from "@/data/public-catalog-state";
 import { buildPath, navPaths } from "@/lib/route-helpers";
 import { getListMetadata } from "@/lib/metadata-pipeline";
 import { useAnalyticsView } from "@/hooks/useAnalyticsView";
@@ -11,21 +13,21 @@ import { getIzdeliyaCollectionBySlug } from "@/data/izdeliya-architecture.seed";
 import { productsShowcaseSeed } from "@/data/products-showcase.seed";
 
 const catalogCopy = {
-  introTitle: "Подберите направление решения для вашего пространства",
+  introTitle: "Подберите направление света для вашего проекта",
   introParagraphs: [
-    "Каталог помогает быстро понять, какая коллекция подходит под ваш сценарий света: мягкая навигация, акцент на материале или опорный ритм маршрута.",
-    "Начните с нужного характера пространства, а затем перейдите к обсуждению проекта и подбору решения под конкретную задачу.",
+    "Начинать с коллекции проще, чем с отдельной модели: каждая из них отвечает за свой сценарий света и помогает быстро сузить выбор под архитектуру пространства.",
+    "Сначала выберите характер света, затем перейдите к моделям и материалам, а после этого обсудите проект, если нужна точная рекомендация под участок или объект.",
   ],
   collectionsTitle: "Коллекции решений",
-  inDevelopment: "Сценарий в разработке",
-  cardCtaLabel: "Смотреть решение",
+  inDevelopment: "Готовим к запуску",
+  cardCtaLabel: "Смотреть коллекцию",
   finalCta: {
     eyebrow: "Подбор решения",
-    title: "Обсудим решение для вашего пространства",
+    title: "Подберём коллекцию под архитектуру и задачу пространства",
     subtitle:
-      "Сопоставим коллекцию, сценарий света и применение в пространстве под архитектуру и задачи проекта.",
+      "Если не уверены, с какого сценария начать, поможем сопоставить коллекцию, материал и применение под частный или объектный проект.",
     primaryCtaLabel: "Обсудить проект",
-    secondaryCtaLabel: "Смотреть проекты",
+    secondaryCtaLabel: "Получить материалы",
   },
 } as const;
 
@@ -81,7 +83,7 @@ const CatalogPage = () => {
                   <h3 className="font-display text-2xl text-foreground">{card.title}</h3>
                   <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground">{card.description}</p>
 
-                  {collection?.status === "in-development" && (
+                  {collection && getCollectionLaunchStatus(collection.slug) === "coming-soon" && (
                     <p className="mt-4 font-body text-xs uppercase tracking-brand-wide text-muted-foreground">
                       {catalogCopy.inDevelopment}
                     </p>
@@ -105,8 +107,9 @@ const CatalogPage = () => {
           eyebrow={catalogCopy.finalCta.eyebrow}
           title={catalogCopy.finalCta.title}
           subtitle={catalogCopy.finalCta.subtitle}
-          primaryCta={{ label: catalogCopy.finalCta.primaryCtaLabel, href: navPaths.requestProject }}
-          secondaryCta={{ label: catalogCopy.finalCta.secondaryCtaLabel, href: navPaths.projects }}
+          primaryCta={{ label: siteStrategy.primaryConversion.label, href: siteStrategy.primaryConversion.href }}
+          secondaryCta={{ label: catalogCopy.finalCta.secondaryCtaLabel, href: navPaths.downloads }}
+          context="catalog_final"
         />
       </div>
     </PageLayout>

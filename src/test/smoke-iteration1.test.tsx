@@ -54,12 +54,15 @@ describe("iteration1 smoke routes", () => {
     expect(screen.queryByText("Bollard 800")).toBeNull();
   });
 
-  it("replaces the old flagship block with the vozduh collection spotlight", async () => {
+  it("uses the home page as a project-entry point", async () => {
     await renderApp("/");
 
-    expect(screen.getAllByText("Воздух").length).toBeGreaterThan(0);
+    expect(screen.getByRole("heading", { name: /Подбираем решения из камня/i })).toBeTruthy();
     expect(screen.queryByText(/Боллард STŌN/i)).toBeNull();
-    expect(screen.getAllByRole("link", { name: /Открыть коллекцию/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "Обсудить проект" }).length).toBeGreaterThan(0);
+    expect(screen.getByRole("link", { name: "Смотреть изделия" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Архитекторам и дизайнерам" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Перейти в раздел для объектов" })).toBeTruthy();
   });
 
   it("keeps legacy product routes as non-indexable alias fallbacks", async () => {

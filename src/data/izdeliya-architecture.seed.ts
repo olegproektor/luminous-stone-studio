@@ -1,9 +1,12 @@
-﻿export type IzdeliyaCollectionSlug = "vozduh" | "zemlya" | "maya";
+import type { ProductStatus } from "@/types";
+
+export type IzdeliyaCollectionSlug = "vozduh" | "zemlya" | "maya";
 export type IzdeliyaProductSlug = "feya" | "mengir" | "fokus" | "mayak";
 
 export interface IzdeliyaProductSeed {
   slug: IzdeliyaProductSlug;
   collectionSlug: Exclude<IzdeliyaCollectionSlug, "maya">;
+  status: ProductStatus;
   name: string;
   tagline: string;
   summary: string;
@@ -21,7 +24,7 @@ export interface IzdeliyaCollectionSeed {
   name: string;
   tagline: string;
   description: string;
-  status: "live" | "in-development";
+  status: ProductStatus;
   seo: {
     title: string;
     description: string;
@@ -35,7 +38,7 @@ export const izdeliyaCollectionsSeed: IzdeliyaCollectionSeed[] = [
     tagline: "Мягкая навигация в пространстве.",
     description:
       "Сдержанный вертикальный свет помогает обозначить маршрут и сохранить спокойный ритм без визуального шума.",
-    status: "live",
+    status: "active",
     seo: {
       title: "Коллекция Воздух — Форма Света",
       description: "Коллекция Воздух: деликатные уличные светильники для дорожек и входных групп.",
@@ -47,7 +50,7 @@ export const izdeliyaCollectionsSeed: IzdeliyaCollectionSeed[] = [
     tagline: "Акцент на материале и рельефе.",
     description:
       "Выразительный свет помогает подчеркнуть фактуру, границы зон и архитектурную пластику пространства.",
-    status: "live",
+    status: "active",
     seo: {
       title: "Коллекция Земля — Форма Света",
       description: "Коллекция Земля: функциональные решения с акцентом на фактуру и архитектурный ритм.",
@@ -59,7 +62,7 @@ export const izdeliyaCollectionsSeed: IzdeliyaCollectionSeed[] = [
     tagline: "Новые акценты в пространстве.",
     description:
       "Коллекция формируется для декоративных и акцентных сценариев света. Сейчас подготавливаем рабочие решения и спецификации для пилотных объектов.",
-    status: "in-development",
+    status: "coming-soon",
     seo: {
       title: "Коллекция Майа — Форма Света",
       description: "Коллекция Майа находится в разработке. Скоро будут опубликованы первые модели.",
@@ -107,6 +110,7 @@ export const izdeliyaProductsSeed: IzdeliyaProductSeed[] = [
   {
     slug: "feya",
     collectionSlug: "vozduh",
+    status: "active",
     name: "Фея",
     tagline: "Компактный световой акцент для приватного ландшафта",
     summary:
@@ -127,6 +131,7 @@ export const izdeliyaProductsSeed: IzdeliyaProductSeed[] = [
   {
     slug: "mengir",
     collectionSlug: "vozduh",
+    status: "active",
     name: "Менгир",
     tagline: "Вертикальный ориентир для архитектурной композиции",
     summary:
@@ -147,6 +152,7 @@ export const izdeliyaProductsSeed: IzdeliyaProductSeed[] = [
   {
     slug: "fokus",
     collectionSlug: "zemlya",
+    status: "active",
     name: "Фокус",
     tagline: "Направленный акцент на материале и рельефе",
     summary:
@@ -167,6 +173,7 @@ export const izdeliyaProductsSeed: IzdeliyaProductSeed[] = [
   {
     slug: "mayak",
     collectionSlug: "zemlya",
+    status: "active",
     name: "Маяк",
     tagline: "Опорный световой ритм для маршрутов и границ",
     summary:
@@ -191,15 +198,23 @@ export function getIzdeliyaCollectionBySlug(slug: string) {
 }
 
 export function getIzdeliyaProductsByCollection(slug: string) {
-  return izdeliyaProductsSeed.filter((item) => item.collectionSlug === slug);
+  return izdeliyaProductsSeed.filter((item) => item.collectionSlug === slug && item.status !== "draft");
 }
 
 export function getIzdeliyaProductByRoute(collectionSlug: string, productSlug: string) {
   return izdeliyaProductsSeed.find(
-    (item) => item.collectionSlug === collectionSlug && item.slug === productSlug
+    (item) => item.collectionSlug === collectionSlug && item.slug === productSlug && item.status !== "draft"
   );
 }
 
 export function getIzdeliyaProductBySlug(productSlug: string) {
-  return izdeliyaProductsSeed.find((item) => item.slug === productSlug);
+  return izdeliyaProductsSeed.find((item) => item.slug === productSlug && item.status !== "draft");
+}
+
+export function getVisibleIzdeliyaCollections() {
+  return izdeliyaCollectionsSeed.filter((item) => item.status !== "draft");
+}
+
+export function getActiveIzdeliyaCollections() {
+  return izdeliyaCollectionsSeed.filter((item) => item.status === "active");
 }

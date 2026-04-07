@@ -1,4 +1,4 @@
-﻿import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import heroBollard from "@/assets/hero-bollard.jpg";
@@ -71,25 +71,28 @@ const HomeMosaicSection = () => {
             <MosaicTile
               title="изделия"
               to={navPaths.collections}
-              ariaLabel="Открыть коллекцию: изделия"
+              ariaLabel="Перейти в раздел изделий и коллекций"
               className="lg:col-span-7 lg:row-span-1"
               background={`linear-gradient(180deg, rgba(16,16,16,0.08), rgba(16,16,16,0.28)), url(${heroBollard})`}
             />
             <MosaicTile
               title="о нас"
               to={navPaths.company}
+              ariaLabel="Перейти в раздел о компании"
               className="lg:col-span-5 lg:row-span-2"
               background="radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), transparent 26%), linear-gradient(145deg, #d7d2c8 0%, #c4bbad 34%, #e4dfd5 58%, #bcb09e 100%)"
             />
             <MosaicTile
-              title="пакетные предложения"
+              title="для объектов"
               to={navPaths.forObjects}
+              ariaLabel="Перейти в раздел для объектов"
               className="lg:col-span-7 lg:row-span-2"
               background="linear-gradient(145deg, #efede8 0%, #d8d4cb 34%, #f4f2ee 58%, #c9c4ba 100%), radial-gradient(circle at 74% 68%, rgba(255,255,255,0.78), transparent 23%)"
             />
             <MosaicTile
               title="материалы"
               to={navPaths.materials}
+              ariaLabel="Перейти в раздел материалов и фактур"
               className="lg:col-span-5 lg:row-span-1"
               background="linear-gradient(162deg, #e4dbc8 0%, #cabda6 46%, #1d1b19 48%, #ece2cf 52%, #d7c7ae 100%)"
             />
@@ -101,4 +104,3 @@ const HomeMosaicSection = () => {
 };
 
 export default HomeMosaicSection;
-

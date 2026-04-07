@@ -2,25 +2,31 @@ import type { LeadFormField, LeadFormPreset } from "@/types/lead-form-contract";
 
 export const contactFormPreset: LeadFormPreset = {
   formId: "contact_general",
-  submitLabel: "Отправить",
+  submitLabel: "Отправить запрос",
   analyticsEvent: "request_consultation",
   fields: [
-    { name: "name", label: "Имя", type: "text", required: true, placeholder: "Как вас зовут" },
+    { name: "name", label: "Имя", type: "text", required: true, placeholder: "Как к вам обращаться" },
     { name: "phone", label: "Телефон", type: "tel", required: true, placeholder: "+7 (___) ___-__-__" },
-    { name: "email", label: "Email", type: "email", placeholder: "email@example.com" },
+    { name: "email", label: "Email", type: "email", placeholder: "Куда отправить ответ и материалы" },
     {
       name: "clientType",
-      label: "Я обращаюсь как",
+      label: "Роль в проекте",
       type: "select",
       options: [
-        { value: "private", label: "Частный клиент" },
+        { value: "private", label: "Частный премиальный клиент" },
         { value: "architect", label: "Архитектор / дизайнер" },
-        { value: "glamping-hotel", label: "Глэмпинг / отель" },
-        { value: "developer", label: "Девелопер" },
+        { value: "glamping-hotel", label: "Команда объекта / hospitality" },
+        { value: "developer", label: "Девелопер / заказчик" },
         { value: "other", label: "Другое" },
       ],
     },
-    { name: "message", label: "Сообщение", type: "textarea", placeholder: "Расскажите о вашем запросе...", half: false },
+    {
+      name: "message",
+      label: "Коротко о запросе",
+      type: "textarea",
+      placeholder: "Тип объекта, город, стадия проекта, задача и что важно обсудить в первую очередь...",
+      half: false,
+    },
   ],
 };
 
@@ -30,13 +36,13 @@ export const requestProjectStep1Fields: LeadFormField[] = [
   { name: "email", label: "Email", type: "email", placeholder: "email@example.com" },
   {
     name: "clientType",
-    label: "Тип клиента",
+    label: "Роль в проекте",
     type: "select",
     options: [
-      { value: "private", label: "Частный клиент" },
+      { value: "private", label: "Частный премиальный клиент" },
       { value: "architect", label: "Архитектор / дизайнер" },
-      { value: "glamping-hotel", label: "Глэмпинг / отель / ресторан" },
-      { value: "developer", label: "Девелопер / комплектатор" },
+      { value: "glamping-hotel", label: "Команда объекта / hospitality" },
+      { value: "developer", label: "Девелопер / заказчик" },
       { value: "other", label: "Другое" },
     ],
   },

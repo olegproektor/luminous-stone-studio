@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { navPaths } from "@/lib/route-helpers";
+import TrackedCta from "@/components/TrackedCta";
+import { siteStrategy } from "@/config/site-strategy";
 
 const FinalCTASection = () => {
   return (
@@ -11,19 +10,26 @@ const FinalCTASection = () => {
         <h2 className="mx-auto max-w-4xl font-display text-4xl font-light leading-[0.95] md:text-6xl lg:text-7xl">
           Подберём решение
           <br />
-          для вашего пространства
+          под архитектуру и сценарий пространства
         </h2>
         <p className="mx-auto mt-7 max-w-xl text-sm leading-relaxed text-white/56 md:text-base">
-          Обсудим задачу, предложим сценарий света и подготовим направление по изделиям, материалам и объектному
-          применению.
+          Сопоставим коллекции, материалы и формат применения под частный или объектный проект и предложим следующий рабочий шаг.
         </p>
         <div className="mt-12 flex flex-col justify-center gap-4 sm:flex-row">
-          <Button asChild variant="siteInverse" size="siteLg">
-            <Link to={navPaths.requestProject}>Обсудить проект</Link>
-          </Button>
-          <Button asChild variant="siteInverseOutline" size="siteLg">
-            <a href="tel:+74951234567">+7 (495) 123-45-67</a>
-          </Button>
+          <TrackedCta
+            href={siteStrategy.primaryConversion.href}
+            label={siteStrategy.primaryConversion.label}
+            context="home_final_primary"
+            variant="siteInverse"
+            size="siteLg"
+          />
+          <TrackedCta
+            href={siteStrategy.secondaryCtas.forObjects.href}
+            label={siteStrategy.secondaryCtas.forObjects.label}
+            context="home_final_secondary"
+            variant="siteInverseOutline"
+            size="siteLg"
+          />
         </div>
       </div>
     </section>

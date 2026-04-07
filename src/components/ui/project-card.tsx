@@ -44,7 +44,7 @@ const ProjectCard = ({ project, className = "" }: ProjectCardProps) => {
           {project.title}
         </h3>
         <p className="font-body text-sm text-muted-foreground mt-2 line-clamp-2">
-          {project.challenge}
+          {project.summary}
         </p>
       </div>
     </Link>

@@ -5,6 +5,7 @@ import CTASection from "@/components/layout/CTASection";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
 import CollectionsPanel, { collectionsRailOffsetClass } from "@/components/products/CollectionsPanel";
 import { getProductPageContent } from "@/data/product-page-content.seed";
+import { siteStrategy } from "@/config/site-strategy";
 import {
   getIzdeliyaCollectionBySlug,
   getIzdeliyaProductByRoute,
@@ -20,21 +21,23 @@ const t = {
   backToCatalog: "Вернуться в каталог",
   catalog: "Каталог",
   collectionLabel: "Коллекция",
+  collectionScenario: "Сценарий коллекции",
   materialsEyebrow: "Материалы",
+  positioningUseCases: "Где применять",
   technicalTitle: "Технические параметры",
   utilityEyebrow: "Поддержка проекта",
   utilityCatalogue: "Скачать каталог",
   utilityBim: "BIM и 3D",
   utilitySupport: "Техническая поддержка",
-  utilityCatalogueCopy: "PDF-материалы по решениям и коллекциям для согласования концепции и состава проекта.",
-  utilityBimCopy: "Материалы для проектирования, координации и проработки технической части объекта.",
-  utilitySupportCopy: "Видео по подключению, монтажу и сервисному сопровождению световых решений.",
+  utilityCatalogueCopy: "Каталог помогает согласовать модель, сценарий применения и состав решения на стадии концепции и обсуждения проекта.",
+  utilityBimCopy: "BIM и 3D нужны, когда решение уже входит в проектирование, координацию и техническую проработку объекта.",
+  utilitySupportCopy: "Раздел поддержки нужен после выбора модели: для монтажа, подключения и аккуратной интеграции в объект.",
   customizationTitle: "Индивидуальная настройка",
   discussProject: "Обсудить проект",
-  getSelection: "Получить подбор решения",
-  finalTitle: "Обсудим применение в вашем проекте",
+  getSelection: "Подобрать решение для объекта",
+  finalTitle: "Поможем выбрать формат применения в проекте",
   finalSubtitle:
-    "Подберём сценарий света, материалы и способ интеграции под архитектуру и задачи конкретного объекта.",
+    "Если модель подходит по характеру света, поможем согласовать материал, сценарий применения и следующий шаг для частного или объектного проекта.",
   lightingScenario: "Световой сценарий",
 } as const;
 
@@ -100,13 +103,13 @@ const CollectionProductPage = () => {
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <Link
-                to={navPaths.requestProject}
+                to={siteStrategy.primaryConversion.href}
                 className={cn(buttonVariants({ variant: "sitePrimary", size: "siteLg" }))}
               >
-                {t.discussProject}
+                {siteStrategy.primaryConversion.label}
               </Link>
               <Link
-                to={navPaths.requestProject}
+                to={navPaths.forObjects}
                 className={cn(buttonVariants({ variant: "siteOutline", size: "siteLg" }))}
               >
                 {t.getSelection}
@@ -128,9 +131,11 @@ const CollectionProductPage = () => {
 
               <div className="space-y-4 border-t border-border pt-6">
                 <p className="font-body text-[11px] uppercase tracking-brand-wide text-muted-foreground">
-                  {t.lightingScenario}
+                  {t.collectionScenario}
                 </p>
-                <p className="font-display text-2xl leading-snug text-foreground">{product.tagline}</p>
+                <p className="font-display text-2xl leading-snug text-foreground">{product.summary}</p>
+
+                <p className="font-body text-sm leading-relaxed text-muted-foreground">{collection.tagline}</p>
 
                 <div className="grid grid-cols-2 gap-3 pt-2">
                   {product.specs.slice(0, 2).map((spec) => (
@@ -152,6 +157,15 @@ const CollectionProductPage = () => {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.8fr)]">
           <div className="max-w-3xl">
             <p className="font-body text-base leading-relaxed text-muted-foreground">{presentation.positioningBody}</p>
+
+            <div className="mt-8 border-t border-border pt-6">
+              <p className="font-body text-[11px] uppercase tracking-brand-wide text-muted-foreground">
+                {t.positioningUseCases}
+              </p>
+              <p className="mt-3 font-body text-base leading-relaxed text-foreground">
+                {product.useCases.join(" · ")}
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-3">
@@ -174,6 +188,9 @@ const CollectionProductPage = () => {
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
           <div className="max-w-xl">
             <p className="font-body text-sm leading-relaxed text-muted-foreground">{product.materialNote}</p>
+            <p className="mt-4 font-body text-sm leading-relaxed text-foreground">
+              Подбор фактуры помогает не просто выбрать поверхность, а понять, как изделие будет работать в связке с покрытием, стеной, посадками и общей пластикой пространства.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -196,6 +213,9 @@ const CollectionProductPage = () => {
       <Section title={t.technicalTitle} className={collectionsRailOffsetClass}>
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
           <div>
+            <p className="max-w-3xl font-body text-sm leading-relaxed text-muted-foreground">
+              Эти параметры помогают понять, как решение встраивается в проект. Они подтверждают применимость модели, но итоговый ритм, способ монтажа и формат интеграции лучше уточнять уже в контексте конкретного пространства.
+            </p>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {product.specs.map((spec) => (
                 <div key={spec.label} className="border border-border/60 bg-background px-5 py-4">
@@ -270,8 +290,9 @@ const CollectionProductPage = () => {
         <CTASection
           title={t.finalTitle}
           subtitle={t.finalSubtitle}
-          primaryCta={{ label: t.discussProject, href: navPaths.requestProject }}
-          secondaryCta={{ label: t.getSelection, href: navPaths.requestProject }}
+          primaryCta={{ label: siteStrategy.primaryConversion.label, href: siteStrategy.primaryConversion.href }}
+          secondaryCta={{ label: t.getSelection, href: navPaths.forObjects }}
+          context={`product_${product.slug}_final`}
         />
       </div>
     </PageLayout>

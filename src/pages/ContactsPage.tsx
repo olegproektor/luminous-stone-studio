@@ -14,16 +14,29 @@ const ContactsPage = () => {
     >
       <PageHero
         eyebrow="Контакты"
-        title="Свяжитесь с нами"
-        subtitle="Ответим на вопросы, поможем с выбором и подготовим предложение."
+        title="Обсудим запрос и подскажем лучший следующий шаг"
+        subtitle="Если нужно быстро выйти на диалог по проекту, выберите удобный канал: архитекторы, объектные команды и частные клиенты получают понятный маршрут уже на первом контакте."
       />
 
       <Section>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {/* Contact info */}
           <div className="space-y-8">
+            <div className="max-w-xl space-y-3">
+              <p className="font-body text-sm uppercase tracking-[0.18em] text-muted-foreground">
+                Как выбрать канал
+              </p>
+              <p className="font-body text-base leading-relaxed text-muted-foreground">
+                Если нужен быстрый старт по проекту, пишите в удобный канал и коротко укажите тип объекта,
+                стадию и задачу. Мы подскажем, какие материалы или следующий шаг будут полезны именно
+                в вашем сценарии.
+              </p>
+            </div>
+
             <div>
-              <h2 className="font-display text-xl font-medium text-foreground mb-3">Телефон</h2>
+              <h2 className="font-display text-xl font-medium text-foreground mb-2">Телефон для срочного обсуждения</h2>
+              <p className="font-body text-sm text-muted-foreground mb-3">
+                Подходит, если нужно быстро сверить вводные по проекту, срокам или следующему рабочему шагу.
+              </p>
               <a
                 href="tel:+74951234567"
                 onClick={() => trackClick("call", "+74951234567")}
@@ -33,7 +46,10 @@ const ContactsPage = () => {
               </a>
             </div>
             <div>
-              <h2 className="font-display text-xl font-medium text-foreground mb-3">Email</h2>
+              <h2 className="font-display text-xl font-medium text-foreground mb-2">Общий контакт</h2>
+              <p className="font-body text-sm text-muted-foreground mb-3">
+                Для первого касания по частному или объектному запросу, когда удобно отправить вводные письмом.
+              </p>
               <a
                 href="mailto:info@ston.ru"
                 onClick={() => trackClick("email", "info@ston.ru")}
@@ -43,7 +59,10 @@ const ContactsPage = () => {
               </a>
             </div>
             <div>
-              <h2 className="font-display text-xl font-medium text-foreground mb-3">Для архитекторов</h2>
+              <h2 className="font-display text-xl font-medium text-foreground mb-2">Для архитекторов и дизайнеров</h2>
+              <p className="font-body text-sm text-muted-foreground mb-3">
+                Для проектных вводных, запроса материалов, координации BIM и обсуждения применения решений.
+              </p>
               <a
                 href="mailto:arch@ston.ru"
                 onClick={() => trackClick("email", "arch@ston.ru")}
@@ -53,7 +72,11 @@ const ContactsPage = () => {
               </a>
             </div>
             <div>
-              <h2 className="font-display text-xl font-medium text-foreground mb-3">Мессенджеры</h2>
+              <h2 className="font-display text-xl font-medium text-foreground mb-2">Мессенджеры для быстрого старта</h2>
+              <p className="font-body text-sm text-muted-foreground mb-4">
+                Удобны для оперативного первого сообщения, если вы хотите быстро обозначить задачу и получить
+                ориентир по следующему шагу.
+              </p>
               <div className="flex gap-4">
                 <a
                   href="https://t.me/ston_light"
@@ -76,20 +99,27 @@ const ContactsPage = () => {
               </div>
             </div>
             <div>
-              <h2 className="font-display text-xl font-medium text-foreground mb-3">Адрес</h2>
+              <h2 className="font-display text-xl font-medium text-foreground mb-2">Город и присутствие</h2>
+              <p className="font-body text-sm text-muted-foreground mb-3">
+                Москва как базовая точка координации частных и объектных проектов по России.
+              </p>
               <p className="font-body text-base text-muted-foreground">
                 Москва, Россия
               </p>
             </div>
           </div>
 
-          {/* Form */}
           <div className="bg-secondary p-8 md:p-12">
             <h2 className="font-display text-2xl font-medium text-foreground mb-2">
-              Напишите нам
+              Отправьте вводные по запросу
             </h2>
+            <p className="font-body text-sm text-muted-foreground mb-3">
+              Форма подходит, если удобнее сразу собрать всё в одном сообщении: тип объекта, город, стадия,
+              задача и желаемый формат связи.
+            </p>
             <p className="font-body text-sm text-muted-foreground mb-8">
-              Ответим в течение рабочего дня.
+              После отправки мы вернёмся с понятным следующим шагом: подскажем нужный канал, материалы или
+              формат обсуждения проекта.
             </p>
             <LeadFormWrapper preset={contactFormPreset} />
           </div>

@@ -1,9 +1,10 @@
-﻿import {
+import {
   izdeliyaCollectionsSeed,
-  izdeliyaProductsSeed,
   type IzdeliyaCollectionSlug,
   type IzdeliyaProductSlug,
 } from "@/data/izdeliya-architecture.seed";
+import heroBollard from "@/assets/hero-bollard.jpg";
+import { getCollectionLaunchStatus, getPublicCollectionProducts } from "@/data/public-catalog-state";
 
 export interface ProductsShowcaseHero {
   eyebrow: string;
@@ -59,52 +60,67 @@ export interface ProductsShowcaseSeed {
   };
 }
 
-const fallbackImage = { src: "/placeholder.svg", alt: "Коллекция уличных светильников КАМЕНЬ И СВЕТ" };
+const fallbackImage = { src: heroBollard, alt: "Каменные уличные светильники Форма Света" };
 
-const productsByCollection = new Map<IzdeliyaCollectionSlug, typeof izdeliyaProductsSeed>([
-  ["vozduh", izdeliyaProductsSeed.filter((item) => item.collectionSlug === "vozduh")],
-  ["zemlya", izdeliyaProductsSeed.filter((item) => item.collectionSlug === "zemlya")],
+const productsByCollection = new Map<IzdeliyaCollectionSlug, ReturnType<typeof getPublicCollectionProducts>>([
+  ["vozduh", getPublicCollectionProducts("vozduh")],
+  ["zemlya", getPublicCollectionProducts("zemlya")],
   ["maya", []],
 ]);
 
 export const productsShowcaseSeed: ProductsShowcaseSeed = {
   hero: {
     eyebrow: "Изделия",
-    title: "Каменные светильники для уличной архитектуры",
+    title: "Выберите сценарий света для вашего пространства",
     subtitle:
-      "Коллекции собраны по сценариям участка: мягкая навигация, материалный акцент и опорный свет для маршрутов.",
+      "Коллекции помогают быстро понять, нужен ли проекту мягкий маршрутный свет, акцент на материале или опорный ритм для входов и движения по территории.",
     image: {
-      src: "/placeholder.svg",
+      src: heroBollard,
       alt: "Каменные уличные светильники в ландшафте",
     },
   },
   intro: {
-    title: "Откройте коллекции для вашего проекта",
+    title: "Начните с коллекции, а не с отдельной модели",
     paragraphs: [
-      "Изделия КАМЕНЬ И СВЕТ объединены в коллекции, где каждая модель решает конкретную задачу в вечернем сценарии участка.",
-      "Так проще выбрать решение под архитектуру, материал среды и требуемый ритм света без визуальной перегрузки.",
+      "В каталоге коллекции собраны по роли света в пространстве: навигация, акцент на материале или опорный ритм маршрута. Так проще быстро понять направление решения под конкретный проект.",
+      "После выбора коллекции можно перейти к моделям, материалам и следующему шагу в обсуждении проекта, а не теряться в наборе отдельных изделий.",
     ],
   },
-  collectionsTitle: "Коллекции",
+  collectionsTitle: "Коллекции решений",
   collectionCards: izdeliyaCollectionsSeed.map((collection) => ({
     collectionSlug: collection.slug,
     title: collection.name,
-    description: collection.description,
+    description:
+      collection.slug === "vozduh"
+        ? "Для дорожек, входных групп и спокойной вечерней навигации, когда свет должен направлять движение без визуального шума."
+        : collection.slug === "zemlya"
+          ? "Для рельефа, фактур и архитектурных акцентов, когда материал и пластика пространства должны читаться вечером."
+          : "Для новых декоративных и акцентных сценариев. Готовим решения и спецификации для пилотных объектов и раннего обсуждения.",
     ctaLabel:
-      collection.status === "in-development"
-        ? "Смотреть коллекцию"
-        : `Открыть коллекцию ${collection.name}`,
+      getCollectionLaunchStatus(collection.slug) === "coming-soon"
+        ? "Готовим к запуску"
+        : `Смотреть коллекцию ${collection.name}`,
     image: {
       ...fallbackImage,
       alt: `Коллекция ${collection.name}`,
     },
   })),
-  panelTitle: "Коллекции и модели",
+  panelTitle: "Выберите коллекцию",
   panelItems: izdeliyaCollectionsSeed.map((collection) => ({
     collectionSlug: collection.slug,
     title: collection.name,
-    subtitle: collection.tagline,
-    description: collection.description,
+    subtitle:
+      collection.slug === "vozduh"
+        ? "Мягкая навигация для маршрутов и входных групп."
+        : collection.slug === "zemlya"
+          ? "Акцентный свет для материала, рельефа и пластики пространства."
+          : "Готовим новые акцентные решения для пилотных сценариев.",
+    description:
+      collection.slug === "vozduh"
+        ? "Подходит для частных участков, камерных объектов и входных групп, где свет должен помогать движению и сохранять спокойный ритм пространства."
+        : collection.slug === "zemlya"
+          ? "Подходит для архитектурных акцентов, посадок, подпорных стен и фактурных поверхностей, где свет работает на выразительность материала."
+          : "Коллекция находится в статусе coming-soon: уже можно понять направление и обсудить применение в проекте, пока готовятся первые модели и спецификации.",
     models: (productsByCollection.get(collection.slug) ?? []).map((product) => ({
       productSlug: product.slug,
       title: product.name,
@@ -112,11 +128,11 @@ export const productsShowcaseSeed: ProductsShowcaseSeed = {
     })),
   })),
   finalCta: {
-    eyebrow: "Нужна помощь с выбором?",
-    title: "Подберем коллекцию под ваш объект",
-    subtitle: "Сопоставим коллекцию, модели и сценарий света под архитектуру и задачи участка.",
+    eyebrow: "Подбор коллекции",
+    title: "Если не уверены в направлении, подберём коллекцию под задачу",
+    subtitle: "Сопоставим сценарий света, коллекцию и формат применения под частный или объектный проект и предложим следующий рабочий шаг.",
     primaryCtaLabel: "Обсудить проект",
-    secondaryCtaLabel: "Связаться",
+    secondaryCtaLabel: "Получить материалы",
   },
 };
 

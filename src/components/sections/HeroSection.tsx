@@ -2,33 +2,34 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import heroBollard from "@/assets/hero-bollard.jpg";
-import { Button } from "@/components/ui/button";
-import { navPaths } from "@/lib/route-helpers";
+import TrackedCta from "@/components/TrackedCta";
+import { siteStrategy } from "@/config/site-strategy";
+import { trackEvent } from "@/lib/analytics";
 
 const AUTO_PLAY_DURATION = 5600;
 
 const slides = [
   {
-    eyebrow: "Форма Света",
-    title: "Камень, свет и ландшафт\nв одной композиции",
+    eyebrow: "Каменные световые решения для ландшафта и архитектуры",
+    title: "Подбираем решения из камня\nдля частных и объектных пространств",
     body:
-      "Каменные светильники для частных садов, дворов, глэмпингов и курортных территорий, где важны атмосфера и цельный образ пространства.",
+      "Сайт помогает выбрать характер света, коллекцию и формат применения для участка, входной группы, маршрутов и архитектурных акцентов, а затем перевести задачу в обсуждение проекта.",
     position: "object-center",
     overlay: "from-black/82 via-black/42 to-black/10",
   },
   {
-    eyebrow: "Коллекция Воздух",
-    title: "Мягкая навигация\nдля вечернего маршрута",
+    eyebrow: "Сценарий для маршрутов и входных групп",
+    title: "Мягкая навигация\nдля вечернего пространства",
     body:
-      "Деликатный тёплый свет помогает обозначить движение и сохранить тишину пространства без визуальной перегрузки.",
+      "Деликатный тёплый свет помогает обозначить движение, вход и границы функциональных зон без визуальной перегрузки. Такой сценарий особенно важен для частных участков, камерных объектов и гостиничных территорий.",
     position: "object-[56%_center]",
     overlay: "from-black/82 via-black/48 to-stone-900/10",
   },
   {
-    eyebrow: "Коллекция Земля",
-    title: "Свет, который\nподчёркивает фактуру",
+    eyebrow: "Сценарий для рельефа и архитектурных акцентов",
+    title: "Свет, который\nподчёркивает материал",
     body:
-      "Акцентные сценарии для рельефа, посадок и архитектурных деталей, где камень остаётся главным материалом.",
+      "Акцентный свет помогает работать с фактурой камня, посадками и пластикой пространства. Такой подход нужен там, где материал должен читаться как часть архитектурного языка, а не как фон.",
     position: "object-[44%_center]",
     overlay: "from-black/86 via-stone-950/50 to-amber-950/8",
   },
@@ -36,7 +37,7 @@ const slides = [
 
 const metrics = [
   { value: "IP65+", label: "Защита" },
-  { value: "30000+ часов", label: "Время работы" },
+  { value: "30000+ часов", label: "Ресурс" },
   { value: "Ручная", label: "Сборка" },
   { value: "5 лет", label: "Гарантия" },
 ];
@@ -111,9 +112,32 @@ const HeroSection = () => {
                   {currentSlide.body}
                 </p>
                 <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center md:mt-12">
-                  <Button asChild variant="siteInverse" size="siteLg">
-                    <Link to={navPaths.collections}>Подробнее</Link>
-                  </Button>
+                  <TrackedCta
+                    href={siteStrategy.primaryConversion.href}
+                    label={siteStrategy.primaryConversion.label}
+                    context="home_hero_primary"
+                    variant="siteInverse"
+                    size="siteLg"
+                  />
+                  <TrackedCta
+                    href={siteStrategy.secondaryCtas.collections.href}
+                    label={siteStrategy.secondaryCtas.collections.label}
+                    context="home_hero_secondary"
+                    variant="siteInverseOutline"
+                    size="siteLg"
+                  />
+                </div>
+                <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5">
+                  {siteStrategy.audiencePaths.map((item) => (
+                    <Link
+                      key={item.context}
+                      to={item.href}
+                      onClick={() => trackEvent("cta_click", { context: item.context, target: item.href })}
+                      className="inline-flex items-center gap-2 border-b border-[hsl(var(--hero-line)/0.45)] pb-1 text-[11px] uppercase tracking-[0.18em] text-[hsl(var(--hero-text-muted))] transition-colors hover:text-[hsl(var(--hero-text))]"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
                 </div>
               </motion.div>
             </AnimatePresence>

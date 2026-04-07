@@ -1,7 +1,9 @@
 import type { FormDeliveryMode, FormKind } from "@/types/form-delivery";
 
+const configuredMode = import.meta.env.VITE_FORM_DELIVERY_MODE as FormDeliveryMode | undefined;
+
 export const formDeliveryMode: FormDeliveryMode =
-  (import.meta.env.VITE_FORM_DELIVERY_MODE as FormDeliveryMode | undefined) ?? "mock";
+  configuredMode ?? (import.meta.env.DEV ? "mock" : "live");
 
 export const formEndpoints: Partial<Record<FormKind, string>> = {
   contact_general: import.meta.env.VITE_FORM_ENDPOINT_CONTACT,
@@ -13,3 +15,7 @@ export const formEndpoints: Partial<Record<FormKind, string>> = {
   architect_lead: import.meta.env.VITE_FORM_ENDPOINT_ARCHITECT,
   download_gate: import.meta.env.VITE_FORM_ENDPOINT_DOWNLOAD_GATE,
 };
+
+export function isProductionMockMode() {
+  return import.meta.env.PROD && formDeliveryMode === "mock";
+}

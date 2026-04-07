@@ -18,21 +18,33 @@ const FaqPage = () => {
 
   return (
     <PageLayout
-      title="Частые вопросы — Форма Света"
-      description="Ответы на частые вопросы о материалах, монтаже, эксплуатации, стоимости и подборе световых решений."
+      title="Вопросы и ответы по подбору решений — Форма Света"
+      description="Ответы на частые вопросы о подборе коллекций, материалах, сроках, проектной работе и следующем шаге по частным и объектным пространствам."
     >
       <PageHero
-        eyebrow="FAQ"
-        title="Частые вопросы"
-        subtitle="Ответы на основные вопросы о наших изделиях, материалах и работе."
+        eyebrow="Вопросы"
+        title="Ответы, которые помогают быстрее перейти к следующему шагу"
+        subtitle="Здесь собраны вопросы, которые обычно возникают до обращения или на раннем этапе обсуждения: подбор решения, материалы, сроки, проектный формат и логика следующего шага."
       />
 
       <Section>
         <div className="container-brand px-0">
-          <Breadcrumbs items={[{ label: "FAQ" }]} className="mb-8" />
+          <Breadcrumbs items={[{ label: "Вопросы" }]} className="mb-8" />
         </div>
 
         <div className="max-w-3xl space-y-12">
+          <div className="space-y-4">
+            <p className="font-body text-base leading-relaxed text-foreground/80">
+              FAQ помогает быстро снять базовые вопросы о выборе коллекции, фактуре, сроках и формате
+              проектной работы.
+            </p>
+            <p className="font-body text-sm leading-relaxed text-muted-foreground">
+              Если ответа достаточно, можно спокойно идти дальше в каталог, материалы или объектный
+              сценарий. Если вопрос остаётся открытым, логичный следующий шаг — обсудить проект или
+              написать нам напрямую.
+            </p>
+          </div>
+
           {categories.map((cat) => {
             const items = faqSeed.filter((f) => f.category === cat);
             return (
@@ -63,10 +75,12 @@ const FaqPage = () => {
       </Section>
 
       <CTASection
-        eyebrow="Не нашли ответ?"
-        title="Задайте нам вопрос"
-        subtitle="Свяжитесь с нами — ответим в течение рабочего дня."
-        primaryCta={{ label: "Связаться", href: navPaths.contacts }}
+        eyebrow="Следующий шаг"
+        title="Если вопрос остаётся открытым, подскажем лучший следующий шаг"
+        subtitle="Поможем понять, какая коллекция, материалы или формат проектной работы подходят именно вашему сценарию."
+        primaryCta={{ label: "Обсудить проект", href: navPaths.requestProject }}
+        secondaryCta={{ label: "Контакты", href: navPaths.contacts }}
+        context="faq_final"
       />
     </PageLayout>
   );

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import TrackedCta from "@/components/TrackedCta";
 
 interface CTASectionProps {
   eyebrow?: string;
@@ -7,6 +7,7 @@ interface CTASectionProps {
   primaryCta: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
   variant?: "default" | "dark";
+  context?: string;
 }
 
 const CTASection = ({
@@ -16,6 +17,7 @@ const CTASection = ({
   primaryCta,
   secondaryCta,
   variant = "default",
+  context = "section_cta",
 }: CTASectionProps) => {
   const isDark = variant === "dark";
 
@@ -48,13 +50,21 @@ const CTASection = ({
           </p>
         )}
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
-          <Button asChild variant={isDark ? "siteInverse" : "sitePrimary"} size="siteLg">
-            <a href={primaryCta.href}>{primaryCta.label}</a>
-          </Button>
+          <TrackedCta
+            href={primaryCta.href}
+            label={primaryCta.label}
+            context={`${context}_primary`}
+            variant={isDark ? "siteInverse" : "sitePrimary"}
+            size="siteLg"
+          />
           {secondaryCta && (
-            <Button asChild variant={isDark ? "siteInverseOutline" : "siteOutline"} size="siteLg">
-              <a href={secondaryCta.href}>{secondaryCta.label}</a>
-            </Button>
+            <TrackedCta
+              href={secondaryCta.href}
+              label={secondaryCta.label}
+              context={`${context}_secondary`}
+              variant={isDark ? "siteInverseOutline" : "siteOutline"}
+              size="siteLg"
+            />
           )}
         </div>
       </div>

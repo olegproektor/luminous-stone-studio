@@ -25,15 +25,15 @@ const ProjectContentModule = ({ project, sidebar }: ProjectContentModuleProps) =
 
           <div className="space-y-10">
             <div>
-              <h2 className="font-display text-xl font-medium text-foreground mb-3">Задача</h2>
+              <h2 className="font-display text-xl font-medium text-foreground mb-3">Какая была задача</h2>
               <p className="font-body text-sm text-muted-foreground leading-relaxed">{project.challenge}</p>
             </div>
             <div>
-              <h2 className="font-display text-xl font-medium text-foreground mb-3">Решение</h2>
+              <h2 className="font-display text-xl font-medium text-foreground mb-3">Как её решили</h2>
               <p className="font-body text-sm text-muted-foreground leading-relaxed">{project.solution}</p>
             </div>
             <div>
-              <h2 className="font-display text-xl font-medium text-foreground mb-3">Результат</h2>
+              <h2 className="font-display text-xl font-medium text-foreground mb-3">Что это дало пространству</h2>
               <p className="font-body text-sm text-muted-foreground leading-relaxed">{project.result}</p>
             </div>
           </div>
