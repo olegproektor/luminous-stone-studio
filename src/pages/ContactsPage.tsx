@@ -2,6 +2,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
 import LeadFormWrapper from "@/components/forms/LeadFormWrapper";
+import { siteContacts } from "@/config/site-contacts";
 import { trackClick } from "@/lib/analytics";
 import { contactFormPreset } from "@/data/lead-form-presets";
 import { pageContentSeed } from "@/data/page-content.seed";
@@ -30,6 +31,9 @@ const ContactsPage = () => {
                 пространства, стадию и задачу. Мы подскажем, какие материалы, формат обсуждения или
                 следующий шаг будут уместны именно в вашем сценарии.
               </p>
+              <p className="font-body text-sm leading-relaxed text-muted-foreground">
+                Телефон, почта и мессенджеры ниже — шаблоны до релиза. Рабочие контакты подставляются перед публикацией.
+              </p>
             </div>
 
             <div>
@@ -38,11 +42,11 @@ const ContactsPage = () => {
                 Подходит, если нужно быстро сверить вводные по проекту, сроки или ближайший следующий шаг.
               </p>
               <a
-                href="tel:+74951234567"
-                onClick={() => trackClick("call", "+74951234567")}
+                href={siteContacts.phoneHref}
+                onClick={() => trackClick("call", siteContacts.phoneDisplay)}
                 className="font-body text-lg text-foreground hover:text-accent transition-colors"
               >
-                +7 (495) 123-45-67
+                {siteContacts.phoneDisplay}
               </a>
             </div>
             <div>
@@ -51,11 +55,11 @@ const ContactsPage = () => {
                 Для первого контакта по частному или объектному запросу, когда удобно отправить вводные письмом.
               </p>
               <a
-                href="mailto:info@ston.ru"
-                onClick={() => trackClick("email", "info@ston.ru")}
+                href={siteContacts.emailHref}
+                onClick={() => trackClick("email", siteContacts.emailDisplay)}
                 className="font-body text-lg text-foreground hover:text-accent transition-colors"
               >
-                info@ston.ru
+                {siteContacts.emailDisplay}
               </a>
             </div>
             <div>
@@ -64,11 +68,11 @@ const ContactsPage = () => {
                 Для проектных вводных, запроса материалов, координации BIM и обсуждения применения решений в проекте.
               </p>
               <a
-                href="mailto:arch@ston.ru"
-                onClick={() => trackClick("email", "arch@ston.ru")}
+                href={siteContacts.architectEmailHref}
+                onClick={() => trackClick("email", siteContacts.architectEmailDisplay)}
                 className="font-body text-lg text-foreground hover:text-accent transition-colors"
               >
-                arch@ston.ru
+                {siteContacts.architectEmailDisplay}
               </a>
             </div>
             <div>
@@ -79,20 +83,16 @@ const ContactsPage = () => {
               </p>
               <div className="flex gap-4">
                 <a
-                  href="https://t.me/ston_light"
+                  href={siteContacts.telegramHref}
                   onClick={() => trackClick("messenger", "telegram")}
                   className="font-body text-sm font-medium text-foreground border border-border px-5 py-2.5 hover:bg-secondary transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
                 >
                   Telegram
                 </a>
                 <a
-                  href="https://wa.me/74951234567"
+                  href={siteContacts.whatsappHref}
                   onClick={() => trackClick("messenger", "whatsapp")}
                   className="font-body text-sm font-medium text-foreground border border-border px-5 py-2.5 hover:bg-secondary transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
                 >
                   WhatsApp
                 </a>

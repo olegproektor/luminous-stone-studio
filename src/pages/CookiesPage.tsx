@@ -1,5 +1,6 @@
 import PageLayout from "@/components/layout/PageLayout";
 import Section from "@/components/layout/Section";
+import { siteContacts } from "@/config/site-contacts";
 import { Link } from "react-router-dom";
 
 const CookiesPage = () => (
@@ -63,8 +64,8 @@ const CookiesPage = () => (
           <h2 className="font-display text-xl font-medium text-foreground !mt-10">5. Связь</h2>
           <p>
             По вопросам использования cookie обращайтесь:{" "}
-            <a href="mailto:privacy@ston.ru" className="text-foreground underline hover:text-accent transition-colors">
-              privacy@ston.ru
+            <a href={siteContacts.privacyEmailHref} className="text-foreground underline hover:text-accent transition-colors">
+              {siteContacts.privacyEmailDisplay}
             </a>
           </p>
           <p>

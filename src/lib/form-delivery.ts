@@ -3,6 +3,12 @@ import type { FormDeliveryPayload, FormDeliveryResult } from "@/types/form-deliv
 
 const MOCK_DELAY_MS = 700;
 
+/**
+ * Browser delivery for every public form.
+ * `mock` accepts locally. `live` POSTs `payload.data` as JSON.
+ * Production mock and a live form with an empty endpoint both fail closed (503).
+ * Endpoint map and sample webhook URLs: `.env.example`.
+ */
 export async function deliverForm(payload: FormDeliveryPayload): Promise<FormDeliveryResult> {
   if (isProductionMockMode()) {
     return {
