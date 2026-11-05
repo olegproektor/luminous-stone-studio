@@ -16,13 +16,19 @@ const fields: FormField[] = [
     label: "Количество",
     type: "select",
     options: [
-      { value: "1-5", label: "1–5 шт" },
-      { value: "6-20", label: "6–20 шт" },
-      { value: "20-50", label: "20–50 шт" },
+      { value: "1-5", label: "1-5 шт" },
+      { value: "6-20", label: "6-20 шт" },
+      { value: "20-50", label: "20-50 шт" },
       { value: "50+", label: "Более 50 шт" },
     ],
   },
-  { name: "message", label: "Комментарий", type: "textarea", placeholder: "Уточнения по цвету, монтажу, доставке...", half: false },
+  {
+    name: "message",
+    label: "Комментарий",
+    type: "textarea",
+    placeholder: "Уточнения по цвету, монтажу, доставке...",
+    half: false,
+  },
 ];
 
 const PriceRequestForm = ({ productName, productSlug, context = "product-detail" }: PriceRequestFormProps) => {
@@ -33,7 +39,7 @@ const PriceRequestForm = ({ productName, productSlug, context = "product-detail"
       submitLabel="Запросить цену"
       analyticsEvent="request_price"
       onSubmit={async (data) => {
-        const payload = { ...data, product: productName, productSlug, context };
+        const payload = { ...data, product: productName || "", productSlug: productSlug || "", context };
         const delivery = await deliverForm({ formId: "request_price", data: payload });
         if (!delivery.ok) {
           throw new Error(delivery.message);

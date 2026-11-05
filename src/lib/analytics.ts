@@ -1,8 +1,8 @@
 import type { FormAnalyticsEventName } from "@/types/form-events";
 
 /**
- * Analytics event system for STŌN
- * Centralized event tracking — ready for Yandex Metrika, GTM, CRM
+ * Centralized analytics layer for the public site.
+ * Primary web analytics target for this project is Yandex Metrika.
  *
  * Usage: trackEvent("form_submit", { form: "request_project", clientType: "architect" })
  */
@@ -35,14 +35,47 @@ type AnalyticsParams = Record<string, string | number | boolean>;
 
 declare global {
   interface Window {
-    ym?: (
-      metrikaId: number | string,
-      action: "reachGoal",
-      goal: AnalyticsEventName,
-      params: AnalyticsParams
-    ) => void;
+    ym?: (...args: unknown[]) => void;
     __METRIKA_ID__?: number | string;
   }
+}
+
+export function initAnalytics() {
+  if (typeof window === "undefined") return;
+
+  const metrikaId = import.meta.env.VITE_METRIKA_ID;
+  if (!metrikaId) return;
+
+  window.__METRIKA_ID__ = metrikaId;
+
+  if (window.ym || document.getElementById("yandex-metrika-script")) {
+    return;
+  }
+
+  const queue: unknown[][] = [];
+  const ymStub = (...args: unknown[]) => {
+    queue.push(args);
+  };
+  window.ym = ymStub;
+
+  const script = document.createElement("script");
+  script.id = "yandex-metrika-script";
+  script.async = true;
+  script.src = "https://mc.yandex.ru/metrika/tag.js";
+  script.onload = () => {
+    if (!window.ym) return;
+
+    const liveYm = window.ym;
+    liveYm(Number(metrikaId), "init", {
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true,
+    } as never);
+
+    queue.forEach((args) => liveYm(...args));
+  };
+
+  document.head.appendChild(script);
 }
 
 /**

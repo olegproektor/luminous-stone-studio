@@ -15,7 +15,7 @@ export const contactFormPreset: LeadFormPreset = {
       options: [
         { value: "private", label: "Частный премиальный клиент" },
         { value: "architect", label: "Архитектор / дизайнер" },
-        { value: "glamping-hotel", label: "Команда объекта / hospitality" },
+        { value: "glamping-hotel", label: "Команда объекта / гостиничный формат" },
         { value: "developer", label: "Девелопер / заказчик" },
         { value: "other", label: "Другое" },
       ],
@@ -24,7 +24,7 @@ export const contactFormPreset: LeadFormPreset = {
       name: "message",
       label: "Коротко о запросе",
       type: "textarea",
-      placeholder: "Тип объекта, город, стадия проекта, задача и что важно обсудить в первую очередь...",
+      placeholder: "Тип объекта, город, стадия проекта, задача и что важно обсудить в первую очередь",
       half: false,
     },
   ],
@@ -33,7 +33,7 @@ export const contactFormPreset: LeadFormPreset = {
 export const requestProjectStep1Fields: LeadFormField[] = [
   { name: "name", label: "Имя", type: "text", required: true, placeholder: "Как вас зовут" },
   { name: "phone", label: "Телефон", type: "tel", required: true, placeholder: "+7 (___) ___-__-__" },
-  { name: "email", label: "Email", type: "email", placeholder: "email@example.com" },
+  { name: "email", label: "Email", type: "email", placeholder: "Куда отправить ответ и материалы" },
   {
     name: "clientType",
     label: "Роль в проекте",
@@ -41,7 +41,7 @@ export const requestProjectStep1Fields: LeadFormField[] = [
     options: [
       { value: "private", label: "Частный премиальный клиент" },
       { value: "architect", label: "Архитектор / дизайнер" },
-      { value: "glamping-hotel", label: "Команда объекта / hospitality" },
+      { value: "glamping-hotel", label: "Команда объекта / гостиничный формат" },
       { value: "developer", label: "Девелопер / заказчик" },
       { value: "other", label: "Другое" },
     ],
@@ -50,7 +50,7 @@ export const requestProjectStep1Fields: LeadFormField[] = [
 
 export const requestProjectFinalPreset: LeadFormPreset = {
   formId: "request_project",
-  submitLabel: "Отправить заявку",
+  submitLabel: "Отправить вводные",
   analyticsEvent: "request_project",
   fields: [
     { name: "city", label: "Город / регион", type: "text", placeholder: "Москва" },
@@ -82,6 +82,12 @@ export const requestProjectFinalPreset: LeadFormPreset = {
         { value: "unknown", label: "Пока не определён" },
       ],
     },
-    { name: "message", label: "Комментарий", type: "textarea", placeholder: "Опишите задачу, площадь, пожелания...", half: false },
+    {
+      name: "message",
+      label: "Комментарий",
+      type: "textarea",
+      placeholder: "Опишите задачу, тип пространства, стадию проекта, ориентиры по срокам или важные ограничения",
+      half: false,
+    },
   ],
 };

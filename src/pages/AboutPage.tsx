@@ -1,10 +1,8 @@
 import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
-import CTASection from "@/components/layout/CTASection";
 import TrustProofStrip from "@/components/shared/TrustProofStrip";
 import { companySeed } from "@/data/company.seed";
-import { navPaths } from "@/lib/route-helpers";
 
 const AboutPage = () => {
   return (
@@ -43,15 +41,6 @@ const AboutPage = () => {
           ))}
         </div>
       </Section>
-
-      <CTASection
-        eyebrow={companySeed.cta.eyebrow}
-        title={companySeed.cta.title}
-        subtitle={companySeed.cta.subtitle}
-        primaryCta={{ label: "Обсудить проект", href: navPaths.requestProject }}
-        secondaryCta={{ label: "Контакты", href: navPaths.contacts }}
-        context="company_final"
-      />
     </PageLayout>
   );
 };

@@ -8,7 +8,7 @@ import { izdeliyaProductsSeed } from "@/data/izdeliya-architecture.seed";
 import { getIndexableCollectionSlugs, getIndexableProductPaths } from "@/data/public-catalog-state";
 
 export const sitemapConfig = {
-  siteUrl: "https://ston.ru",
+  siteUrl: import.meta.env.VITE_SITE_URL || "https://ston.ru",
   staticPaths: [
     routes.home,
     routes.products,

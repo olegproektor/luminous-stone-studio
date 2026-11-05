@@ -26,37 +26,28 @@ const RequestProjectForm = () => {
   const isLastStep = step === steps.length - 1;
 
   if (isLastStep) {
-    // Last step uses LeadForm with consent + submit
     return (
       <div>
-        {/* Step indicator */}
-        <div className="flex items-center gap-3 mb-8">
-          {steps.map((s, i) => (
-            <div key={i} className="flex items-center gap-2">
+        <div className="mb-8 flex items-center gap-3">
+          {steps.map((stepItem, index) => (
+            <div key={stepItem.title} className="flex items-center gap-2">
               <button
-                onClick={() => i < step && setStep(i)}
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-body font-medium transition-colors ${
-                  i <= step
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-secondary text-muted-foreground"
+                type="button"
+                onClick={() => index < step && setStep(index)}
+                className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-body font-medium transition-colors ${
+                  index <= step ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground"
                 }`}
               >
-                {i + 1}
+                {index + 1}
               </button>
-              <span className="hidden sm:inline text-sm font-body text-muted-foreground">
-                {s.title}
-              </span>
-              {i < steps.length - 1 && <div className="w-8 h-px bg-border" />}
+              <span className="hidden text-sm font-body text-muted-foreground sm:inline">{stepItem.title}</span>
+              {index < steps.length - 1 ? <div className="h-px w-8 bg-border" /> : null}
             </div>
           ))}
         </div>
 
-        <h3 className="font-display text-xl font-medium text-foreground mb-1">
-          {currentStep.title}
-        </h3>
-        <p className="font-body text-sm text-muted-foreground mb-6">
-          {currentStep.subtitle}
-        </p>
+        <h3 className="mb-1 font-display text-xl font-medium text-foreground">{currentStep.title}</h3>
+        <p className="mb-6 font-body text-sm text-muted-foreground">{currentStep.subtitle}</p>
 
         <LeadFormWrapper
           preset={requestProjectFinalPreset}
@@ -72,12 +63,10 @@ const RequestProjectForm = () => {
     );
   }
 
-  // Intermediate steps — just collect data
   const handleNext = () => {
-    // Basic validation for required fields
     const missing = currentStep.fields
-      .filter((f) => "required" in f && f.required && !(stepData[f.name] || "").trim())
-      .map((f) => f.name);
+      .filter((field) => "required" in field && field.required && !(stepData[field.name] || "").trim())
+      .map((field) => field.name);
 
     if (missing.length > 0) return;
 
@@ -87,77 +76,67 @@ const RequestProjectForm = () => {
 
   return (
     <div>
-      {/* Step indicator */}
-      <div className="flex items-center gap-3 mb-8">
-        {steps.map((s, i) => (
-          <div key={i} className="flex items-center gap-2">
+      <div className="mb-8 flex items-center gap-3">
+        {steps.map((stepItem, index) => (
+          <div key={stepItem.title} className="flex items-center gap-2">
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-body font-medium ${
-                i <= step
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-secondary text-muted-foreground"
+              className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-body font-medium ${
+                index <= step ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground"
               }`}
             >
-              {i + 1}
+              {index + 1}
             </div>
-            <span className="hidden sm:inline text-sm font-body text-muted-foreground">
-              {s.title}
-            </span>
-            {i < steps.length - 1 && <div className="w-8 h-px bg-border" />}
+            <span className="hidden text-sm font-body text-muted-foreground sm:inline">{stepItem.title}</span>
+            {index < steps.length - 1 ? <div className="h-px w-8 bg-border" /> : null}
           </div>
         ))}
       </div>
 
-      <h3 className="font-display text-xl font-medium text-foreground mb-1">
-        {currentStep.title}
-      </h3>
-      <p className="font-body text-sm text-muted-foreground mb-6">
-        {currentStep.subtitle}
-      </p>
+      <h3 className="mb-1 font-display text-xl font-medium text-foreground">{currentStep.title}</h3>
+      <p className="mb-6 font-body text-sm text-muted-foreground">{currentStep.subtitle}</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {currentStep.fields.map((field) => (
-          <div
-            key={field.name}
-            className={field.type === "textarea" ? "md:col-span-2" : ""}
-          >
-            <label className="block text-sm font-body text-muted-foreground mb-1.5">
+          <div key={field.name} className={field.type === "textarea" ? "md:col-span-2" : ""}>
+            <label className="mb-1.5 block text-sm font-body text-muted-foreground">
               {field.label}
-              {field.required && <span className="text-destructive ml-1">*</span>}
+              {field.required ? <span className="ml-1 text-destructive">*</span> : null}
             </label>
             {field.type === "select" ? (
               <select
                 value={stepData[field.name] || ""}
-                onChange={(e) => setStepData((prev) => ({ ...prev, [field.name]: e.target.value }))}
-                className="w-full font-body text-sm bg-background border border-border px-4 py-3 h-11 focus:outline-none focus:ring-1 focus:ring-ring"
+                onChange={(event) => setStepData((prev) => ({ ...prev, [field.name]: event.target.value }))}
+                className="h-11 w-full border border-border bg-background px-4 py-3 font-body text-sm focus:outline-none focus:ring-1 focus:ring-ring"
               >
                 <option value="">{field.placeholder || "Выберите..."}</option>
-                {field.options?.map((opt) => (
-                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                {field.options?.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
                 ))}
               </select>
             ) : field.type === "textarea" ? (
               <textarea
                 value={stepData[field.name] || ""}
-                onChange={(e) => setStepData((prev) => ({ ...prev, [field.name]: e.target.value }))}
+                onChange={(event) => setStepData((prev) => ({ ...prev, [field.name]: event.target.value }))}
                 placeholder={field.placeholder}
                 rows={4}
-                className="w-full font-body text-sm bg-background border border-border px-4 py-3 focus:outline-none focus:ring-1 focus:ring-ring resize-none"
+                className="w-full resize-none border border-border bg-background px-4 py-3 font-body text-sm focus:outline-none focus:ring-1 focus:ring-ring"
               />
             ) : (
               <input
                 type={field.type}
                 value={stepData[field.name] || ""}
-                onChange={(e) => setStepData((prev) => ({ ...prev, [field.name]: e.target.value }))}
+                onChange={(event) => setStepData((prev) => ({ ...prev, [field.name]: event.target.value }))}
                 placeholder={field.placeholder}
-                className="w-full font-body text-sm bg-background border border-border px-4 py-3 h-11 focus:outline-none focus:ring-1 focus:ring-ring"
+                className="h-11 w-full border border-border bg-background px-4 py-3 font-body text-sm focus:outline-none focus:ring-1 focus:ring-ring"
               />
             )}
           </div>
         ))}
       </div>
 
-      <Button onClick={handleNext} variant="sitePrimary" size="site" className="mt-6">
+      <Button onClick={handleNext} variant="sitePrimary" size="site" className="mt-6" type="button">
         Далее →
       </Button>
     </div>

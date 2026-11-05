@@ -13,7 +13,7 @@ const FinalCTASection = () => {
           под архитектуру и сценарий пространства
         </h2>
         <p className="mx-auto mt-7 max-w-xl text-sm leading-relaxed text-white/56 md:text-base">
-          Сопоставим коллекции, материалы и формат применения под частный или объектный проект и предложим следующий рабочий шаг.
+          Сопоставим коллекции, материалы и формат применения под частный или объектный проект и предложим понятный следующий шаг по задаче.
         </p>
         <div className="mt-12 flex flex-col justify-center gap-4 sm:flex-row">
           <TrackedCta

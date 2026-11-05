@@ -1,74 +1,69 @@
-﻿# КАМЕНЬ И СВЕТ / Luminous Stone Studio
+# Форма Света
 
-Frontend-репозиторий сайта о премиальных каменных уличных светильниках для российского рынка.
+Рабочий репозиторий сайта бренда «Форма Света» для российского рынка.
 
-Проект построен на `React + Vite + TypeScript + Tailwind CSS` и использует:
-- alias-first routing
-- canonical URL policy
-- seed/config-driven content architecture
-- единый `PageLayout` для meta / OG / canonical / JSON-LD
-- защищённые контракты форм, аналитики и download-gate
+Стек: `React + Vite + TypeScript + Tailwind CSS`.
 
-## О проекте
+Сайт строится не как e-commerce-витрина SKU, а как проектный продуктовый сайт: пользователь проходит через коллекции, материалы, проектные сценарии, раздел загрузок и формы, после чего переводится в обсуждение проекта.
 
-КАМЕНЬ И СВЕТ — русскоязычный сайт о каменных уличных светильниках для частной и архитектурной среды.
+---
 
-Ключевые принципы:
-- русскоязычный public UI по умолчанию
-- canonical-first SEO и алиасы для совместимости
-- seed-driven контентный слой с возможностью миграции на CMS
-- повторно используемые layout и page-модули
-- отдельные защищённые подсистемы для форм, аналитики, downloads и qualification flow
-
-## Текущая архитектура
+## Архитектура
 
 ```text
 src/
+├── assets/                  # Статические изображения
 ├── components/
-│   ├── collections/     # Модули страниц коллекций
-│   ├── downloads/       # Download gate и UI загрузок
-│   ├── for-objects/     # Qualification flow для объектов
-│   ├── forms/           # LeadForm, presets, wrappers
-│   ├── layout/          # Header, Footer, PageLayout, CTASection
-│   ├── products/        # Каталог, коллекции, product pages
-│   ├── sections/        # Секции главной страницы
-│   ├── shared/          # Общие контентные блоки
-│   └── ui/              # Базовые UI-компоненты
-├── config/              # routes, metadata maps, analytics maps
-├── data/                # seed/config файлы контента
-├── hooks/               # UTM, analytics view, media hooks
-├── lib/                 # canonical, route-helpers, analytics, schema, delivery
-├── pages/               # Route-level страницы
-├── test/                # Smoke и unit tests
-└── types/               # TypeScript-контракты
+│   ├── downloads/           # Раздел загрузок, gated-материалы, служебные модули
+│   ├── forms/               # LeadForm, обёртки, сценарии заявок
+│   ├── layout/              # Header, Footer, PageLayout, PageHero, Section
+│   ├── products/            # Витрина изделий, rail-панель, product/collection blocks
+│   ├── sections/            # Секции главной и вспомогательных страниц
+│   ├── shared/              # Общие контентные блоки
+│   └── ui/                  # Базовые UI-компоненты
+├── config/                  # routes, navigation, analytics map, sitemap config
+├── data/                    # Контент и конфигурация на основе seed-слоя
+├── hooks/                   # analytics, utm, media hooks
+├── lib/                     # canonical, analytics, schema, download/form helpers
+├── pages/                   # Route-level страницы
+├── test/                    # Smoke и unit tests
+└── types/                   # Контракты доменных сущностей и слоёв доставки данных
 ```
 
-Ключевые точки:
-- `src/config/routes.ts` — canonical routes и legacy aliases
-- `src/lib/route-helpers.ts` — генерация внутренних ссылок
-- `src/components/layout/PageLayout.tsx` — title / meta / canonical / JSON-LD
-- `scripts/generate-sitemap.mjs` — генерация sitemap
-- `scripts/generate-robots.mjs` — генерация robots.txt
+### Ключевые принципы
 
-## Protected systems
+- **Русский публичный интерфейс**: публичный UI и tone of voice по умолчанию русскоязычные.
+- **Основные canonical-маршруты**: canonical routes первичны, legacy aliases поддерживаются для совместимости.
+- **Контент через seed-слой**: контент и композиция максимально вынесены из JSX в `src/data` и `src/config`.
+- **Защищённые системы**: canonical policy, metadata pipeline, analytics wiring, lead form contracts и download gate не должны ломаться в рамках обычных UI-итераций.
+- **Проектная конверсия**: основная конверсия сайта — обсуждение проекта, а не корзина и оформление заказа.
+- **Запуск в `.ru` зоне**: доменная, языковая и аналитическая логика проекта ориентированы на `.ru`-запуск и российский рынок.
 
-Без отдельного архитектурного решения не менять:
-- alias-first routing
-- canonical URL policy
+---
+
+## Защищённые системы
+
+Без отдельного решения не менять:
+
+- alias-first routing / canonical URL policy
 - metadata pipeline
 - JSON-LD / schema hooks
-- sitemap / robots generation policy
-- analytics event names и wiring
+- sitemap.xml и robots.txt generation policy
+- названия аналитических событий и их wiring
 - lead form contracts и wrappers
 - download gate logic
 - `/for-objects` qualification flow
 - sticky CTA policy
-- core data / entity shapes
+- core data/entity shapes
 - seed/config-driven content architecture
+- Яндекс.Метрика как базовая web-аналитика
+
+---
 
 ## Canonical routes и aliases
 
-### Canonical
+### Canonical routes
+
 - `/`
 - `/izdeliya`
 - `/izdeliya/:collectionSlug`
@@ -86,7 +81,8 @@ src/
 - `/company`
 - `/voprosy`
 
-### Aliases / legacy compatibility
+### Legacy aliases
+
 - `/products` -> `/izdeliya`
 - `/catalog` -> `/izdeliya`
 - `/collections` -> `/izdeliya`
@@ -101,97 +97,213 @@ src/
 - `/faq` -> `/voprosy`
 - `/about` -> `/company`
 
-Важно:
-- в sitemap и canonical должны попадать только canonical routes
-- внутренние ссылки строить только через `buildPath` и route helpers
+Правила:
 
-## Контентная модель
+- в sitemap и canonical попадают только canonical routes
+- внутренние ссылки строятся через route helpers, а не через вручную прописанные legacy href
+- alias routes существуют как слой совместимости, а не как параллельная IA
 
-Контент хранится в seed/data слое и может быть заменён на CMS без поломки UI-контрактов.
+Ключевые файлы:
 
-Подробная схема:
-- `CONTENT_ARCHITECTURE.md` — правила разделения `core entities`, `presentation/storytelling` и `layout/config`
+- `src/config/routes.ts`
+- `src/lib/route-helpers.ts`
+- `src/lib/canonical.ts`
+
+---
+
+## Контентная архитектура
+
+Проект уже живёт не на модели «всё в JSX», а на контентном seed-слое.
 
 Основные источники:
-- `src/data/products.ts` — основная продуктовая база
-- `src/data/collections.ts` — legacy / общие коллекции
-- `src/data/izdeliya-architecture.seed.ts` — структура витрины `/izdeliya`, коллекций и вложенных product routes
-- `src/data/products-showcase.seed.ts` — showcase/view-layer данные
+
+- `src/data/izdeliya-architecture.seed.ts` — canonical-структура изделий, коллекций и вложенных product routes
+- `src/data/public-catalog-state.ts` — статусы запуска и indexability
+- `src/data/products-showcase.seed.ts` — витринный смысловой слой каталога
+- `src/data/product-page-content.seed.ts` — смысловая подача product pages
+- `src/data/home-layout.seed.ts` — композиция главной страницы
 - `src/data/projects.ts` — проекты
-- `src/data/articles.ts` — новости / статьи
-- `src/data/downloads.seed.ts` — загрузки
-- `src/data/faq.seed.ts`, `src/data/faq.ts` — FAQ
-- `src/data/legal.seed.ts` — юридические тексты
-- `src/data/company.seed.ts` — данные о компании
-- `src/data/product-page-content.seed.ts` — product-page storytelling
-- `src/data/page-content.seed.ts`, `src/data/trust-content.seed.ts`, `src/data/trust-proofs.seed.ts` — editorial / page-level контент
-- `src/data/home-layout.seed.ts` — layout composition
+- `src/data/articles.ts` — материалы и новости
+- `src/data/downloads.seed.ts` — материалы для загрузки и категории
+- `src/data/company.seed.ts`, `src/data/page-content.seed.ts`, `src/data/legal.seed.ts` — содержимое страниц и legal content
 
 Правило:
-- factual data хранить в `core entity seeds`
-- page storytelling хранить отдельно
+
+- factual data хранить в seed/data слое
+- смысловую подачу страниц отделять от core entities
 - layout/config не смешивать с factual content
-- публичный контент не хранить напрямую в JSX
+- публичный контент не размазывать по JSX без необходимости
 
-## Изделия, коллекции и модели
+---
 
-Текущая IA для product layer:
-- `/izdeliya` — витрина коллекций
-- `/izdeliya/:collectionSlug` — страница коллекции
-- `/izdeliya/:collectionSlug/:productSlug` — страница модели внутри коллекции
-- `/products/:slug` и `/catalog/:slug` — legacy/general product detail
+## Метаданные, schema и SEO
 
-При добавлении коллекции или модели:
-1. обновляйте данные в `src/data/izdeliya-architecture.seed.ts` и связанных seed-файлах
-2. следите, чтобы `slug` совпадал с route conventions
-3. все переходы на страницы изделий стройте через `buildPath.collectionProduct(...)`
-4. не добавляйте прямые hardcoded URL в компоненты
+SEO-слой собран вокруг `PageLayout` и metadata pipeline.
 
-## Формы, аналитика, downloads
+Что уже поддерживается:
 
-### Формы
-Все формы используют единый контракт через:
-- `LeadForm`
-- form presets
-- `deliverForm`
+- `title`
+- `description`
+- canonical URL
+- `robots`
+- JSON-LD/schema hooks
+- генерация sitemap
+- генерация robots
 
-Нельзя ломать:
-- event names
-- success / fail states
-- UTM-поля
-- consent / privacy wrappers
+Ключевые файлы:
 
-### Аналитика
-Проект подготовлен под подключение Яндекс.Метрики и внутренних событий.
+- `src/components/layout/PageLayout.tsx`
+- `src/lib/schema.ts`
+- `src/config/schema-map.ts`
+- `src/config/sitemap.config.ts`
+- `scripts/generate-sitemap.mjs`
+- `scripts/generate-robots.mjs`
 
-Основные группы событий:
-- page/list/detail views
-- CTA clicks
-- product / project / article views
-- download intent / download success
-- form start / submit / success / fail / error
-- contact clicks
-- cookie consent events
+Важно:
 
-### Download gate
-Раздел загрузок поддерживает открытые и gated assets.
+- canonical policy считается защищённой системой
+- любые UI-изменения не должны ломать schema hooks и alias/canonical поведение
+- `VITE_SITE_URL` используется как источник домена для runtime/meta и SEO-скриптов
 
-Ключевые точки:
+---
+
+## Формы и слой доставки
+
+Все публичные формы должны проходить через единый form contract.
+
+Ключевые файлы:
+
+- `src/components/forms/LeadForm.tsx`
+- `src/components/forms/LeadFormWrapper.tsx`
+- `src/components/forms/RequestProjectForm.tsx`
+- `src/lib/form-delivery.ts`
+- `src/config/form-endpoints.ts`
+- `src/types/lead-form-contract.ts`
+- `src/types/form-delivery.ts`
+
+Текущая модель:
+
+- формы собирают payload в одном формате
+- honeypot, consent и UTM capture встроены в общий слой форм
+- отправка идёт через `deliverForm`
+- режим работы задаётся env-переменными
+
+Важно:
+
+- не менять event names у form analytics без отдельного решения
+- не обходить `LeadForm` «простыми формами на странице»
+- отсутствие endpoint должно обрабатываться предсказуемым UI-состоянием
+
+---
+
+## Раздел загрузок и gated-материалы
+
+Раздел загрузок — это отдельная продуктовая подсистема, а не просто папка файлов.
+
+Ключевые файлы:
+
+- `src/pages/DownloadsHubPage.tsx`
+- `src/pages/DownloadCategoryPage.tsx`
 - `src/components/downloads/DownloadGateForm.tsx`
-- `src/lib/download-access.ts`
+- `src/components/downloads/modules/*`
 - `src/data/downloads.seed.ts`
+- `src/config/download-file-governance.ts`
+- `src/lib/download-access.ts`
 
-## SEO и metadata
+Правила:
 
-SEO-слой строится через `PageLayout` и metadata pipeline:
-- document title
-- meta description
-- OG title / description
-- canonical URL с учётом alias mapping
-- JSON-LD / schema hooks
-- sitemap.xml и robots.txt generation
+- открытые материалы скачиваются напрямую
+- gated-материалы требуют форму
+- governance rules должны покрывать используемые категории
+- материалы должны вести к обсуждению проекта, а не существовать как «скачать любой ценой»
 
-Любые UI-правки не должны ломать этот слой.
+---
+
+## Аналитика
+
+Проект подготовлен под Яндекс.Метрику как базовую систему веб-аналитики для `.ru`-запуска и внутренних product/form events.
+
+Ключевые файлы:
+
+- `src/lib/analytics.ts`
+- `src/config/analytics-event-map.ts`
+- `src/hooks/useAnalyticsView.ts`
+- `src/components/TrackedCta.tsx`
+
+Что трекается:
+
+- `page_view`
+- list/detail views
+- CTA clicks
+- product/project/article views
+- form start / submit / success / fail / error
+- download intent / download success
+- contact clicks
+- cookie consent actions
+
+### Подключение Метрики
+
+Если задан `VITE_METRIKA_ID`, Яндекс.Метрика подключается автоматически через `src/main.tsx`.
+
+### Карта основных целей
+
+| Приоритет | Событие | Описание |
+|-----------|---------|----------|
+| Primary | `request_project` | Заявка на проект |
+| Primary | `architect_lead` | Лид от архитектора |
+| Secondary | `request_price` | Запрос цены |
+| Secondary | `request_consultation` | Запрос консультации |
+| Secondary | `request_catalog` | Запрос каталога |
+| Secondary | `request_custom` | Кастомный запрос |
+| Mid-funnel | `form_start` | Начало заполнения формы |
+| Mid-funnel | `download_pdf`, `download_intent` | Намерение и факт скачивания |
+| Micro | `product_view`, `project_view`, `article_view` | Просмотры контента |
+
+---
+
+## Как продолжать разработку
+
+### Как добавить страницу
+
+1. Создайте файл в `src/pages/YourPage.tsx`
+2. Используйте `PageLayout` как каркас страницы
+3. Добавьте lazy import и route в `src/App.tsx`
+4. Используйте route helpers и не добавляйте вручную прописанные legacy paths
+
+### Как добавить коллекцию или изделие
+
+1. Обновите `src/data/izdeliya-architecture.seed.ts`
+2. Если нужно, синхронизируйте launch/indexability через `src/data/public-catalog-state.ts`
+3. Проверьте canonical path и использование route helpers
+4. Если страница indexable, не забудьте про metadata/SEO consistency
+
+### Как добавить article / project / download
+
+1. Обновите соответствующий seed в `src/data`
+2. Сверьте ссылочные path helpers
+3. Для раздела загрузок убедитесь, что файл действительно существует в `public/downloads`, либо пока не публикуйте его в seed
+
+---
+
+## Переменные окружения
+
+См. `.env.example`.
+
+Основные переменные:
+
+- `VITE_SITE_URL`
+- `VITE_METRIKA_ID`
+- `VITE_FORM_DELIVERY_MODE`
+- `VITE_FORM_ENDPOINT_CONTACT`
+- `VITE_FORM_ENDPOINT_PROJECT`
+- `VITE_FORM_ENDPOINT_PRICE`
+- `VITE_FORM_ENDPOINT_CATALOG`
+- `VITE_FORM_ENDPOINT_CONSULTATION`
+- `VITE_FORM_ENDPOINT_CUSTOM`
+- `VITE_FORM_ENDPOINT_ARCHITECT`
+- `VITE_FORM_ENDPOINT_DOWNLOAD_GATE`
+
+---
 
 ## Запуск
 
@@ -199,46 +311,102 @@ SEO-слой строится через `PageLayout` и metadata pipeline:
 npm install
 npm run dev
 npm run build
-npm run preview
-npm test
+npm run test
 ```
 
-Отдельно:
+SEO-скрипты:
 
 ```bash
 npm run generate:seo
 ```
 
-Важно:
-- `prebuild` запускает генерацию `sitemap.xml` и `robots.txt`
+`prebuild` автоматически запускает генерацию `sitemap.xml` и `robots.txt`.
+
+---
 
 ## Проверки после изменений
 
 Минимум:
+
 - `npx tsc --noEmit`
 - `npm run build`
-- `npm test`
+- `npm run test`
 
-Если менялись routes, формы, SEO, downloads или page shell, дополнительно проверить:
-- alias behavior
+Если трогали routes, forms, SEO, downloads, company, FAQ, page shell или qualification flow, дополнительно проверить:
+
+- canonical routes и alias resolution
 - canonical tags
-- JSON-LD
-- sitemap / robots
+- JSON-LD/schema hooks
+- корректность sitemap / robots
 - `/izdeliya`
-- страницы коллекций
-- страницы моделей коллекций
+- страницы коллекций и вложенных моделей
 - `/izdeliya/faktura`
 - `/skachat`
-- gated download flow
+- open vs gated download flow
 - `/komplekty`
 - `/custom` alias behavior
 - `/company`
 - `/voprosy`
 - success / fail states форм
-- sticky CTA и cookie banner на mobile
+- sticky CTA и cookie banner overlap на mobile
 
-## Текущий статус
+---
 
-Репозиторий production-oriented, но активно развивается на уровне UI, контента и визуальной системы.
+## Чек-лист перед запуском
 
-README должен описывать текущее состояние кода, а не историческую архитектуру. Если меняется IA, routing, metadata layer или seed-структура, обновляйте README вместе с кодом.
+### SEO
+
+- [ ] Проверить `VITE_SITE_URL` для production
+- [ ] Проверить canonical tags на ключевых страницах
+- [ ] Проверить JSON-LD на indexable pages
+- [ ] Проверить sitemap.xml и robots.txt после build
+- [ ] Проверить сайт в Яндекс.Вебмастере
+
+### Аналитика
+
+- [ ] Подключить production `VITE_METRIKA_ID` для Яндекс.Метрики
+- [ ] Проверить отправку page/form/cta/download событий
+- [ ] Сверить карту целей в Метрике
+
+### Формы
+
+- [ ] Подключить реальные endpoints для production
+- [ ] Протестировать contact / project / price / download gate формы
+- [ ] Проверить honeypot и consent behavior
+- [ ] Проверить UTM-передачу
+
+### Downloads
+
+- [ ] Положить реальные согласованные файлы в `public/downloads`
+- [ ] Проверить gated/open flow на production-сборке
+- [ ] Проверить governance consistency
+
+### Контент
+
+- [ ] Заменить placeholder-контент на реальные фото и согласованные материалы
+- [ ] Сверить словарь бренда на всех страницах
+- [ ] Обновить legal copy после юр. проверки
+
+### Технические
+
+- [ ] Проверить favicon и social preview image
+- [ ] Проверить мобильную версию ключевых страниц
+- [ ] Проверить 404
+- [ ] Проверить alias behavior после деплоя
+
+---
+
+## Важно для команды
+
+README должен описывать фактическое состояние текущей архитектуры, а не историческую версию проекта.
+
+Если меняются:
+
+- canonical routing
+- metadata/schema pipeline
+- analytics wiring
+- form delivery contracts
+- download gate behavior
+- seed/config-driven architecture
+
+обновляйте `README` вместе с кодом.

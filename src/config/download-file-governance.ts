@@ -20,4 +20,10 @@ export const downloadFileGovernance: DownloadFileGovernanceRule[] = [
     allowedFileTypes: ["zip", "3d", "dwg"],
     defaultTargetSegment: "architect",
   },
+  {
+    category: "support",
+    defaultAccessMode: "open",
+    allowedFileTypes: ["pdf", "doc", "dwg"],
+    defaultTargetSegment: "b2c",
+  },
 ];

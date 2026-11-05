@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import PageLayout from "@/components/layout/PageLayout";
 import Section from "@/components/layout/Section";
@@ -6,19 +7,26 @@ import Breadcrumbs from "@/components/ui/breadcrumbs";
 import ArticleCard from "@/components/ui/article-card";
 import { getArticleBySlug, getRelatedArticles, articleCategories } from "@/data/articles";
 import { navPaths } from "@/lib/route-helpers";
+import { trackEvent } from "@/lib/analytics";
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const article = slug ? getArticleBySlug(slug) : undefined;
 
+  useEffect(() => {
+    if (article) {
+      trackEvent("article_view", { slug: article.slug, category: article.category });
+    }
+  }, [article]);
+
   if (!article) {
     return (
-      <PageLayout title="Статья не найдена — STŌN">
+      <PageLayout title="Материал не найден — Форма Света" noIndex suppressCanonical>
         <Section>
-          <div className="text-center py-20">
-            <h1 className="font-display text-3xl text-foreground mb-4">Статья не найдена</h1>
+          <div className="py-20 text-center">
+            <h1 className="mb-4 font-display text-3xl text-foreground">Материал не найден</h1>
             <Link to={navPaths.news} className="font-body text-sm text-muted-foreground underline">
-              Все статьи
+              Все материалы
             </Link>
           </div>
         </Section>
@@ -28,106 +36,57 @@ const BlogPostPage = () => {
 
   const related = getRelatedArticles(article);
 
-  // Simple markdown-like rendering for content
   const renderContent = (content: string) => {
     if (!content) return null;
-    const lines = content.split("\n");
-    const elements: JSX.Element[] = [];
 
-    lines.forEach((line, i) => {
-      const trimmed = line.trim();
-      if (!trimmed) return;
-
-      if (trimmed.startsWith("## ")) {
-        elements.push(
-          <h2
-            key={i}
-            className="font-display text-2xl font-medium text-foreground mt-10 mb-4"
-          >
-            {trimmed.replace("## ", "")}
-          </h2>
-        );
-      } else if (trimmed.startsWith("### ")) {
-        elements.push(
-          <h3
-            key={i}
-            className="font-display text-xl font-medium text-foreground mt-8 mb-3"
-          >
-            {trimmed.replace("### ", "")}
-          </h3>
-        );
-      } else if (trimmed.startsWith("- **")) {
-        // Bold list item
-        const match = trimmed.match(/^- \*\*(.+?)\*\*\s*[—–-]\s*(.+)$/);
-        if (match) {
-          elements.push(
-            <li key={i} className="flex items-start gap-2 mb-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
-              <span>
-                <strong className="text-foreground">{match[1]}</strong>
-                <span className="text-muted-foreground"> — {match[2]}</span>
-              </span>
-            </li>
-          );
-        } else {
-          elements.push(
-            <p key={i} className="font-body text-base text-muted-foreground leading-relaxed mb-4">
-              {trimmed}
-            </p>
+    return content
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((line, index) => {
+        if (line.startsWith("## ")) {
+          return (
+            <h2 key={index} className="mb-4 mt-10 font-display text-2xl font-medium text-foreground">
+              {line.replace("## ", "")}
+            </h2>
           );
         }
-      } else if (trimmed.startsWith("**")) {
-        // Bold paragraph
-        const text = trimmed.replace(/\*\*/g, "");
-        elements.push(
-          <p key={i} className="font-body text-base text-foreground font-medium leading-relaxed mb-4">
-            {text}
-          </p>
-        );
-      } else {
-        elements.push(
-          <p key={i} className="font-body text-base text-muted-foreground leading-relaxed mb-4">
-            {trimmed}
-          </p>
-        );
-      }
-    });
 
-    return elements;
+        if (line.startsWith("### ")) {
+          return (
+            <h3 key={index} className="mb-3 mt-8 font-display text-xl font-medium text-foreground">
+              {line.replace("### ", "")}
+            </h3>
+          );
+        }
+
+        return (
+          <p key={index} className="mb-4 font-body text-base leading-relaxed text-muted-foreground">
+            {line.replace(/\*\*/g, "")}
+          </p>
+        );
+      });
   };
 
   return (
     <PageLayout title={article.seo.title} description={article.seo.description}>
-      {/* Breadcrumbs */}
-      <div className="container-brand px-6 md:px-12 lg:px-24 pt-6">
-        <Breadcrumbs
-          items={[
-            { label: "Новости", href: navPaths.news },
-            { label: article.title },
-          ]}
-        />
+      <div className="container-brand px-6 pt-6 md:px-12 lg:px-24">
+        <Breadcrumbs items={[{ label: "Новости", href: navPaths.news }, { label: article.title }]} />
       </div>
 
-      {/* Cover */}
-      <div className="container-brand px-6 md:px-12 lg:px-24 mt-6">
-        <div className="aspect-[21/9] bg-secondary overflow-hidden">
-          <img
-            src={article.coverImage.src}
-            alt={article.coverImage.alt}
-            className="w-full h-full object-cover"
-          />
+      <div className="container-brand mt-6 px-6 md:px-12 lg:px-24">
+        <div className="aspect-[21/9] overflow-hidden bg-secondary">
+          <img src={article.coverImage.src} alt={article.coverImage.alt} className="h-full w-full object-cover" />
         </div>
       </div>
 
       <Section>
         <article className="max-w-3xl">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="text-xs font-body font-medium tracking-[0.1em] uppercase text-accent">
+          <div className="mb-6 flex items-center gap-3">
+            <span className="text-xs font-body font-medium uppercase tracking-[0.1em] text-accent">
               {articleCategories[article.category] || article.category}
             </span>
-            <span className="text-xs font-body text-muted-foreground">
-              {article.readingTime} мин
-            </span>
+            <span className="text-xs font-body text-muted-foreground">{article.readingTime} мин</span>
             <span className="text-xs font-body text-muted-foreground">
               {new Date(article.publishedAt).toLocaleDateString("ru-RU", {
                 day: "numeric",
@@ -137,20 +96,16 @@ const BlogPostPage = () => {
             </span>
           </div>
 
-          <h1 className="font-display text-3xl md:text-5xl font-light text-foreground mb-8 leading-tight">
-            {article.title}
-          </h1>
+          <h1 className="mb-8 font-display text-3xl font-light leading-tight text-foreground md:text-5xl">{article.title}</h1>
 
           <div className="prose-ston">
             {article.content ? (
               renderContent(article.content)
             ) : (
               <>
-                <p className="font-body text-base text-muted-foreground leading-relaxed mb-4">
-                  {article.excerpt}
-                </p>
+                <p className="mb-4 font-body text-base leading-relaxed text-muted-foreground">{article.excerpt}</p>
                 <p className="text-sm italic text-muted-foreground/60">
-                  Полный текст статьи будет доступен после подключения CMS.
+                  Полный текст будет опубликован после следующей контентной итерации.
                 </p>
               </>
             )}
@@ -158,21 +113,23 @@ const BlogPostPage = () => {
         </article>
       </Section>
 
-      {/* Related articles */}
-      {related.length > 0 && (
+      {related.length > 0 ? (
         <Section variant="alt" eyebrow="Читайте также">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {related.map((a) => (
-              <ArticleCard key={a.id} article={a} />
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {related.map((relatedArticle) => (
+              <ArticleCard key={relatedArticle.id} article={relatedArticle} />
             ))}
           </div>
         </Section>
-      )}
+      ) : null}
 
       <CTASection
-        title="Нужна консультация?"
+        eyebrow="Следующий шаг"
+        title="Нужен разбор под ваш объект?"
+        subtitle="Если тема совпадает с вашей задачей, переведём материал в конкретный проектный сценарий и подскажем следующий шаг."
         primaryCta={{ label: "Связаться", href: navPaths.contacts }}
-        secondaryCta={{ label: "Все статьи", href: navPaths.news }}
+        secondaryCta={{ label: "Все материалы", href: navPaths.news }}
+        context="news_detail_final"
       />
     </PageLayout>
   );

@@ -1,4 +1,4 @@
-﻿import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PageLayout from "@/components/layout/PageLayout";
 import PageHero from "@/components/layout/PageHero";
 import Section from "@/components/layout/Section";
@@ -15,7 +15,7 @@ import { productsShowcaseSeed } from "@/data/products-showcase.seed";
 const catalogCopy = {
   introTitle: "Подберите направление света для вашего проекта",
   introParagraphs: [
-    "Начинать с коллекции проще, чем с отдельной модели: каждая из них отвечает за свой сценарий света и помогает быстро сузить выбор под архитектуру пространства.",
+    "Начинать с коллекции проще, чем с отдельной модели: каждая из них отвечает за свой сценарий света и помогает быстрее сузить выбор под архитектуру пространства.",
     "Сначала выберите характер света, затем перейдите к моделям и материалам, а после этого обсудите проект, если нужна точная рекомендация под участок или объект.",
   ],
   collectionsTitle: "Коллекции решений",
@@ -26,7 +26,6 @@ const catalogCopy = {
     title: "Подберём коллекцию под архитектуру и задачу пространства",
     subtitle:
       "Если не уверены, с какого сценария начать, поможем сопоставить коллекцию, материал и применение под частный или объектный проект.",
-    primaryCtaLabel: "Обсудить проект",
     secondaryCtaLabel: "Получить материалы",
   },
 } as const;
@@ -83,11 +82,11 @@ const CatalogPage = () => {
                   <h3 className="font-display text-2xl text-foreground">{card.title}</h3>
                   <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground">{card.description}</p>
 
-                  {collection && getCollectionLaunchStatus(collection.slug) === "coming-soon" && (
+                  {collection && getCollectionLaunchStatus(collection.slug) === "coming-soon" ? (
                     <p className="mt-4 font-body text-xs uppercase tracking-brand-wide text-muted-foreground">
                       {catalogCopy.inDevelopment}
                     </p>
-                  )}
+                  ) : null}
 
                   <Link
                     to={buildPath.collection(card.collectionSlug)}

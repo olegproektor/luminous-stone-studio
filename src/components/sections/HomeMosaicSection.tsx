@@ -58,7 +58,7 @@ const MosaicTile = ({
 
 const HomeMosaicSection = () => {
   return (
-    <section className="relative w-full overflow-hidden bg-[#ece9e3] pt-4 pb-28 md:pt-6 md:pb-36 lg:pt-8 lg:pb-40">
+    <section className="relative w-full overflow-hidden bg-[#ece9e3] pt-4 pb-10 md:pt-6 md:pb-12 lg:pt-8 lg:pb-14">
       <div className="absolute inset-0 bg-[linear-gradient(180deg,#f0ede7_0%,#ece9e3_18%,#e7e2d9_58%,#ece8e2_100%)]" />
       <div className="container-brand relative px-6 md:px-12 lg:px-16 xl:px-20">
         <motion.div

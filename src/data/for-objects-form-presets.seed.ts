@@ -2,12 +2,12 @@ import type { LeadFormPreset } from "@/types/lead-form-contract";
 
 export const forObjectsQualificationPreset: LeadFormPreset = {
   formId: "request_project",
-  submitLabel: "Отправить квалификацию",
+  submitLabel: "Отправить вводные",
   analyticsEvent: "request_project",
   fields: [
     { name: "name", label: "Имя", type: "text", required: true, placeholder: "Как к вам обращаться" },
     { name: "phone", label: "Телефон", type: "tel", required: true, placeholder: "+7 (___) ___-__-__" },
-    { name: "email", label: "Email", type: "email", required: true, placeholder: "email@example.com" },
+    { name: "email", label: "Email", type: "email", required: true, placeholder: "Куда отправить ответ и материалы" },
     {
       name: "clientType",
       label: "Роль в проекте",
@@ -16,7 +16,7 @@ export const forObjectsQualificationPreset: LeadFormPreset = {
       options: [
         { value: "architect", label: "Архитектор / дизайнер" },
         { value: "developer", label: "Девелопер / заказчик" },
-        { value: "hospitality", label: "Команда объекта / hospitality" },
+        { value: "hospitality", label: "Команда объекта / гостиничный формат" },
         { value: "private", label: "Частный премиальный клиент" },
       ],
     },
@@ -26,7 +26,7 @@ export const forObjectsQualificationPreset: LeadFormPreset = {
       type: "select",
       required: true,
       options: [
-        { value: "hospitality", label: "Отель / глэмпинг / hospitality" },
+        { value: "hospitality", label: "Отель / глэмпинг / гостиничный формат" },
         { value: "developer", label: "Девелоперский или масштабируемый проект" },
         { value: "private", label: "Частный премиальный объект" },
       ],
@@ -57,7 +57,7 @@ export const forObjectsQualificationPreset: LeadFormPreset = {
       name: "message",
       label: "Вводные по проекту",
       type: "textarea",
-      placeholder: "Тип пространства, стадия проекта, площадь, ожидаемый сценарий света, ограничения или пожелания",
+      placeholder: "Тип пространства, стадия проекта, площадь, ожидаемый сценарий света, ограничения или важные пожелания",
       half: false,
     },
   ],

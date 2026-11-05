@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { Article } from "@/types";
+import { routes } from "@/config/routes";
 
 interface ArticleCardProps {
   article: Article;
@@ -9,7 +10,7 @@ interface ArticleCardProps {
 const ArticleCard = ({ article, className = "" }: ArticleCardProps) => {
   return (
     <Link
-      to={`/blog/${article.slug}`}
+      to={routes.newsDetail(article.slug)}
       className={`group block ${className}`}
     >
       <div className="relative aspect-[16/10] bg-secondary overflow-hidden mb-4">

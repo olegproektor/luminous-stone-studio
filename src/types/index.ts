@@ -1,5 +1,5 @@
 // =============================================
-// Core data models for the STŌN brand website
+// Core data models for the "Форма Света" website
 // CMS-ready: all types mirror future CMS schemas
 // =============================================
 import type { ProductTechGroup, ProductTechGroupId } from "./product-tech";

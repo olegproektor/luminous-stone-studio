@@ -1,37 +1,61 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { Link } from "react-router-dom";
 import heroBollard from "@/assets/hero-bollard.jpg";
+import stoneSceneDay from "@/assets/hero/stone-scene-day.png";
+import stoneSceneNight from "@/assets/hero/stone-scene-night.png";
 import TrackedCta from "@/components/TrackedCta";
 import { siteStrategy } from "@/config/site-strategy";
-import { trackEvent } from "@/lib/analytics";
 
 const AUTO_PLAY_DURATION = 5600;
+const HERO_IMAGE_SWAP_DURATION = 2600;
 
-const slides = [
+type HeroSlide = {
+  title: string;
+  position: string;
+  overlay: string;
+  images: Array<{
+    src: string;
+    alt: string;
+  }>;
+};
+
+const slides: HeroSlide[] = [
   {
-    eyebrow: "Каменные световые решения для ландшафта и архитектуры",
-    title: "Подбираем решения из камня\nдля частных и объектных пространств",
-    body:
-      "Сайт помогает выбрать характер света, коллекцию и формат применения для участка, входной группы, маршрутов и архитектурных акцентов, а затем перевести задачу в обсуждение проекта.",
+    title: "Каменные светильники\nдля частных и\nобъектных пространств",
     position: "object-center",
     overlay: "from-black/82 via-black/42 to-black/10",
+    images: [
+      {
+        src: stoneSceneNight,
+        alt: "Каменные светильники в архитектурном дворе, вечерняя сцена",
+      },
+      {
+        src: stoneSceneDay,
+        alt: "Каменные светильники в архитектурном дворе, дневная сцена",
+      },
+    ],
   },
   {
-    eyebrow: "Сценарий для маршрутов и входных групп",
     title: "Мягкая навигация\nдля вечернего пространства",
-    body:
-      "Деликатный тёплый свет помогает обозначить движение, вход и границы функциональных зон без визуальной перегрузки. Такой сценарий особенно важен для частных участков, камерных объектов и гостиничных территорий.",
     position: "object-[56%_center]",
     overlay: "from-black/82 via-black/48 to-stone-900/10",
+    images: [
+      {
+        src: heroBollard,
+        alt: "Каменный светильник в вечернем ландшафте",
+      },
+    ],
   },
   {
-    eyebrow: "Сценарий для рельефа и архитектурных акцентов",
     title: "Свет, который\nподчёркивает материал",
-    body:
-      "Акцентный свет помогает работать с фактурой камня, посадками и пластикой пространства. Такой подход нужен там, где материал должен читаться как часть архитектурного языка, а не как фон.",
     position: "object-[44%_center]",
     overlay: "from-black/86 via-stone-950/50 to-amber-950/8",
+    images: [
+      {
+        src: heroBollard,
+        alt: "Каменный светильник в вечернем ландшафте",
+      },
+    ],
   },
 ];
 
@@ -45,6 +69,7 @@ const metrics = [
 const HeroSection = () => {
   const prefersReducedMotion = useReducedMotion();
   const [activeSlide, setActiveSlide] = useState(0);
+  const [activeImagePhase, setActiveImagePhase] = useState(0);
   const { scrollY } = useScroll();
 
   const imageY = useTransform(scrollY, [0, 780], [0, 118]);
@@ -53,15 +78,36 @@ const HeroSection = () => {
 
   useEffect(() => {
     if (prefersReducedMotion) return undefined;
-
     const interval = window.setInterval(() => {
       setActiveSlide((current) => (current + 1) % slides.length);
     }, AUTO_PLAY_DURATION);
-
     return () => window.clearInterval(interval);
   }, [prefersReducedMotion]);
 
+  useEffect(() => {
+    setActiveImagePhase(0);
+  }, [activeSlide]);
+
+  useEffect(() => {
+    const imageCount = slides[activeSlide].images.length;
+    if (prefersReducedMotion || imageCount <= 1) return undefined;
+
+    if (imageCount === 2) {
+      const timeout = window.setTimeout(() => {
+        setActiveImagePhase(1);
+      }, HERO_IMAGE_SWAP_DURATION);
+
+      return () => window.clearTimeout(timeout);
+    }
+
+    const interval = window.setInterval(() => {
+      setActiveImagePhase((current) => (current + 1) % imageCount);
+    }, HERO_IMAGE_SWAP_DURATION);
+    return () => window.clearInterval(interval);
+  }, [activeSlide, prefersReducedMotion]);
+
   const currentSlide = slides[activeSlide];
+  const currentImage = currentSlide.images[activeImagePhase] ?? currentSlide.images[0];
 
   return (
     <section className="relative flex min-h-[100svh] items-end overflow-hidden bg-[hsl(var(--hero-overlay))] text-[hsl(var(--hero-text))]">
@@ -75,13 +121,22 @@ const HeroSection = () => {
             exit={prefersReducedMotion ? undefined : { opacity: 0 }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           >
-            <motion.img
-              src={heroBollard}
-              alt="Каменный светильник в вечернем ландшафте"
-              className={`h-full w-full object-cover ${currentSlide.position}`}
-              style={prefersReducedMotion ? undefined : { y: imageY, scale: imageScale }}
-              loading="eager"
-            />
+            {currentSlide.images.map((image, index) => (
+              <motion.img
+                key={`${activeSlide}-${image.src}`}
+                src={image.src}
+                alt={image.alt}
+                className={`absolute inset-0 h-full w-full object-cover ${currentSlide.position}`}
+                style={prefersReducedMotion ? undefined : { y: imageY, scale: imageScale }}
+                loading="eager"
+                initial={index === 0 ? { opacity: 1 } : { opacity: 0 }}
+                animate={{ opacity: index === activeImagePhase ? 1 : 0 }}
+                transition={{
+                  duration: prefersReducedMotion ? 0 : 1.15,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              />
+            ))}
             <div className={`absolute inset-0 bg-gradient-to-t ${currentSlide.overlay}`} />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,228,196,0.12),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.12),transparent_30%)]" />
           </motion.div>
@@ -102,23 +157,10 @@ const HeroSection = () => {
                 exit={prefersReducedMotion ? undefined : { opacity: 0 }}
                 transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
               >
-                <p className="mb-5 text-[11px] uppercase tracking-[0.28em] text-[hsl(var(--hero-text-muted))] md:mb-7">
-                  {currentSlide.eyebrow}
-                </p>
                 <h1 className="max-w-5xl whitespace-pre-line font-display text-5xl font-light leading-[0.94] text-[hsl(var(--hero-text))] md:text-7xl lg:text-[6.25rem]">
                   {currentSlide.title}
                 </h1>
-                <p className="mt-6 max-w-xl text-sm leading-relaxed text-[hsl(var(--hero-text-muted))] md:mt-8 md:text-base">
-                  {currentSlide.body}
-                </p>
                 <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center md:mt-12">
-                  <TrackedCta
-                    href={siteStrategy.primaryConversion.href}
-                    label={siteStrategy.primaryConversion.label}
-                    context="home_hero_primary"
-                    variant="siteInverse"
-                    size="siteLg"
-                  />
                   <TrackedCta
                     href={siteStrategy.secondaryCtas.collections.href}
                     label={siteStrategy.secondaryCtas.collections.label}
@@ -126,18 +168,6 @@ const HeroSection = () => {
                     variant="siteInverseOutline"
                     size="siteLg"
                   />
-                </div>
-                <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5">
-                  {siteStrategy.audiencePaths.map((item) => (
-                    <Link
-                      key={item.context}
-                      to={item.href}
-                      onClick={() => trackEvent("cta_click", { context: item.context, target: item.href })}
-                      className="inline-flex items-center gap-2 border-b border-[hsl(var(--hero-line)/0.45)] pb-1 text-[11px] uppercase tracking-[0.18em] text-[hsl(var(--hero-text-muted))] transition-colors hover:text-[hsl(var(--hero-text))]"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -147,24 +177,19 @@ const HeroSection = () => {
                 <div className="flex items-center justify-between px-1">
                   {slides.map((slide, index) => {
                     const isActive = index === activeSlide;
-
                     return (
                       <button
-                        key={slide.eyebrow}
+                        key={slide.title}
                         type="button"
                         onClick={() => setActiveSlide(index)}
-                        aria-label={`Показать слайд ${slide.eyebrow}`}
+                        aria-label={`Показать слайд ${index + 1}`}
                         className={`
                           relative z-10 flex h-10 w-10 items-center justify-center text-xl font-light
                           transition-colors duration-300
                           ${isActive ? "text-[hsl(var(--hero-text))]" : "text-[hsl(var(--hero-text-muted)/0.72)] hover:text-[hsl(var(--hero-text))]"}
                         `}
                       >
-                        <svg
-                          className="absolute inset-0 -rotate-90"
-                          viewBox="0 0 40 40"
-                          aria-hidden="true"
-                        >
+                        <svg className="absolute inset-0 -rotate-90" viewBox="0 0 40 40" aria-hidden="true">
                           {isActive ? (
                             <motion.circle
                               cx="20"

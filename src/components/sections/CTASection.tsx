@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { routes } from "@/config/routes";
 
 const CTASection = () => {
   return (
@@ -8,14 +9,14 @@ const CTASection = () => {
           Начните проект
         </p>
         <h2 className="mx-auto mb-6 max-w-2xl font-display text-3xl font-light text-foreground md:text-5xl">
-          Расскажите о вашем ландшафте — предложим решение
+          Расскажите о вашем пространстве — предложим следующий рабочий шаг
         </h2>
         <p className="mx-auto mb-10 max-w-md font-body text-sm text-muted-foreground">
-          Бесплатная консультация, подбор светильников и расчёт проекта.
+          Поможем выбрать направление света, материалы и формат обсуждения проекта без лишнего шума и лишних итераций.
         </p>
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
           <Button asChild variant="sitePrimary" size="siteLg">
-            <a href="/contacts">Запросить консультацию</a>
+            <a href={routes.contacts}>Запросить консультацию</a>
           </Button>
           <Button asChild variant="siteOutline" size="siteLg">
             <a href="tel:+74951234567">+7 (495) 123-45-67</a>

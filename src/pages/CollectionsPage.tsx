@@ -23,7 +23,7 @@ const CollectionsPage = () => {
       />
 
       <Section>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
           {izdeliyaCollectionsSeed.map((collection) => (
             <CollectionCard key={collection.slug} collection={collection} />
           ))}
@@ -37,7 +37,7 @@ const CollectionsPage = () => {
         title="Обсудим ваш проект"
         subtitle="Подберём коллекцию, сценарий света и состав моделей под задачи вашего объекта."
         primaryCta={{ label: "Запросить проект", href: navPaths.requestProject }}
-        secondaryCta={{ label: "Смотреть каталог", href: navPaths.products }}
+        secondaryCta={{ label: "Смотреть изделия", href: navPaths.products }}
       />
     </PageLayout>
   );

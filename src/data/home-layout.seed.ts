@@ -1,9 +1,9 @@
-export type HomeSectionKey = "hero" | "story" | "mosaic" | "finalCta";
+export type HomeSectionKey = "hero" | "story" | "mosaic";
 
 export const homeLayoutSeed = {
   title: "Форма Света — премиальные каменные световые решения для ландшафта и архитектуры",
   description:
-    "Премиальные световые решения из камня для частных и объектных пространств российского рынка: подбор коллекций, материалов и сценариев применения под архитектурный проект.",
+    "Каменные световые решения для частных и объектных пространств: коллекции, материалы и сценарии света, собранные под архитектуру участка и проектную задачу.",
   featuredSections: ["mosaic"] as HomeSectionKey[],
-  order: ["hero", "story", "mosaic", "finalCta"] as HomeSectionKey[],
+  order: ["hero", "story", "mosaic"] as HomeSectionKey[],
 } as const;

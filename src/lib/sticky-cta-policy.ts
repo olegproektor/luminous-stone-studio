@@ -1,7 +1,13 @@
+import { routes } from "@/config/routes";
+
 const STICKY_HIDDEN_PATHS = new Set([
-  "/contacts",
-  "/request-project",
-  "/for-objects",
+  routes.contacts,
+  routes.contactsLegacy,
+  routes.requestProject,
+  routes.forObjects,
+  routes.forObjectsLegacy,
+  routes.forObjectsCustomLegacy,
+  routes.downloadsCategory("bim"),
   "/downloads/bim",
 ]);
 
