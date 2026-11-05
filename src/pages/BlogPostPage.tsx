@@ -96,7 +96,7 @@ const BlogPostPage = () => {
             </span>
           </div>
 
-          <h1 className="mb-8 font-display text-3xl font-light leading-tight text-foreground md:text-5xl">{article.title}</h1>
+          <h1 className="mb-8 font-display text-3xl leading-tight text-foreground md:text-5xl">{article.title}</h1>
 
           <div className="prose-ston">
             {article.content ? (

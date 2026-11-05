@@ -20,7 +20,7 @@ const CollectionHeroModule = ({ collection }: CollectionHeroModuleProps) => {
             <p className="text-xs font-body font-medium tracking-[0.1em] uppercase text-muted-foreground mb-3">
               Коллекция
             </p>
-            <h1 className="font-display text-3xl md:text-5xl font-light text-foreground mb-4">{collection.name}</h1>
+            <h1 className="font-display text-3xl md:text-5xl text-foreground mb-4">{collection.name}</h1>
             <p className="font-body text-base text-muted-foreground mb-4">{collection.tagline}</p>
             <p className="font-body text-sm text-muted-foreground leading-relaxed">{collection.description}</p>
           </div>

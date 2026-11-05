@@ -198,7 +198,7 @@ const MobileMenu = ({
               <X size={20} />
             </button>
 
-            <h3 className="mb-6 font-display text-xl font-light text-[hsl(var(--hero-text))]">{item.label}</h3>
+            <h3 className="mb-6 font-display text-xl text-[hsl(var(--hero-text))]">{item.label}</h3>
             {item.children!.map((sub, i) => (
               <Link
                 key={sub.href}
@@ -495,7 +495,7 @@ const Header = () => {
           >
             <span
               className={cn(
-                "block font-display uppercase tracking-[0.16em] text-[hsl(var(--hero-text))] transition-[font-size,line-height] duration-[2520ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+                "font-wordmark block uppercase text-[hsl(var(--hero-text))] transition-[font-size,line-height] duration-[2520ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
                 headerScrolled ? "text-[0.8rem] md:text-[0.95rem]" : "text-[0.88rem] md:text-[1.05rem]"
               )}
             >

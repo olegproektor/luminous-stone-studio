@@ -25,7 +25,7 @@ const AboutProductSection = () => {
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center px-8">
               <div className="w-px h-40 bg-accent/30 mx-auto mb-8" />
-              <p className="font-display text-3xl font-light text-foreground/30">{collection.name}</p>
+              <p className="font-display text-3xl text-foreground/30">{collection.name}</p>
               <p className="font-body text-xs tracking-brand uppercase text-muted-foreground mt-3">
                 {collectionProducts.map((item) => item.name).join(" · ")}
               </p>
@@ -38,7 +38,7 @@ const AboutProductSection = () => {
             <p className="text-xs font-body font-medium tracking-brand-wide uppercase text-muted-foreground mb-6">
               Коллекция в фокусе
             </p>
-            <h2 className="font-display text-4xl md:text-5xl font-light text-foreground leading-tight mb-6">
+            <h2 className="font-display text-4xl md:text-5xl text-foreground leading-tight mb-6">
               {collection.name}
             </h2>
             <p className="font-body text-sm text-muted-foreground leading-relaxed mb-10">

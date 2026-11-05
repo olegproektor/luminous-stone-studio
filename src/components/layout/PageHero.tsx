@@ -33,7 +33,7 @@ const PageHero = ({
         <div className="max-w-2xl">
           {eyebrow && (
             <p
-              className={`mb-4 text-sm font-body font-medium uppercase tracking-[0.15em] ${
+              className={`mb-4 text-sm font-body font-medium uppercase tracking-brand-wide ${
                 hasImage ? "text-background/60" : "text-muted-foreground"
               }`}
             >
@@ -41,7 +41,7 @@ const PageHero = ({
             </p>
           )}
           <h1
-            className={`mb-4 font-display text-3xl font-light leading-tight md:text-5xl lg:text-6xl ${
+            className={`mb-4 font-display text-3xl leading-tight md:text-5xl lg:text-6xl ${
               hasImage ? "text-background" : "text-foreground"
             }`}
           >

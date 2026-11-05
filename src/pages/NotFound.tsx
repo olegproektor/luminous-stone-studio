@@ -11,10 +11,10 @@ const NotFound = () => {
     >
       <section className="section-padding">
         <div className="container-brand py-20 text-center">
-          <p className="mb-4 text-sm font-body font-medium uppercase tracking-[0.15em] text-muted-foreground">
+          <p className="mb-4 text-sm font-body font-medium uppercase tracking-brand-wide text-muted-foreground">
             Ошибка 404
           </p>
-          <h1 className="mb-6 font-display text-5xl font-light text-foreground md:text-7xl">Страница не найдена</h1>
+          <h1 className="mb-6 font-display text-5xl text-foreground md:text-7xl">Страница не найдена</h1>
           <p className="mx-auto mb-10 max-w-md font-body text-base text-muted-foreground">
             Возможно, она была перемещена или удалена. Воспользуйтесь навигацией или вернитесь на главную.
           </p>

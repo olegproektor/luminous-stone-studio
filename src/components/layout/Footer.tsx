@@ -16,10 +16,10 @@ const Footer = () => {
       : "Предложим решение под архитектуру и сценарий пространства";
 
   return (
-    <footer className="mt-0 bg-[#0f0d0b] text-white">
-      <div className="relative overflow-hidden bg-[#f5f2eb]">
+    <footer className="mt-0 bg-[hsl(var(--charcoal))] text-white">
+      <div className="relative overflow-hidden bg-[hsl(var(--background))]">
         <div className="relative h-[684px] md:h-[846px] lg:h-[972px]">
-          <div className="absolute inset-x-0 top-0 h-[60%] bg-[#f5f2eb]" />
+          <div className="absolute inset-x-0 top-0 h-[60%] bg-[hsl(var(--background))]" />
           <div className="absolute inset-x-0 bottom-0">
             <img
               src={footerScene}
@@ -27,13 +27,13 @@ const Footer = () => {
               className="block w-full select-none object-cover object-bottom"
               loading="lazy"
             />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-[linear-gradient(180deg,rgba(245,242,235,0)_0%,rgba(15,13,11,0.18)_32%,rgba(15,13,11,0.72)_68%,rgba(15,13,11,0.96)_90%,rgba(15,13,11,1)_100%)] md:h-36 lg:h-44" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-[linear-gradient(180deg,hsl(var(--background)/0)_0%,hsl(var(--charcoal)/0.18)_32%,hsl(var(--charcoal)/0.72)_68%,hsl(var(--charcoal)/0.96)_90%,hsl(var(--charcoal))_100%)] md:h-36 lg:h-44" />
           </div>
 
           <div className="absolute inset-x-0 top-[6.75rem] z-10 md:top-[8.75rem] lg:top-[10.25rem]">
             <div className="container-brand px-6 md:px-12 lg:px-24">
               <div className="mx-auto max-w-[64rem] text-center">
-                <h2 className="font-display text-[2.1rem] font-light leading-[0.98] text-stone-950 md:text-[3.4rem] lg:text-[4rem]">
+                <h2 className="font-display text-[2.1rem] leading-[1.05] text-foreground md:text-[3.4rem] lg:text-[4rem]">
                   {footerTitle}
                 </h2>
                 <div className="mt-8 flex justify-center">
@@ -51,11 +51,11 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="bg-[#0f0d0b]">
+      <div className="bg-[hsl(var(--charcoal))]">
         <div className="container-brand px-6 pb-8 pt-6 md:px-12 md:pb-10 md:pt-8 lg:px-24 lg:pt-10">
           <div className="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-12 xl:gap-8">
             <div className="xl:col-span-4">
-              <Link to="/" className="font-display text-xl font-medium tracking-[0.08em] text-white">
+              <Link to="/" className="font-wordmark text-xl text-white">
                 Форма Света
               </Link>
               <p className="mt-5 max-w-sm text-xs leading-relaxed text-white/48">

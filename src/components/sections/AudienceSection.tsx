@@ -27,10 +27,10 @@ const AudienceSection = () => {
     <section className="section-padding bg-secondary">
       <div className="container-brand">
         <div className="text-center mb-16">
-          <p className="text-sm font-body font-medium tracking-[0.15em] uppercase text-muted-foreground mb-4">
+          <p className="text-sm font-body font-medium tracking-brand-wide uppercase text-muted-foreground mb-4">
             Для кого
           </p>
-          <h2 className="font-display text-3xl md:text-5xl font-light text-foreground">
+          <h2 className="font-display text-3xl md:text-5xl text-foreground">
             Работаем с теми, кто ценит свет
           </h2>
         </div>

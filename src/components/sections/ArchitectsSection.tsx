@@ -35,7 +35,7 @@ const ArchitectsSection = () => {
             <p className="mb-6 text-xs font-body font-medium uppercase tracking-brand-wide text-primary-foreground/40">
               Для архитекторов
             </p>
-            <h2 className="mb-6 font-display text-3xl font-light leading-tight text-primary-foreground md:text-4xl">
+            <h2 className="mb-6 font-display text-3xl leading-tight text-primary-foreground md:text-4xl">
               Проектным бюро и дизайнерам
             </h2>
             <p className="font-body text-sm leading-relaxed text-primary-foreground/50">

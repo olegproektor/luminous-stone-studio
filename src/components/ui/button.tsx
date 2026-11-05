@@ -16,13 +16,13 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         sitePrimary:
-          "rounded-[var(--radius-sm)] bg-primary text-primary-foreground uppercase tracking-[0.18em] hover:bg-[hsl(var(--charcoal-light))]",
+          "rounded-[var(--radius-sm)] bg-primary text-primary-foreground uppercase tracking-brand hover:bg-primary/90",
         siteOutline:
-          "rounded-[var(--radius-sm)] border border-border bg-transparent text-foreground uppercase tracking-[0.18em] hover:bg-[hsl(var(--bg-surface))]",
+          "rounded-[var(--radius-sm)] border border-border bg-transparent text-foreground uppercase tracking-brand hover:bg-[hsl(var(--bg-surface))]",
         siteInverse:
-          "rounded-[var(--radius-sm)] bg-[hsl(var(--hero-text))] text-[hsl(var(--charcoal))] uppercase tracking-[0.2em] hover:bg-[hsl(var(--cream-dark))]",
+          "rounded-[var(--radius-sm)] bg-[hsl(var(--hero-text))] text-[hsl(var(--charcoal))] uppercase tracking-brand-wide hover:bg-[hsl(var(--cream-dark))]",
         siteInverseOutline:
-          "rounded-[var(--radius-sm)] border border-[hsl(var(--hero-line)/0.6)] bg-[hsl(var(--hero-surface)/0.16)] text-[hsl(var(--hero-text-muted))] uppercase tracking-[0.2em] hover:border-[hsl(var(--hero-line))] hover:bg-[hsl(var(--hero-surface)/0.28)] hover:text-[hsl(var(--hero-text))]",
+          "rounded-[var(--radius-sm)] border border-[hsl(var(--hero-line)/0.6)] bg-[hsl(var(--hero-surface)/0.16)] text-[hsl(var(--hero-text-muted))] uppercase tracking-brand-wide hover:border-[hsl(var(--hero-line))] hover:bg-[hsl(var(--hero-surface)/0.28)] hover:text-[hsl(var(--hero-text))]",
         siteFloatingDark:
           "rounded-[var(--radius-lg)] border border-[hsl(var(--hero-line)/0.42)] bg-[hsl(var(--hero-surface)/0.96)] text-[hsl(var(--hero-text))] uppercase tracking-brand-wide shadow-[0_10px_30px_rgba(0,0,0,0.28)] hover:bg-[hsl(var(--hero-surface))]",
       },

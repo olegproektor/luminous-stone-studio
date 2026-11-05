@@ -13,7 +13,7 @@ const CollectionsSection = () => {
             <p className="text-xs font-body font-medium tracking-brand-wide uppercase text-muted-foreground mb-4">
               Коллекции
             </p>
-            <h2 className="font-display text-3xl md:text-5xl font-light text-foreground leading-tight">
+            <h2 className="font-display text-3xl md:text-5xl text-foreground leading-tight">
               Линейки изделий
             </h2>
           </div>

@@ -20,7 +20,7 @@ const RequestProjectPage = () => {
         <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-start">
           <div className="space-y-6">
             <div className="space-y-3">
-              <p className="font-body text-sm uppercase tracking-[0.18em] text-muted-foreground">
+              <p className="font-body text-sm uppercase tracking-brand-wide text-muted-foreground">
                 Что полезно указать
               </p>
               <p className="font-body text-base leading-relaxed text-muted-foreground">

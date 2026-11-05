@@ -13,7 +13,7 @@ const ProjectsSection = () => {
             <p className="text-xs font-body font-medium tracking-brand-wide uppercase text-muted-foreground mb-4">
               Проекты
             </p>
-            <h2 className="font-display text-3xl md:text-5xl font-light text-foreground leading-tight">
+            <h2 className="font-display text-3xl md:text-5xl text-foreground leading-tight">
               Реализованные объекты
             </h2>
             <p className="font-body text-sm text-muted-foreground leading-relaxed mt-4">

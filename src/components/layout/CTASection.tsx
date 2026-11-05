@@ -34,7 +34,7 @@ const CTASection = ({
           </p>
         )}
         <h2
-          className={`mx-auto mb-6 max-w-2xl font-display text-3xl font-light leading-tight md:text-5xl ${
+          className={`mx-auto mb-6 max-w-2xl font-display text-3xl leading-tight md:text-5xl ${
             isDark ? "text-primary-foreground" : "text-foreground"
           }`}
         >

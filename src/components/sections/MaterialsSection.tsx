@@ -11,7 +11,7 @@ const MaterialsSection = () => {
             <p className="mb-6 text-xs font-body font-medium uppercase tracking-brand-wide text-muted-foreground">
               Материалы
             </p>
-            <h2 className="mb-6 font-display text-3xl font-light leading-tight text-foreground md:text-5xl">
+            <h2 className="mb-6 font-display text-3xl leading-tight text-foreground md:text-5xl">
               Материалы и текстуры под проект
             </h2>
             <p className="mb-10 max-w-xl font-body text-sm leading-relaxed text-muted-foreground">

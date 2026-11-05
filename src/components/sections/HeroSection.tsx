@@ -157,7 +157,7 @@ const HeroSection = () => {
                 exit={prefersReducedMotion ? undefined : { opacity: 0 }}
                 transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
               >
-                <h1 className="max-w-5xl whitespace-pre-line font-display text-5xl font-light leading-[0.94] text-[hsl(var(--hero-text))] md:text-7xl lg:text-[6.25rem]">
+                <h1 className="max-w-5xl whitespace-pre-line font-display text-5xl leading-[1.05] text-[hsl(var(--hero-text))] md:text-7xl lg:text-[6.25rem]">
                   {currentSlide.title}
                 </h1>
                 <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center md:mt-12">
@@ -184,7 +184,7 @@ const HeroSection = () => {
                         onClick={() => setActiveSlide(index)}
                         aria-label={`Показать слайд ${index + 1}`}
                         className={`
-                          relative z-10 flex h-10 w-10 items-center justify-center text-xl font-light
+                          relative z-10 flex h-10 w-10 items-center justify-center text-xl
                           transition-colors duration-300
                           ${isActive ? "text-[hsl(var(--hero-text))]" : "text-[hsl(var(--hero-text-muted)/0.72)] hover:text-[hsl(var(--hero-text))]"}
                         `}
@@ -234,8 +234,8 @@ const HeroSection = () => {
                 key={item.label}
                 className="flex min-h-[72px] flex-col items-center justify-center bg-[hsl(var(--hero-surface)/0.08)] px-4 py-2.5 text-center md:min-h-[80px] md:px-6 md:py-3 lg:px-8"
               >
-                <div className="font-display text-[1.1rem] font-light text-[hsl(var(--hero-text))] md:text-[1.4rem]">{item.value}</div>
-                <div className="mt-0.5 text-[9px] uppercase tracking-[0.18em] text-[hsl(var(--hero-text-muted))]">{item.label}</div>
+                <div className="font-display text-[1.1rem] text-[hsl(var(--hero-text))] md:text-[1.4rem]">{item.value}</div>
+                <div className="mt-0.5 text-[9px] uppercase tracking-brand-wide text-[hsl(var(--hero-text-muted))]">{item.label}</div>
               </div>
             ))}
           </div>

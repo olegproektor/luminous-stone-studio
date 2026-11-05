@@ -37,7 +37,7 @@ const StickyMobileCTA = React.forwardRef<HTMLDivElement>((_, ref) => {
       <a
         href={siteContacts.phoneHref}
         onClick={() => trackClick("call", siteContacts.phoneDisplay)}
-        className="inline-flex items-center justify-center rounded-[var(--radius-sm)] border border-border bg-transparent px-5 py-3 text-xs font-body font-medium uppercase tracking-[0.18em] text-foreground transition-colors hover:bg-[hsl(var(--bg-surface))]"
+        className="inline-flex items-center justify-center rounded-[var(--radius-sm)] border border-border bg-transparent px-5 py-3 text-xs font-body font-medium uppercase tracking-brand text-foreground transition-colors hover:bg-[hsl(var(--bg-surface))]"
       >
         Позвонить
       </a>

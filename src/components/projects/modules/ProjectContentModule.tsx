@@ -21,7 +21,7 @@ const ProjectContentModule = ({ project, sidebar }: ProjectContentModuleProps) =
     <Section>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-20">
         <div className="lg:col-span-2">
-          <h1 className="font-display text-3xl md:text-5xl font-light text-foreground mb-8">{project.title}</h1>
+          <h1 className="font-display text-3xl md:text-5xl text-foreground mb-8">{project.title}</h1>
 
           <div className="space-y-10">
             <div>
