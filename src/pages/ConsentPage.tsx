@@ -1,5 +1,6 @@
 import PageLayout from "@/components/layout/PageLayout";
 import Section from "@/components/layout/Section";
+import { siteContacts } from "@/config/site-contacts";
 import { Link } from "react-router-dom";
 
 const ConsentPage = () => (
@@ -40,7 +41,7 @@ const ConsentPage = () => (
             <li>
               Вы можете отозвать согласие в любой момент, направив письменное уведомление
               на адрес{" "}
-              <a href="mailto:privacy@ston.ru" className="text-foreground underline">privacy@ston.ru</a>.
+              <a href={siteContacts.privacyEmailHref} className="text-foreground underline">{siteContacts.privacyEmailDisplay}</a>.
             </li>
           </ul>
 

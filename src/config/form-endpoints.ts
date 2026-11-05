@@ -1,5 +1,15 @@
 import type { FormDeliveryMode, FormKind } from "@/types/form-delivery";
 
+/**
+ * Live delivery is `VITE_FORM_DELIVERY_MODE=live` plus a non-empty URL per form.
+ * Setup, payload (`_form`, `_source`, `_timestamp`, UTM), and a CRM webhook
+ * or Telegram-relay example live in `.env.example`. Do not put secrets here.
+ *
+ * Fail-closed: production + mock → 503; live + empty endpoint → 503.
+ *
+ * request_catalog       → VITE_FORM_ENDPOINT_CATALOG        (CatalogRequestForm)
+ * request_consultation  → VITE_FORM_ENDPOINT_CONSULTATION   (ConsultationForm, support)
+ */
 const configuredMode = import.meta.env.VITE_FORM_DELIVERY_MODE as FormDeliveryMode | undefined;
 
 export const formDeliveryMode: FormDeliveryMode =

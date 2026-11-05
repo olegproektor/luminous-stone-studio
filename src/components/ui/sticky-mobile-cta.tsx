@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import TrackedCta from "@/components/TrackedCta";
+import { siteContacts } from "@/config/site-contacts";
 import { siteStrategy } from "@/config/site-strategy";
 import { shouldShowStickyCta } from "@/lib/sticky-cta-policy";
 import { trackClick } from "@/lib/analytics";
@@ -34,8 +35,8 @@ const StickyMobileCTA = React.forwardRef<HTMLDivElement>((_, ref) => {
         eventParams={{ source: "sticky_mobile" }}
       />
       <a
-        href="tel:+74951234567"
-        onClick={() => trackClick("call", "+74951234567")}
+        href={siteContacts.phoneHref}
+        onClick={() => trackClick("call", siteContacts.phoneDisplay)}
         className="inline-flex items-center justify-center rounded-[var(--radius-sm)] border border-border bg-transparent px-5 py-3 text-xs font-body font-medium uppercase tracking-[0.18em] text-foreground transition-colors hover:bg-[hsl(var(--bg-surface))]"
       >
         Позвонить

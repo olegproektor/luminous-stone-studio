@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { footerNavigation } from "@/config/footer.config";
 import { routes } from "@/config/routes";
+import { siteContacts } from "@/config/site-contacts";
 import { siteStrategy } from "@/config/site-strategy";
 import TrackedCta from "@/components/TrackedCta";
 import footerScene from "@/assets/footer-scene.png";
@@ -101,14 +102,14 @@ const Footer = () => {
                 Контакт
               </h4>
               <div className="flex flex-col gap-3 text-xs text-white/58">
-                <a href="tel:+74951234567" className="transition-colors hover:text-white">
-                  +7 (495) 123-45-67
+                <a href={siteContacts.phoneHref} className="transition-colors hover:text-white">
+                  {siteContacts.phoneDisplay}
                 </a>
-                <a href="mailto:info@ston.ru" className="transition-colors hover:text-white">
-                  info@ston.ru
+                <a href={siteContacts.emailHref} className="transition-colors hover:text-white">
+                  {siteContacts.emailDisplay}
                 </a>
-                <a href="mailto:arch@ston.ru" className="transition-colors hover:text-white">
-                  arch@ston.ru — для архитекторов
+                <a href={siteContacts.architectEmailHref} className="transition-colors hover:text-white">
+                  {siteContacts.architectEmailDisplay} — для архитекторов
                 </a>
                 <span className="mt-2 text-white/34">Москва, Россия</span>
               </div>

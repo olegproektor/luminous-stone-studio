@@ -25,6 +25,13 @@
     <!-- Yandex verification (replace with real value) -->
     <!-- <meta name="yandex-verification" content="YOUR_VERIFICATION_CODE" /> -->
 
+    <!--
+      Yandex Metrika slot. Do not paste a counter ID here, including a fake one.
+      The tag loads only when VITE_METRIKA_ID is set (empty by default).
+      See .env.example and src/main.tsx → initAnalytics().
+      VITE_METRIKA_ID=
+    -->
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -33,7 +40,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
 
-    <!-- JSON-LD Organization -->
+    <!-- JSON-LD Organization. telephone is a pre-release template; replace [ТЕЛЕФОН] before launch. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -48,7 +55,7 @@
       },
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+7-495-123-45-67",
+        "telephone": "[ТЕЛЕФОН]",
         "contactType": "sales",
         "availableLanguage": "Russian"
       }

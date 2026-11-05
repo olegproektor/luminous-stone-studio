@@ -1,5 +1,6 @@
 import PageLayout from "@/components/layout/PageLayout";
 import Section from "@/components/layout/Section";
+import { siteContacts } from "@/config/site-contacts";
 import { Link } from "react-router-dom";
 
 const TermsPage = () => (
@@ -77,8 +78,8 @@ const TermsPage = () => (
           <p>
             ООО «СТОН»<br />
             Адрес: г. Москва, Россия<br />
-            Email: <a href="mailto:info@ston.ru" className="text-foreground underline">info@ston.ru</a><br />
-            Телефон: <a href="tel:+74951234567" className="text-foreground underline">+7 (495) 123-45-67</a>
+            Email: <a href={siteContacts.emailHref} className="text-foreground underline">{siteContacts.emailDisplay}</a><br />
+            Телефон: <a href={siteContacts.phoneHref} className="text-foreground underline">{siteContacts.phoneDisplay}</a>
           </p>
 
           <p className="text-xs text-muted-foreground/60 !mt-10">

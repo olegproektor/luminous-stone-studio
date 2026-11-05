@@ -188,6 +188,14 @@ SEO-слой собран вокруг `PageLayout` и metadata pipeline.
 - отправка идёт через `deliverForm`
 - режим работы задаётся env-переменными
 
+Live-режим:
+
+- `VITE_FORM_DELIVERY_MODE=live` и непустой URL на каждую отправляемую форму
+- `CatalogRequestForm` (`request_catalog`) и `ConsultationForm` (`request_consultation`) вызывают `deliverForm` явно
+- production + `mock` и live с пустым endpoint закрываются ответом 503
+- образец CRM webhook и Telegram-relay, состав JSON (`_form`, `_source`, `_timestamp`, UTM) — в `.env.example`
+- токен бота и другие секреты в `VITE_*` не класть: они попадают в публичный бандл
+
 Важно:
 
 - не менять event names у form analytics без отдельного решения
@@ -243,7 +251,7 @@ SEO-слой собран вокруг `PageLayout` и metadata pipeline.
 
 ### Подключение Метрики
 
-Если задан `VITE_METRIKA_ID`, Яндекс.Метрика подключается автоматически через `src/main.tsx`.
+Если задан `VITE_METRIKA_ID`, Яндекс.Метрика подключается автоматически через `src/main.tsx`. Пустое значение — режим по умолчанию: тег не вставляется, в `index.html` оставлен только комментарий-слот без числового ID.
 
 ### Карта основных целей
 

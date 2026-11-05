@@ -1,4 +1,5 @@
 import LeadForm, { type FormField } from "./LeadForm";
+import { deliverForm } from "@/lib/form-delivery";
 
 const fields: FormField[] = [
   { name: "name", label: "Имя", type: "text", required: true, placeholder: "Как вас зовут" },
@@ -14,6 +15,12 @@ const ConsultationForm = () => {
       fields={fields}
       submitLabel="Получить консультацию"
       analyticsEvent="request_consultation"
+      onSubmit={async (data) => {
+        const delivery = await deliverForm({ formId: "request_consultation", data });
+        if (!delivery.ok) {
+          throw new Error(delivery.message);
+        }
+      }}
     />
   );
 };

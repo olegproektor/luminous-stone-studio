@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { siteContacts } from "@/config/site-contacts";
 import { routes } from "@/config/routes";
 
 const CTASection = () => {
@@ -19,7 +20,7 @@ const CTASection = () => {
             <a href={routes.contacts}>Запросить консультацию</a>
           </Button>
           <Button asChild variant="siteOutline" size="siteLg">
-            <a href="tel:+74951234567">+7 (495) 123-45-67</a>
+            <a href={siteContacts.phoneHref}>{siteContacts.phoneDisplay}</a>
           </Button>
         </div>
       </div>
