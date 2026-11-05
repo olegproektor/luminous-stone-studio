@@ -33,7 +33,7 @@ const AdvantagesSection = () => {
       <div className="grid grid-cols-1 gap-px bg-border md:grid-cols-2 lg:grid-cols-4">
         {advantages.map((item) => (
           <div key={item.number} className="bg-background p-8 lg:p-10">
-            <span className="mb-6 block font-display text-4xl font-light text-accent/40">
+            <span className="mb-6 block font-display text-4xl text-accent/40">
               {item.number}
             </span>
             <h3 className="mb-4 font-display text-xl font-medium leading-snug text-foreground">

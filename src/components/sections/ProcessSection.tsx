@@ -34,7 +34,7 @@ const ProcessSection = () => {
           <p className="mb-4 text-xs font-body font-medium uppercase tracking-brand-wide text-muted-foreground">
             Как мы работаем
           </p>
-          <h2 className="font-display text-3xl font-light leading-tight text-foreground md:text-5xl">
+          <h2 className="font-display text-3xl leading-tight text-foreground md:text-5xl">
             От обсуждения до установки
           </h2>
         </div>
@@ -42,7 +42,7 @@ const ProcessSection = () => {
         <div className="grid grid-cols-1 gap-px bg-border md:grid-cols-2 lg:grid-cols-4">
           {steps.map((step) => (
             <div key={step.number} className="bg-card p-8 lg:p-10">
-              <span className="mb-6 block font-display text-4xl font-light text-accent/40">{step.number}</span>
+              <span className="mb-6 block font-display text-4xl text-accent/40">{step.number}</span>
               <h3 className="mb-3 font-display text-lg font-medium text-foreground">{step.title}</h3>
               <p className="font-body text-xs leading-relaxed text-muted-foreground">{step.description}</p>
             </div>

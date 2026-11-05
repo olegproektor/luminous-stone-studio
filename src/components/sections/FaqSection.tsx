@@ -17,7 +17,7 @@ const FaqSection = () => {
             <p className="mb-4 text-xs font-body font-medium uppercase tracking-brand-wide text-muted-foreground">
               FAQ
             </p>
-            <h2 className="mb-6 font-display text-3xl font-light leading-tight text-foreground md:text-4xl">
+            <h2 className="mb-6 font-display text-3xl leading-tight text-foreground md:text-4xl">
               Частые вопросы
             </h2>
             <p className="mb-6 font-body text-sm leading-relaxed text-muted-foreground">

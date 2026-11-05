@@ -50,7 +50,7 @@ const ScenariosSection = () => {
             <p className="text-xs font-body font-medium tracking-brand-wide uppercase text-muted-foreground mb-4">
               Сценарии
             </p>
-            <h2 className="font-display text-3xl md:text-5xl font-light text-foreground leading-tight">
+            <h2 className="font-display text-3xl md:text-5xl text-foreground leading-tight">
               Где работает свет
             </h2>
             <p className="font-body text-sm text-muted-foreground leading-relaxed mt-4">
@@ -81,7 +81,7 @@ const ScenariosSection = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-foreground/75 via-foreground/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-                <h3 className="font-display text-xl md:text-2xl font-light text-background mb-2">
+                <h3 className="font-display text-xl md:text-2xl text-background mb-2">
                   {s.title}
                 </h3>
                 <p className="font-body text-xs text-background/50 max-w-sm leading-relaxed">

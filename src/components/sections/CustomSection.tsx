@@ -14,7 +14,7 @@ const CustomSection = () => {
               <div className="w-20 h-20 border border-accent/30 mx-auto mb-6 flex items-center justify-center">
                 <div className="w-10 h-10 bg-accent/15" />
               </div>
-              <p className="font-display text-2xl font-light text-foreground/30">Ваш проект</p>
+              <p className="font-display text-2xl text-foreground/30">Ваш проект</p>
               <p className="font-body text-xs tracking-brand uppercase text-muted-foreground mt-3">
                 Форма · Фактура · Свет
               </p>
@@ -28,7 +28,7 @@ const CustomSection = () => {
             <p className="text-xs font-body font-medium tracking-brand-wide uppercase text-muted-foreground mb-6">
               Кастомизация
             </p>
-            <h2 className="font-display text-3xl md:text-4xl font-light text-foreground leading-tight mb-6">
+            <h2 className="font-display text-3xl md:text-4xl text-foreground leading-tight mb-6">
               Адаптируем под ваш проект
             </h2>
             <p className="font-body text-sm text-muted-foreground leading-relaxed mb-10">

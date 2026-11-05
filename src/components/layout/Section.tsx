@@ -43,7 +43,7 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(({
             )}
             {title && (
               <h2
-                className={`font-display text-3xl md:text-5xl font-light leading-tight ${
+                className={`font-display text-3xl md:text-5xl leading-tight ${
                   isDark ? "text-primary-foreground" : "text-foreground"
                 }`}
               >

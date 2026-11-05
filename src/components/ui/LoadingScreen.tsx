@@ -247,7 +247,7 @@ const LoadingScreen = ({ onComplete, onBackgroundFadeStart }: LoadingScreenProps
                 ease: EASE,
               }}
             >
-              <p className="mx-auto font-body text-[1.08rem] uppercase tracking-[0.22em] text-[#f2e6cf] drop-shadow-[0_0_18px_rgba(242,230,207,0.3)] sm:text-[1.32rem] md:text-[1.68rem]">
+              <p className="mx-auto font-body text-[1.08rem] uppercase tracking-brand-wide text-[hsl(var(--hero-text))] drop-shadow-[0_0_18px_hsl(var(--hero-text)/0.28)] sm:text-[1.32rem] md:text-[1.68rem]">
                 Включите свет
               </p>
             </motion.div>
@@ -261,10 +261,10 @@ const LoadingScreen = ({ onComplete, onBackgroundFadeStart }: LoadingScreenProps
               {hasAnimationError ? (
                 <div className="absolute inset-0 z-[2] flex items-center justify-center rounded-[32px] border border-white/10 bg-black/70 backdrop-blur-sm">
                   <div className="text-center">
-                    <div className="font-display text-3xl uppercase tracking-[0.16em] text-white">
+                    <div className="font-display text-3xl uppercase tracking-brand-wide text-white">
                       Вход
                     </div>
-                    <div className="mt-2 font-body text-[10px] uppercase tracking-[0.28em] text-white/45">
+                    <div className="mt-2 font-body text-[10px] uppercase tracking-brand-wide text-white/45">
                       Нажмите, чтобы войти
                     </div>
                   </div>
@@ -272,7 +272,7 @@ const LoadingScreen = ({ onComplete, onBackgroundFadeStart }: LoadingScreenProps
               ) : null}
             </div>
 
-            <p className="w-[min(78vw,460px)] text-center font-body text-[11px] uppercase tracking-[0.18em] text-[#f2e6cf] drop-shadow-[0_0_10px_rgba(242,230,207,0.14)] sm:text-xs md:text-[13px]">
+            <p className="w-[min(78vw,460px)] text-center font-body text-[11px] uppercase tracking-brand-wide text-[hsl(var(--hero-text))] drop-shadow-[0_0_10px_hsl(var(--hero-text)/0.14)] sm:text-xs md:text-[13px]">
               СВЕТИЛЬНИКИ ИЗ КАМНЯ ДЛЯ АРХИТЕКТУРНЫХ ПРОСТРАНСТВ
             </p>
           </motion.div>

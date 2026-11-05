@@ -23,7 +23,7 @@ const ContactsPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <div className="space-y-8">
             <div className="max-w-xl space-y-3">
-              <p className="font-body text-sm uppercase tracking-[0.18em] text-muted-foreground">
+              <p className="font-body text-sm uppercase tracking-brand-wide text-muted-foreground">
                 Как выбрать канал
               </p>
               <p className="font-body text-base leading-relaxed text-muted-foreground">

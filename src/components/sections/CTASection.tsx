@@ -9,7 +9,7 @@ const CTASection = () => {
         <p className="mb-4 text-xs font-body font-medium uppercase tracking-brand-wide text-muted-foreground">
           Начните проект
         </p>
-        <h2 className="mx-auto mb-6 max-w-2xl font-display text-3xl font-light text-foreground md:text-5xl">
+        <h2 className="mx-auto mb-6 max-w-2xl font-display text-3xl text-foreground md:text-5xl">
           Расскажите о вашем пространстве — предложим следующий рабочий шаг
         </h2>
         <p className="mx-auto mb-10 max-w-md font-body text-sm text-muted-foreground">

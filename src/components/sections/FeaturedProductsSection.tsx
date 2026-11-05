@@ -16,7 +16,7 @@ const FeaturedProductsSection = () => {
             <p className="text-xs font-body font-medium tracking-brand-wide uppercase text-muted-foreground mb-4">
               Решения
             </p>
-            <h2 className="font-display text-3xl md:text-5xl font-light text-foreground leading-tight">
+            <h2 className="font-display text-3xl md:text-5xl text-foreground leading-tight">
               Решения для сценариев света
             </h2>
           </div>

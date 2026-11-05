@@ -174,7 +174,7 @@ const CollectionDetailPage = () => {
                 <p className="font-display text-2xl text-foreground">{product.name}</p>
                 <p className="mt-1 font-body text-sm text-muted-foreground">{product.tagline}</p>
                 <p className="mt-3 font-body text-sm leading-relaxed text-foreground">{product.summary}</p>
-                <p className="mt-4 inline-flex border border-border/70 px-3 py-1 text-[11px] uppercase tracking-[0.11em]">
+                <p className="mt-4 inline-flex border border-border/70 px-3 py-1 text-[11px] uppercase tracking-brand-wide">
                   {t.openModel}
                 </p>
               </Link>

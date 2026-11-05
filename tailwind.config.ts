@@ -15,8 +15,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Cormorant Garamond', 'Georgia', 'serif'],
-        body: ['Roboto', 'system-ui', 'sans-serif'],
+        display: ['Manrope', 'system-ui', 'sans-serif'],
+        body: ['Manrope', 'system-ui', 'sans-serif'],
+        wordmark: ['Cormorant Garamond', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -95,8 +96,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       letterSpacing: {
-        'brand': '0.15em',
-        'brand-wide': '0.2em',
+        brand: '0.08em',
+        'brand-wide': '0.1em',
       },
       keyframes: {
         "accordion-down": {

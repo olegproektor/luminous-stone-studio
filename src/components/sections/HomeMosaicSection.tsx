@@ -47,7 +47,7 @@ const MosaicTile = ({
       />
       <div className="relative flex h-full min-h-[340px] items-start p-7 md:min-h-[410px] md:p-10 lg:min-h-0 lg:p-12">
         <span
-          className={`font-body text-[2rem] font-light lowercase tracking-[0.01em] text-white transition-transform duration-500 group-hover:translate-x-1 md:text-[2.55rem] lg:text-[2.9rem] ${textClassName}`}
+          className={`font-body text-[2rem] lowercase tracking-[0.01em] text-white transition-transform duration-500 group-hover:translate-x-1 md:text-[2.55rem] lg:text-[2.9rem] ${textClassName}`}
         >
           {title}
         </span>
@@ -58,9 +58,9 @@ const MosaicTile = ({
 
 const HomeMosaicSection = () => {
   return (
-    <section className="relative w-full overflow-hidden bg-[#ece9e3] pt-4 pb-10 md:pt-6 md:pb-12 lg:pt-8 lg:pb-14">
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,#f0ede7_0%,#ece9e3_18%,#e7e2d9_58%,#ece8e2_100%)]" />
-      <div className="container-brand relative px-6 md:px-12 lg:px-16 xl:px-20">
+    <section className="section-padding relative w-full overflow-hidden bg-[hsl(var(--bg-surface-2))]">
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,hsl(var(--bg-surface))_0%,hsl(var(--bg-surface-2))_100%)]" />
+      <div className="container-brand relative">
         <motion.div
           className="px-0 md:px-2"
           initial={{ opacity: 0, y: 18 }}

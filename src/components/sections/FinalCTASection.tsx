@@ -6,8 +6,8 @@ const FinalCTASection = () => {
     <section className="relative overflow-hidden bg-stone-950 py-28 text-white md:py-36 lg:py-40">
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(19,18,17,0.92)_0%,rgba(19,18,17,0.98)_35%,rgba(17,16,15,1)_100%)]" />
       <div className="container-brand relative px-6 text-center md:px-12 lg:px-24">
-        <p className="mb-6 text-[11px] uppercase tracking-[0.24em] text-white/38">Обсуждение проекта</p>
-        <h2 className="mx-auto max-w-4xl font-display text-4xl font-light leading-[0.95] md:text-6xl lg:text-7xl">
+        <p className="mb-6 text-[11px] uppercase tracking-brand-wide text-white/38">Обсуждение проекта</p>
+        <h2 className="mx-auto max-w-4xl font-display text-4xl leading-tight md:text-6xl lg:text-7xl">
           Подберём решение
           <br />
           под архитектуру и сценарий пространства

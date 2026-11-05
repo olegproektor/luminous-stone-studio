@@ -10,7 +10,7 @@ const CookiesPage = () => (
   >
     <Section>
       <div className="max-w-3xl">
-        <h1 className="font-display text-3xl md:text-4xl font-light text-foreground mb-8">
+        <h1 className="font-display text-3xl md:text-4xl text-foreground mb-8">
           Политика использования файлов cookie
         </h1>
         <div className="font-body text-sm text-muted-foreground leading-relaxed space-y-6">

@@ -96,7 +96,7 @@ const ProductHeroModule = ({ product, cta }: ProductHeroModuleProps) => {
 
           <div className="flex flex-col justify-start">
             <p className="text-xs font-body font-medium tracking-[0.1em] uppercase text-muted-foreground mb-2">{product.series}</p>
-            <h1 className="font-display text-3xl md:text-4xl font-light text-foreground mb-2">{product.name}</h1>
+            <h1 className="font-display text-3xl md:text-4xl text-foreground mb-2">{product.name}</h1>
             <p className="font-body text-sm text-muted-foreground mb-6">{product.tagline}</p>
             {priceFrom < Infinity && <p className="font-display text-2xl text-foreground mb-6">от {priceFrom.toLocaleString("ru-RU")} ₽</p>}
             <p className="font-body text-sm text-muted-foreground leading-relaxed mb-8">{product.description}</p>
