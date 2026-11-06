@@ -567,17 +567,17 @@ const Header = () => {
           <nav
             ref={navRef}
             className={cn(
-              "hidden xl:flex items-center shrink-0 menu-main ease-[cubic-bezier(0.3,0,0.15,1)]",
+              "hidden xl:flex items-center shrink-0 menu-main ease-[cubic-bezier(0.77,0,0.175,1)]",
               "xl:absolute xl:left-1/2",
-              isHomePage ? "transition-transform duration-[242ms]" : "transition-none"
+              isHomePage ? "transition-transform duration-[1000ms]" : "transition-none"
             )}
             style={{
               gap: `${desktopNavGap}px`,
               transform: `translate3d(calc(-50% + ${desktopNavShiftX}px), calc(-50% + ${desktopNavShiftY}px), 0)`,
               left: "50%",
               transitionDelay: "0ms",
-              transitionDuration: isHomePage ? "910ms" : "0ms",
-              transitionTimingFunction: "cubic-bezier(0.3, 0, 0.15, 1)",
+              transitionDuration: isHomePage ? "1000ms" : "0ms",
+              transitionTimingFunction: "cubic-bezier(0.77, 0, 0.175, 1)",
               top: "50%",
             }}
           >
