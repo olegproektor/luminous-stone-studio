@@ -230,7 +230,10 @@ const Header = () => {
   const [canShowDesktopActions, setCanShowDesktopActions] = useState(false);
   const [isCompactDesktop, setIsCompactDesktop] = useState(false);
   const [homeReturnAnimating, setHomeReturnAnimating] = useState(false);
+  const [menuEndOffsetX, setMenuEndOffsetX] = useState<number | null>(null);
   const suppressScrollSyncRef = useRef(false);
+  const navRef = useRef<HTMLElement | null>(null);
+  const actionsRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
   const previousPathnameRef = useRef<string | null>(
     typeof window !== "undefined" ? window.sessionStorage.getItem("header-last-pathname") : null
@@ -348,7 +351,63 @@ const Header = () => {
   }, []);
 
   const desktopNavGap = isCompactDesktop ? 14 : 18;
-  const desktopNavFinalOffsetX = isWideDesktop ? 273 : isCompactDesktop ? 129 : 110;
+  const legacyNavOffsetX = isWideDesktop ? 273 : isCompactDesktop ? 129 : 110;
+  const desktopNavFinalOffsetX = Math.max(legacyNavOffsetX, menuEndOffsetX ?? legacyNavOffsetX);
+
+  const measureMenuEndOffset = useCallback(() => {
+    const nav = navRef.current;
+    const actions = actionsRef.current;
+    const bar = nav?.offsetParent instanceof HTMLElement ? nav.offsetParent : null;
+    if (!nav || !actions || !bar || nav.offsetWidth < 8) return;
+
+    const cta = actions.querySelector("a");
+    const theme = actions.querySelector("button");
+    const actionsStyle = window.getComputedStyle(actions);
+    const actionsGap = Number.parseFloat(actionsStyle.columnGap || actionsStyle.gap) || 0;
+    const themeWidth = theme?.offsetWidth ?? 0;
+
+    let ctaWidth = 0;
+    if (cta instanceof HTMLElement) {
+      const previous = {
+        maxWidth: cta.style.maxWidth,
+        width: cta.style.width,
+        paddingLeft: cta.style.paddingLeft,
+        paddingRight: cta.style.paddingRight,
+        transition: cta.style.transition,
+      };
+      const pad = isCompactDesktop ? "1rem" : isWideDesktop ? "1.75rem" : "1.25rem";
+      cta.style.transition = "none";
+      cta.style.maxWidth = "none";
+      cta.style.width = "max-content";
+      cta.style.paddingLeft = pad;
+      cta.style.paddingRight = pad;
+      ctaWidth = cta.getBoundingClientRect().width;
+      cta.style.maxWidth = previous.maxWidth;
+      cta.style.width = previous.width;
+      cta.style.paddingLeft = previous.paddingLeft;
+      cta.style.paddingRight = previous.paddingRight;
+      cta.style.transition = previous.transition;
+    }
+
+    const actionsRight = actions.getBoundingClientRect().right;
+    const endActionsLeft = actionsRight - (themeWidth + actionsGap + ctaWidth);
+    const barRect = bar.getBoundingClientRect();
+    const centeredNavRight = barRect.left + barRect.width / 2 + nav.offsetWidth / 2;
+    const clearance = 16;
+    const measured = Math.round(endActionsLeft - clearance - centeredNavRight);
+    const next = Math.max(legacyNavOffsetX, measured);
+    setMenuEndOffsetX((current) => (current === next ? current : next));
+  }, [legacyNavOffsetX, isCompactDesktop, isWideDesktop]);
+
+  useLayoutEffect(() => {
+    measureMenuEndOffset();
+    window.addEventListener("resize", measureMenuEndOffset);
+    const fontsReady = document.fonts?.ready.then(() => measureMenuEndOffset()).catch(() => undefined);
+    return () => {
+      window.removeEventListener("resize", measureMenuEndOffset);
+      void fontsReady;
+    };
+  }, [measureMenuEndOffset]);
   const desktopNavCenterOffsetX =
     headerScrolled || !isHomePage || shouldAnimateHomeReturn || homeReturnAnimating ? desktopNavFinalOffsetX : 0;
   const desktopNavShiftX = desktopNavCenterOffsetX;
@@ -407,6 +466,7 @@ const Header = () => {
 
   const renderDesktopActions = (isClustered: boolean) => (
     <div
+      ref={actionsRef}
       className={cn(
         "hidden items-center",
         canShowDesktopActions ? "xl:flex" : "xl:hidden",
@@ -505,6 +565,7 @@ const Header = () => {
 
           {/* Desktop Nav */}
           <nav
+            ref={navRef}
             className={cn(
               "hidden xl:flex items-center shrink-0 menu-main ease-[cubic-bezier(0.3,0,0.15,1)]",
               "xl:absolute xl:left-1/2",
