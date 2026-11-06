@@ -70,6 +70,22 @@
     --hero-text: 36 10% 94%;
     --hero-text-muted: 32 8% 72%;
 
+    /*
+      Motion sheet. GPU only: opacity and transform.
+      Do: header settle 250–600ms; hero crossfade ~1.2s, soft ease, 3–4 frames, pause off-screen;
+          one-shot reveal 16–24px; tile hover scale 1.02–1.04; honor prefers-reduced-motion.
+      Don't: blur-on-scroll, scroll-jacking, Lottie per section, long autoplay, bounce,
+             layout-height animation, grain every frame, infinite header marquee, scrub parallax.
+    */
+    --motion-ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+    --motion-duration-header: 420ms;
+    --motion-duration-crossfade: 1200ms;
+    --motion-duration-reveal: 800ms;
+    --motion-duration-hover: 600ms;
+    --motion-duration-hero-frame: 7600ms;
+    --motion-distance-reveal: 20px;
+    --motion-hover-scale: 1.03;
+
     --font-sans: 'Manrope', system-ui, sans-serif;
     --font-display: var(--font-sans);
     --font-body: var(--font-sans);
@@ -317,4 +333,104 @@
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes hero-ring {
+  from { stroke-dashoffset: 116.24; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Header, hero, and home sections share these. Reduced motion wins over the sheet. */
+.motion-header {
+  transition-property: background-color, box-shadow, border-color;
+  transition-duration: var(--motion-duration-header);
+  transition-timing-function: var(--motion-ease-soft);
+}
+
+.motion-logo {
+  transform-origin: left center;
+  transition: transform var(--motion-duration-header) var(--motion-ease-soft);
+}
+
+.hero-photo,
+.hero-frame {
+  transition-property: opacity, transform;
+  transition-duration: var(--motion-duration-crossfade);
+  transition-timing-function: var(--motion-ease-soft);
+}
+
+.hero-ui {
+  transition-property: opacity, transform;
+  transition-duration: var(--motion-duration-reveal);
+  transition-timing-function: var(--motion-ease-soft);
+}
+
+.hero-ring {
+  stroke-dasharray: 116.24;
+  stroke-dashoffset: 116.24;
+  animation: hero-ring var(--motion-duration-hero-frame) linear forwards;
+}
+
+.hero-ring.is-paused {
+  animation-play-state: paused;
+}
+
+.motion-reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--motion-distance-reveal), 0);
+  transition-property: opacity, transform;
+  transition-duration: var(--motion-duration-reveal);
+  transition-timing-function: var(--motion-ease-soft);
+}
+
+.motion-reveal.is-shown {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.motion-tile-media {
+  transform: scale(1);
+  transition: transform var(--motion-duration-hover) var(--motion-ease-soft);
+}
+
+.group:hover .motion-tile-media {
+  transform: scale(var(--motion-hover-scale));
+}
+
+.motion-tile-label {
+  transition: transform var(--motion-duration-hover) var(--motion-ease-soft);
+}
+
+.group:hover .motion-tile-label {
+  transform: translate3d(0, -4px, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-header,
+  .motion-logo,
+  .hero-photo,
+  .hero-frame,
+  .hero-ui,
+  .motion-reveal,
+  .motion-tile-media,
+  .motion-tile-label {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .hero-ring {
+    animation: none !important;
+  }
+
+  .motion-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .motion-tile-media,
+  .group:hover .motion-tile-media,
+  .motion-tile-label,
+  .group:hover .motion-tile-label {
+    transform: none !important;
+  }
 }

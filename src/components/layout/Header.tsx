@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useCallback, useRef, useLayoutEffect } from "react";
+﻿import { useState, useEffect, useCallback, useLayoutEffect } from "react";
 import { Menu, X, Sun, Moon, ChevronRight, ArrowRight, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "next-themes";
@@ -220,77 +220,36 @@ const MobileMenu = ({
   );
 };
 
+const HEADER_SETTLE_PX = 12;
+
 /* ─── Header ─── */
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [scrollCompression, setScrollCompression] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState<string | null>(null);
-  const [isWideDesktop, setIsWideDesktop] = useState(false);
-  const [canShowDesktopActions, setCanShowDesktopActions] = useState(false);
-  const [isCompactDesktop, setIsCompactDesktop] = useState(false);
-  const [homeReturnAnimating, setHomeReturnAnimating] = useState(false);
-  const suppressScrollSyncRef = useRef(false);
   const location = useLocation();
-  const previousPathnameRef = useRef<string | null>(
-    typeof window !== "undefined" ? window.sessionStorage.getItem("header-last-pathname") : null
-  );
   const { resolvedTheme, setTheme } = useTheme();
   const currentTheme = resolvedTheme ?? "light";
   const isHomePage = location.pathname === navPaths.home;
   const headerScrolled = isHomePage ? scrolled : true;
-  const headerCompression = isHomePage ? scrollCompression : 1;
   const isTransparent = isHomePage ? !headerScrolled : false;
-  const nonHomeThickened = !isHomePage && scrolled;
-  const previousPathname = previousPathnameRef.current;
-  const shouldAnimateHomeReturn =
-    location.pathname === navPaths.home &&
-    previousPathname !== null &&
-    previousPathname !== navPaths.home;
 
   useLayoutEffect(() => {
-    if (!shouldAnimateHomeReturn) {
-      suppressScrollSyncRef.current = false;
-      setHomeReturnAnimating(false);
-      return;
-    }
-
-    suppressScrollSyncRef.current = true;
+    if (!isHomePage) return;
     setScrolled(false);
-    setScrollCompression(0);
-    setHomeReturnAnimating(true);
-
-    const firstFrame = window.requestAnimationFrame(() => {
-      const secondFrame = window.requestAnimationFrame(() => {
-        setHomeReturnAnimating(false);
-        suppressScrollSyncRef.current = false;
-      });
-
-      return () => window.cancelAnimationFrame(secondFrame);
+    const frame = window.requestAnimationFrame(() => {
+      setScrolled(window.scrollY > HEADER_SETTLE_PX);
     });
-
-    return () => window.cancelAnimationFrame(firstFrame);
-  }, [location.pathname]);
+    return () => window.cancelAnimationFrame(frame);
+  }, [isHomePage, location.pathname]);
 
   useEffect(() => {
     let rafId: number | null = null;
-    const ANIMATION_TRIGGER = 1;
 
     const onScroll = () => {
-      if (rafId !== null) {
-        return;
-      }
+      if (rafId !== null) return;
       rafId = window.requestAnimationFrame(() => {
-        if (suppressScrollSyncRef.current) {
-          rafId = null;
-          return;
-        }
-
-        const y = window.scrollY;
-        const isAnimated = y >= ANIMATION_TRIGGER;
-        const compression = isAnimated ? 1 : 0;
-        setScrollCompression(compression);
-        setScrolled(isAnimated);
+        setScrolled(window.scrollY > HEADER_SETTLE_PX);
         rafId = null;
       });
     };
@@ -299,37 +258,9 @@ const Header = () => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
-      if (rafId !== null) {
-        window.cancelAnimationFrame(rafId);
-      }
+      if (rafId !== null) window.cancelAnimationFrame(rafId);
     };
   }, []);
-
-  useEffect(() => {
-    const updateWideDesktop = () => {
-      const width = window.innerWidth;
-      setIsWideDesktop(width >= 1536);
-      setCanShowDesktopActions(width >= 1280);
-      setIsCompactDesktop(width >= 1280 && width < 1440);
-    };
-
-    updateWideDesktop();
-    window.addEventListener("resize", updateWideDesktop);
-    return () => {
-      window.removeEventListener("resize", updateWideDesktop);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!shouldAnimateHomeReturn) {
-      setHomeReturnAnimating(false);
-    }
-
-    previousPathnameRef.current = location.pathname;
-    if (typeof window !== "undefined") {
-      window.sessionStorage.setItem("header-last-pathname", location.pathname);
-    }
-  }, [shouldAnimateHomeReturn, location.pathname]);
 
   // Close mobile on route change
   useEffect(() => {
@@ -347,13 +278,6 @@ const Header = () => {
     setMegaOpen((current) => (current === label ? null : label));
   }, []);
 
-  const desktopNavGap = isCompactDesktop ? 14 : 18;
-  const desktopNavFinalOffsetX = isWideDesktop ? 273 : isCompactDesktop ? 129 : 110;
-  const desktopNavCenterOffsetX =
-    headerScrolled || !isHomePage || shouldAnimateHomeReturn || homeReturnAnimating ? desktopNavFinalOffsetX : 0;
-  const desktopNavShiftX = desktopNavCenterOffsetX;
-  const desktopNavShiftY = isHomePage ? (6 + headerCompression * -6) : 0;
-
   const renderDesktopNavItems = () =>
     navItems.map((item) => {
       const isActive = location.pathname.startsWith(item.href);
@@ -366,14 +290,13 @@ const Header = () => {
           <Link
             to={item.href}
             className={cn(
-              "relative whitespace-nowrap font-body font-medium tracking-[0.08em] uppercase py-4 transition-all duration-[600ms] ease-[cubic-bezier(0.77,0,0.175,1)]",
-              isCompactDesktop ? "text-[10px]" : "text-[11px]",
-              "before:content-[''] before:absolute before:left-0 before:top-0 before:w-full before:border-t-[2px] before:border-[hsl(var(--accent-light))] before:origin-center before:scale-x-0 before:[transition:transform_1000ms_cubic-bezier(0.77,0,0.175,1)]",
-              "after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:border-b-[2px] after:border-[hsl(var(--accent-light))] after:origin-center after:scale-x-0 after:[transition:transform_1000ms_cubic-bezier(0.77,0,0.175,1)]",
+              "relative whitespace-nowrap py-4 font-body text-[10px] font-medium uppercase tracking-[0.08em] transition-colors duration-300 2xl:text-[11px]",
+              "before:absolute before:left-0 before:top-0 before:w-full before:origin-center before:scale-x-0 before:border-t-[2px] before:border-[hsl(var(--accent-light))] before:transition-transform before:duration-500 before:ease-out before:content-['']",
+              "after:absolute after:bottom-0 after:left-0 after:w-full after:origin-center after:scale-x-0 after:border-b-[2px] after:border-[hsl(var(--accent-light))] after:transition-transform after:duration-500 after:ease-out after:content-['']",
               "hover:before:scale-x-100 hover:after:scale-x-100 group-hover:before:scale-x-100 group-hover:after:scale-x-100",
               isActive
                 ? "text-[hsl(var(--hero-text))] before:scale-x-100 after:scale-x-100"
-                : "text-[hsl(var(--hero-text-muted))] hover:text-[hsl(var(--hero-text))]"
+                : "text-[hsl(var(--hero-text-muted))] hover:text-[hsl(var(--hero-text))]",
             )}
           >
             {item.label}
@@ -396,7 +319,7 @@ const Header = () => {
                 strokeWidth={2.5}
                 className={cn(
                   "transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
-                  isMegaOpen ? "rotate-180" : "rotate-0"
+                  isMegaOpen ? "rotate-180" : "rotate-0",
                 )}
               />
             </button>
@@ -405,138 +328,65 @@ const Header = () => {
       );
     });
 
-  const renderDesktopActions = (isClustered: boolean) => (
-    <div
-      className={cn(
-        "hidden items-center",
-        canShowDesktopActions ? "xl:flex" : "xl:hidden",
-        isCompactDesktop ? "gap-2" : "gap-4",
-        isClustered
-          ? "self-auto mb-0"
-          : "self-end mb-[20px] xl:absolute xl:top-1/2 xl:-translate-y-1/2 xl:mb-0",
-        !isClustered && (isWideDesktop ? "xl:right-4" : "xl:right-6")
-      )}
-    >
-      <button
-        onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
-        className={cn(
-          "transition-all duration-500",
-          isCompactDesktop ? "p-1.5" : "p-2",
-          headerScrolled ? "opacity-100 translate-x-0" : "opacity-0 pointer-events-none translate-x-2",
-          isTransparent
-            ? "text-[hsl(var(--hero-text-muted))] hover:text-[hsl(var(--hero-text))]"
-            : "text-muted-foreground hover:text-foreground"
-        )}
-        aria-label="Переключить тему"
-      >
-        {currentTheme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
-      </button>
-      <Link
-        to={navPaths.requestProject}
-        onClick={() => trackEvent("cta_click", { context: "header_desktop_primary", target: navPaths.requestProject })}
-        className={cn(
-          buttonVariants({ variant: isTransparent ? "siteInverseOutline" : "sitePrimary", size: "site" }),
-          `font-body font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-[800ms] ${headerScrolled ? 'ease-[cubic-bezier(0.7,0,1,0.5)]' : 'ease-linear'}`,
-          isCompactDesktop ? "text-[10px]" : "text-[11px]",
-          headerScrolled
-            ? (isCompactDesktop
-                ? "opacity-100 max-w-[170px] px-4 py-2"
-                : "opacity-100 max-w-[200px] px-5 2xl:px-7 py-2.5")
-            : "opacity-0 max-w-0 overflow-hidden px-0 py-0 pointer-events-none",
-        )}
-      >
-        Обсудить проект
-      </Link>
-    </div>
-  );
-
   return (
     <>
       <header
+        data-header={isTransparent ? "transparent" : "solid"}
         className={cn(
-          "fixed top-0 left-0 right-0 z-50",
-           "transition-[background-color,backdrop-filter,box-shadow,border-color] duration-[2520ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "motion-header fixed top-0 left-0 right-0 z-50 border-b",
           isTransparent
-            ? "bg-transparent border-b border-transparent"
-            : "bg-[hsl(var(--hero-overlay)/0.58)] backdrop-blur-[20px] border-b border-transparent shadow-[0_0_40px_rgba(0,0,0,0.58)]"
+            ? "border-transparent bg-transparent shadow-none"
+            : "border-[hsl(var(--hero-line)/0.28)] bg-[hsl(var(--hero-overlay))] shadow-[0_10px_28px_rgba(0,0,0,0.22)]",
         )}
-        style={{
-          transitionDuration: "2520ms",
-          transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
-        }}
       >
-        <div
-          className={cn(
-            "container-brand relative flex w-full items-center justify-between px-4 sm:px-6 md:px-10 xl:px-8",
-            isWideDesktop && "max-w-none px-4 2xl:px-4",
-            "transition-[height] ease-[cubic-bezier(0.22,1,0.36,1)]",
-            isHomePage
-              ? (headerScrolled ? "h-[76px] md:h-[88px]" : "h-[84px] md:h-[104px]")
-              : (nonHomeThickened ? "h-[94px] md:h-[108px]" : "h-[76px] md:h-[88px]")
-          )}
-          style={{
-            transitionDuration: isHomePage ? "910ms" : "884ms",
-            transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
-          }}
-        >
-          {/* Logo */}
-          <Link
-            to={navPaths.home}
-            className={cn(
-              "origin-left shrink-0",
-              isWideDesktop && "xl:absolute xl:left-4 xl:top-1/2 xl:-translate-y-1/2",
-              "transition-[opacity,transform] duration-[2520ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-              isTransparent ? "xl:opacity-0" : "xl:opacity-100"
-            )}
-            style={{
-              transitionDuration: "2520ms",
-              transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
-            }}
-          >
+        {/* Center column stays put: logo scale does not push the nav. */}
+        <div className="container-brand grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center px-6 md:h-20 md:px-10 xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] xl:px-8">
+          <Link to={navPaths.home} className="justify-self-start" aria-label="Форма Света, на главную">
             <span
               className={cn(
-                "font-wordmark block uppercase text-[hsl(var(--hero-text))] transition-[font-size,line-height] duration-[2520ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-                headerScrolled ? "text-[0.8rem] md:text-[0.95rem]" : "text-[0.88rem] md:text-[1.05rem]"
+                "motion-logo block font-wordmark text-[0.95rem] uppercase text-[hsl(var(--hero-text))] md:text-[1.08rem]",
+                headerScrolled ? "scale-[0.92]" : "scale-100",
               )}
             >
               Форма Света
             </span>
           </Link>
 
-          {/* Desktop Nav */}
-          <nav
-            className={cn(
-              "hidden xl:flex items-center shrink-0 menu-main ease-[cubic-bezier(0.3,0,0.15,1)]",
-              "xl:absolute xl:left-1/2",
-              isHomePage ? "transition-transform duration-[242ms]" : "transition-none"
-            )}
-            style={{
-              gap: `${desktopNavGap}px`,
-              transform: `translate3d(calc(-50% + ${desktopNavShiftX}px), calc(-50% + ${desktopNavShiftY}px), 0)`,
-              left: "50%",
-              transitionDelay: "0ms",
-              transitionDuration: isHomePage ? "910ms" : "0ms",
-              transitionTimingFunction: "cubic-bezier(0.3, 0, 0.15, 1)",
-              top: "50%",
-            }}
-          >
+          <nav className="menu-main hidden items-center justify-center gap-3 xl:flex 2xl:gap-[18px]">
             {renderDesktopNavItems()}
           </nav>
 
-          {/* Desktop Right */}
-          {renderDesktopActions(false)}
+          <div className="flex items-center justify-end gap-2 justify-self-end xl:col-start-3">
+            <div className="hidden items-center gap-3 xl:flex 2xl:gap-4">
+              <button
+                type="button"
+                onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
+                className="p-2 text-[hsl(var(--hero-text-muted))] transition-colors duration-300 hover:text-[hsl(var(--hero-text))]"
+                aria-label="Переключить тему"
+              >
+                {currentTheme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
+              </button>
+              <Link
+                to={navPaths.requestProject}
+                onClick={() => trackEvent("cta_click", { context: "header_desktop_primary", target: navPaths.requestProject })}
+                className={cn(
+                  buttonVariants({ variant: isTransparent ? "siteInverseOutline" : "siteInverse", size: "site" }),
+                  "whitespace-nowrap px-4 py-2 font-body text-[10px] font-medium uppercase tracking-[0.08em] 2xl:px-6 2xl:text-[11px]",
+                )}
+              >
+                Обсудить проект
+              </Link>
+            </div>
 
-          {/* Mobile Toggle */}
-          <button
-            onClick={() => setMobileOpen(true)}
-            className={cn(
-              "xl:hidden p-2 transition-colors duration-500",
-              isTransparent ? "text-[hsl(var(--hero-text))]" : "text-foreground"
-            )}
-            aria-label="Открыть меню"
-          >
-            <Menu size={20} />
-          </button>
+            <button
+              type="button"
+              onClick={() => setMobileOpen(true)}
+              className="p-2 text-[hsl(var(--hero-text))] transition-colors duration-300 xl:hidden"
+              aria-label="Открыть меню"
+            >
+              <Menu size={20} />
+            </button>
+          </div>
         </div>
 
         {/* Mega Menu */}

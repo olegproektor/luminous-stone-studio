@@ -1,54 +1,31 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
 import { Link } from "react-router-dom";
 import heroBollard from "@/assets/hero-bollard.jpg";
+import { useOnceInView } from "@/hooks/useInViewMotion";
 import { navPaths } from "@/lib/route-helpers";
+import { cn } from "@/lib/utils";
 
 interface MosaicTileProps {
   title: string;
   to: string;
   background: string;
   className?: string;
-  textClassName?: string;
   ariaLabel?: string;
 }
 
-const MosaicTile = ({
-  title,
-  to,
-  background,
-  className = "",
-  textClassName = "",
-  ariaLabel,
-}: MosaicTileProps) => {
-  const ref = useRef<HTMLAnchorElement | null>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const bgY = useTransform(scrollYProgress, [0, 1], [-34, 34]);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.28, 0.16, 0.3]);
-
+const MosaicTile = ({ title, to, background, className = "", ariaLabel }: MosaicTileProps) => {
   return (
     <Link
-      ref={ref}
       to={to}
       aria-label={ariaLabel ?? title}
-      className={`group relative block overflow-hidden bg-stone-300 ${className}`}
+      className={cn("group relative block overflow-hidden bg-stone-300", className)}
     >
-      <motion.div
-        className="absolute inset-0 scale-[1.08]"
-        style={{ y: bgY, backgroundImage: background, backgroundSize: "cover", backgroundPosition: "center" }}
+      <div
+        className="motion-tile-media absolute inset-0"
+        style={{ backgroundImage: background, backgroundSize: "cover", backgroundPosition: "center" }}
       />
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/10 to-transparent transition-opacity duration-500 group-hover:opacity-80"
-        style={{ opacity: overlayOpacity }}
-      />
-      <div className="relative flex h-full min-h-[340px] items-start p-7 md:min-h-[410px] md:p-10 lg:min-h-0 lg:p-12">
-        <span
-          className={`font-body text-[2rem] lowercase tracking-[0.01em] text-white transition-transform duration-500 group-hover:translate-x-1 md:text-[2.55rem] lg:text-[2.9rem] ${textClassName}`}
-        >
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-black/5" />
+      <div className="relative flex h-full min-h-[260px] items-end p-6 md:min-h-[300px] md:p-8 lg:min-h-0 lg:p-10">
+        <span className="motion-tile-label font-body text-2xl lowercase tracking-[0.01em] text-white md:text-3xl lg:text-[2.35rem]">
           {title}
         </span>
       </div>
@@ -57,17 +34,14 @@ const MosaicTile = ({
 };
 
 const HomeMosaicSection = () => {
+  const { ref, shown } = useOnceInView<HTMLDivElement>(0.16);
+
   return (
-    <section className="section-padding relative w-full overflow-hidden bg-[hsl(var(--bg-surface-2))]">
+    <section className="relative w-full overflow-hidden bg-[hsl(var(--bg-surface-2))] px-6 py-14 md:px-12 md:py-16 lg:px-24 lg:py-20">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,hsl(var(--bg-surface))_0%,hsl(var(--bg-surface-2))_100%)]" />
       <div className="container-brand relative">
-        <motion.div
-          className="px-0 md:px-2"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className="grid gap-5 md:gap-6 lg:grid-cols-12 lg:auto-rows-[300px] xl:auto-rows-[340px]">
+        <div ref={ref} className={cn("motion-reveal", shown && "is-shown")}>
+          <div className="grid gap-4 md:gap-5 lg:grid-cols-12 lg:auto-rows-[240px] xl:auto-rows-[280px]">
             <MosaicTile
               title="изделия"
               to={navPaths.collections}
@@ -97,7 +71,7 @@ const HomeMosaicSection = () => {
               background="linear-gradient(162deg, #e4dbc8 0%, #cabda6 46%, #1d1b19 48%, #ece2cf 52%, #d7c7ae 100%)"
             />
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
