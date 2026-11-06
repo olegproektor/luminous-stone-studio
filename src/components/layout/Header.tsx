@@ -59,7 +59,7 @@ const MegaMenu = ({
                   transitionDelay: isOpen ? `${420 + i * 120}ms` : "0ms",
                 }}
               >
-                <span className="relative inline-block text-sm font-body font-medium text-[hsl(var(--hero-text))] transition-[color] duration-300 group-hover:text-[hsl(var(--accent-light))] after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:w-full after:h-px after:bg-current after:origin-center after:scale-x-0 after:[transition:transform_1000ms_cubic-bezier(0.77,0,0.175,1)] group-hover:after:scale-x-100">
+                <span className="relative inline-block text-sm font-body font-medium text-[hsl(var(--hero-text))] transition-[color] duration-300 group-hover:text-[hsl(var(--accent-light))] after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:w-full after:h-px after:bg-current after:origin-center after:scale-x-0 after:[transition:transform_400ms_cubic-bezier(0.22,1,0.36,1)] group-hover:after:scale-x-100">
                   {item.label}
                 </span>
                 {item.description && (
@@ -221,16 +221,21 @@ const MobileMenu = ({
 };
 
 /* ─── Header ─── */
+const HEADER_SCRUB_PX = 140;
+
 const Header = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const [scrollCompression, setScrollCompression] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [menuTravelX, setMenuTravelX] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState<string | null>(null);
   const [isWideDesktop, setIsWideDesktop] = useState(false);
   const [canShowDesktopActions, setCanShowDesktopActions] = useState(false);
   const [isCompactDesktop, setIsCompactDesktop] = useState(false);
-  const [homeReturnAnimating, setHomeReturnAnimating] = useState(false);
+  const [isMd, setIsMd] = useState(false);
   const suppressScrollSyncRef = useRef(false);
+  const barRef = useRef<HTMLDivElement | null>(null);
+  const logoRef = useRef<HTMLAnchorElement | null>(null);
+  const navRef = useRef<HTMLElement | null>(null);
   const location = useLocation();
   const previousPathnameRef = useRef<string | null>(
     typeof window !== "undefined" ? window.sessionStorage.getItem("header-last-pathname") : null
@@ -238,10 +243,7 @@ const Header = () => {
   const { resolvedTheme, setTheme } = useTheme();
   const currentTheme = resolvedTheme ?? "light";
   const isHomePage = location.pathname === navPaths.home;
-  const headerScrolled = isHomePage ? scrolled : true;
-  const headerCompression = isHomePage ? scrollCompression : 1;
-  const isTransparent = isHomePage ? !headerScrolled : false;
-  const nonHomeThickened = !isHomePage && scrolled;
+  const headerProgress = isHomePage ? scrollProgress : 1;
   const previousPathname = previousPathnameRef.current;
   const shouldAnimateHomeReturn =
     location.pathname === navPaths.home &&
@@ -251,18 +253,14 @@ const Header = () => {
   useLayoutEffect(() => {
     if (!shouldAnimateHomeReturn) {
       suppressScrollSyncRef.current = false;
-      setHomeReturnAnimating(false);
       return;
     }
 
     suppressScrollSyncRef.current = true;
-    setScrolled(false);
-    setScrollCompression(0);
-    setHomeReturnAnimating(true);
+    setScrollProgress(0);
 
     const firstFrame = window.requestAnimationFrame(() => {
       const secondFrame = window.requestAnimationFrame(() => {
-        setHomeReturnAnimating(false);
         suppressScrollSyncRef.current = false;
       });
 
@@ -274,7 +272,7 @@ const Header = () => {
 
   useEffect(() => {
     let rafId: number | null = null;
-    const ANIMATION_TRIGGER = 1;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const onScroll = () => {
       if (rafId !== null) {
@@ -287,10 +285,8 @@ const Header = () => {
         }
 
         const y = window.scrollY;
-        const isAnimated = y >= ANIMATION_TRIGGER;
-        const compression = isAnimated ? 1 : 0;
-        setScrollCompression(compression);
-        setScrolled(isAnimated);
+        const linear = Math.min(1, Math.max(0, y / HEADER_SCRUB_PX));
+        setScrollProgress(reduceMotion ? (y > 8 ? 1 : 0) : linear);
         rafId = null;
       });
     };
@@ -311,6 +307,7 @@ const Header = () => {
       setIsWideDesktop(width >= 1536);
       setCanShowDesktopActions(width >= 1280);
       setIsCompactDesktop(width >= 1280 && width < 1440);
+      setIsMd(width >= 768);
     };
 
     updateWideDesktop();
@@ -321,15 +318,11 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    if (!shouldAnimateHomeReturn) {
-      setHomeReturnAnimating(false);
-    }
-
     previousPathnameRef.current = location.pathname;
     if (typeof window !== "undefined") {
       window.sessionStorage.setItem("header-last-pathname", location.pathname);
     }
-  }, [shouldAnimateHomeReturn, location.pathname]);
+  }, [location.pathname]);
 
   // Close mobile on route change
   useEffect(() => {
@@ -348,11 +341,44 @@ const Header = () => {
   }, []);
 
   const desktopNavGap = isCompactDesktop ? 14 : 18;
-  const desktopNavFinalOffsetX = isWideDesktop ? 273 : isCompactDesktop ? 129 : 110;
-  const desktopNavCenterOffsetX =
-    headerScrolled || !isHomePage || shouldAnimateHomeReturn || homeReturnAnimating ? desktopNavFinalOffsetX : 0;
-  const desktopNavShiftX = desktopNavCenterOffsetX;
-  const desktopNavShiftY = isHomePage ? (6 + headerCompression * -6) : 0;
+  // Centered at rest. Scroll progress carries the menu left until it meets the logo.
+  const desktopNavShiftX = menuTravelX * headerProgress;
+  const desktopNavShiftY = isHomePage ? 6 * (1 - headerProgress) : 0;
+
+  const measureMenuTravel = useCallback(() => {
+    const nav = navRef.current;
+    const bar = barRef.current;
+    if (!nav || !bar) return;
+
+    const barRect = bar.getBoundingClientRect();
+    const navWidth = nav.offsetWidth;
+    if (navWidth < 8) return;
+    const centeredLeft = barRect.left + barRect.width / 2 - navWidth / 2;
+    const barStyle = window.getComputedStyle(bar);
+    const pad = Number.parseFloat(barStyle.paddingLeft) || 0;
+    const logo = logoRef.current;
+    let destLeft = barRect.left + pad;
+
+    if (logo) {
+      const logoStyle = window.getComputedStyle(logo);
+      const logoLeft = logoStyle.position === "absolute" ? Number.parseFloat(logoStyle.left) || 0 : pad;
+      const origin = logoStyle.position === "absolute" ? barRect.left + logoLeft : barRect.left + pad;
+      destLeft = origin + logo.offsetWidth * 0.86 + 28;
+    }
+
+    const actions = bar.querySelector<HTMLElement>("[data-header-actions]");
+    if (actions) {
+      const maxLeft = actions.getBoundingClientRect().left - 20 - navWidth;
+      destLeft = Math.min(destLeft, maxLeft);
+    }
+
+    setMenuTravelX(Math.round(destLeft - centeredLeft));
+  }, []);
+
+  useLayoutEffect(() => {
+    measureMenuTravel();
+    void document.fonts?.ready.then(() => measureMenuTravel()).catch(() => undefined);
+  }, [measureMenuTravel, isCompactDesktop, isWideDesktop, canShowDesktopActions, desktopNavGap]);
 
   const renderDesktopNavItems = () =>
     navItems.map((item) => {
@@ -366,10 +392,10 @@ const Header = () => {
           <Link
             to={item.href}
             className={cn(
-              "relative whitespace-nowrap font-body font-medium tracking-[0.08em] uppercase py-4 transition-all duration-[600ms] ease-[cubic-bezier(0.77,0,0.175,1)]",
+              "relative whitespace-nowrap font-body font-medium tracking-[0.08em] uppercase py-4 transition-colors duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
               isCompactDesktop ? "text-[10px]" : "text-[11px]",
-              "before:content-[''] before:absolute before:left-0 before:top-0 before:w-full before:border-t-[2px] before:border-[hsl(var(--accent-light))] before:origin-center before:scale-x-0 before:[transition:transform_1000ms_cubic-bezier(0.77,0,0.175,1)]",
-              "after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:border-b-[2px] after:border-[hsl(var(--accent-light))] after:origin-center after:scale-x-0 after:[transition:transform_1000ms_cubic-bezier(0.77,0,0.175,1)]",
+              "before:content-[''] before:absolute before:left-0 before:top-0 before:w-full before:border-t-[2px] before:border-[hsl(var(--accent-light))] before:origin-center before:scale-x-0 before:[transition:transform_400ms_cubic-bezier(0.22,1,0.36,1)]",
+              "after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:border-b-[2px] after:border-[hsl(var(--accent-light))] after:origin-center after:scale-x-0 after:[transition:transform_400ms_cubic-bezier(0.22,1,0.36,1)]",
               "hover:before:scale-x-100 hover:after:scale-x-100 group-hover:before:scale-x-100 group-hover:after:scale-x-100",
               isActive
                 ? "text-[hsl(var(--hero-text))] before:scale-x-100 after:scale-x-100"
@@ -405,8 +431,14 @@ const Header = () => {
       );
     });
 
+  const startH = isMd ? 104 : 84;
+  const endH = isMd ? 88 : 76;
+  const barHeight = startH + (endH - startH) * headerProgress;
+  const logoOpacity = canShowDesktopActions && isHomePage ? headerProgress : 1;
+
   const renderDesktopActions = (isClustered: boolean) => (
     <div
+      data-header-actions
       className={cn(
         "hidden items-center",
         canShowDesktopActions ? "xl:flex" : "xl:hidden",
@@ -420,13 +452,11 @@ const Header = () => {
       <button
         onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
         className={cn(
-          "transition-all duration-500",
+          "transition-colors duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
           isCompactDesktop ? "p-1.5" : "p-2",
-          headerScrolled ? "opacity-100 translate-x-0" : "opacity-0 pointer-events-none translate-x-2",
-          isTransparent
-            ? "text-[hsl(var(--hero-text-muted))] hover:text-[hsl(var(--hero-text))]"
-            : "text-muted-foreground hover:text-foreground"
+          "text-[hsl(var(--hero-text-muted))] hover:text-[hsl(var(--hero-text))]"
         )}
+        style={{ opacity: headerProgress, pointerEvents: headerProgress > 0.65 ? "auto" : "none" }}
         aria-label="Переключить тему"
       >
         {currentTheme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
@@ -435,15 +465,11 @@ const Header = () => {
         to={navPaths.requestProject}
         onClick={() => trackEvent("cta_click", { context: "header_desktop_primary", target: navPaths.requestProject })}
         className={cn(
-          buttonVariants({ variant: isTransparent ? "siteInverseOutline" : "sitePrimary", size: "site" }),
-          `font-body font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-[800ms] ${headerScrolled ? 'ease-[cubic-bezier(0.7,0,1,0.5)]' : 'ease-linear'}`,
-          isCompactDesktop ? "text-[10px]" : "text-[11px]",
-          headerScrolled
-            ? (isCompactDesktop
-                ? "opacity-100 max-w-[170px] px-4 py-2"
-                : "opacity-100 max-w-[200px] px-5 2xl:px-7 py-2.5")
-            : "opacity-0 max-w-0 overflow-hidden px-0 py-0 pointer-events-none",
+          buttonVariants({ variant: "siteInverse", size: "site" }),
+          "font-body font-medium uppercase tracking-[0.08em] whitespace-nowrap transition-colors duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+          isCompactDesktop ? "px-4 py-2 text-[10px]" : "px-5 py-2.5 text-[11px] 2xl:px-7",
         )}
+        style={{ opacity: headerProgress, pointerEvents: headerProgress > 0.65 ? "auto" : "none" }}
       >
         Обсудить проект
       </Link>
@@ -453,71 +479,48 @@ const Header = () => {
   return (
     <>
       <header
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50",
-           "transition-[background-color,backdrop-filter,box-shadow,border-color] duration-[2520ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-          isTransparent
-            ? "bg-transparent border-b border-transparent"
-            : "bg-[hsl(var(--hero-overlay)/0.58)] backdrop-blur-[20px] border-b border-transparent shadow-[0_0_40px_rgba(0,0,0,0.58)]"
-        )}
+        className="fixed top-0 left-0 right-0 z-50 border-b border-transparent"
         style={{
-          transitionDuration: "2520ms",
-          transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+          backgroundColor: `rgba(17, 17, 17, ${headerProgress})`,
+          backdropFilter: headerProgress > 0.02 ? "blur(16px)" : "none",
+          WebkitBackdropFilter: headerProgress > 0.02 ? "blur(16px)" : "none",
+          boxShadow: headerProgress > 0.9 ? "0 8px 28px rgba(0,0,0,0.28)" : "none",
         }}
       >
         <div
+          ref={barRef}
           className={cn(
             "container-brand relative flex w-full items-center justify-between px-4 sm:px-6 md:px-10 xl:px-8",
             isWideDesktop && "max-w-none px-4 2xl:px-4",
-            "transition-[height] ease-[cubic-bezier(0.22,1,0.36,1)]",
-            isHomePage
-              ? (headerScrolled ? "h-[76px] md:h-[88px]" : "h-[84px] md:h-[104px]")
-              : (nonHomeThickened ? "h-[94px] md:h-[108px]" : "h-[76px] md:h-[88px]")
           )}
-          style={{
-            transitionDuration: isHomePage ? "910ms" : "884ms",
-            transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
-          }}
+          style={{ height: `${barHeight}px` }}
         >
-          {/* Logo */}
           <Link
+            ref={logoRef}
             to={navPaths.home}
             className={cn(
               "origin-left shrink-0",
               isWideDesktop && "xl:absolute xl:left-4 xl:top-1/2 xl:-translate-y-1/2",
-              "transition-[opacity,transform] duration-[2520ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-              isTransparent ? "xl:opacity-0" : "xl:opacity-100"
             )}
             style={{
-              transitionDuration: "2520ms",
-              transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+              opacity: logoOpacity,
+              pointerEvents: logoOpacity > 0.65 ? "auto" : "none",
             }}
           >
             <span
-              className={cn(
-                "font-wordmark block uppercase text-[hsl(var(--hero-text))] transition-[font-size,line-height] duration-[2520ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-                headerScrolled ? "text-[0.8rem] md:text-[0.95rem]" : "text-[0.88rem] md:text-[1.05rem]"
-              )}
+              className="block origin-left font-wordmark text-[0.95rem] uppercase text-[hsl(var(--hero-text))] md:text-[1.08rem]"
+              style={{ transform: `scale(${1 - 0.14 * headerProgress})` }}
             >
               Форма Света
             </span>
           </Link>
 
-          {/* Desktop Nav */}
           <nav
-            className={cn(
-              "hidden xl:flex items-center shrink-0 menu-main ease-[cubic-bezier(0.3,0,0.15,1)]",
-              "xl:absolute xl:left-1/2",
-              isHomePage ? "transition-transform duration-[242ms]" : "transition-none"
-            )}
+            ref={navRef}
+            className="menu-main absolute left-1/2 top-1/2 hidden shrink-0 items-center xl:flex"
             style={{
               gap: `${desktopNavGap}px`,
               transform: `translate3d(calc(-50% + ${desktopNavShiftX}px), calc(-50% + ${desktopNavShiftY}px), 0)`,
-              left: "50%",
-              transitionDelay: "0ms",
-              transitionDuration: isHomePage ? "910ms" : "0ms",
-              transitionTimingFunction: "cubic-bezier(0.3, 0, 0.15, 1)",
-              top: "50%",
             }}
           >
             {renderDesktopNavItems()}
@@ -529,10 +532,7 @@ const Header = () => {
           {/* Mobile Toggle */}
           <button
             onClick={() => setMobileOpen(true)}
-            className={cn(
-              "xl:hidden p-2 transition-colors duration-500",
-              isTransparent ? "text-[hsl(var(--hero-text))]" : "text-foreground"
-            )}
+            className="p-2 text-[hsl(var(--hero-text))] transition-colors duration-[400ms] xl:hidden"
             aria-label="Открыть меню"
           >
             <Menu size={20} />
