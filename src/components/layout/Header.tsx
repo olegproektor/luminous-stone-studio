@@ -228,7 +228,6 @@ const Header = () => {
   const [menuTravelX, setMenuTravelX] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState<string | null>(null);
-  const [isWideDesktop, setIsWideDesktop] = useState(false);
   const [canShowDesktopActions, setCanShowDesktopActions] = useState(false);
   const [isCompactDesktop, setIsCompactDesktop] = useState(false);
   const [isMd, setIsMd] = useState(false);
@@ -304,7 +303,6 @@ const Header = () => {
   useEffect(() => {
     const updateWideDesktop = () => {
       const width = window.innerWidth;
-      setIsWideDesktop(width >= 1536);
       setCanShowDesktopActions(width >= 1280);
       setIsCompactDesktop(width >= 1280 && width < 1440);
       setIsMd(width >= 768);
@@ -378,7 +376,7 @@ const Header = () => {
   useLayoutEffect(() => {
     measureMenuTravel();
     void document.fonts?.ready.then(() => measureMenuTravel()).catch(() => undefined);
-  }, [measureMenuTravel, isCompactDesktop, isWideDesktop, canShowDesktopActions, desktopNavGap]);
+  }, [measureMenuTravel, isCompactDesktop, canShowDesktopActions, desktopNavGap]);
 
   const renderDesktopNavItems = () =>
     navItems.map((item) => {
@@ -443,10 +441,7 @@ const Header = () => {
         "hidden items-center",
         canShowDesktopActions ? "xl:flex" : "xl:hidden",
         isCompactDesktop ? "gap-2" : "gap-4",
-        isClustered
-          ? "self-auto mb-0"
-          : "self-end mb-[20px] xl:absolute xl:top-1/2 xl:-translate-y-1/2 xl:mb-0",
-        !isClustered && (isWideDesktop ? "xl:right-4" : "xl:right-6")
+        isClustered ? "self-auto" : "shrink-0"
       )}
     >
       <button
@@ -489,19 +484,13 @@ const Header = () => {
       >
         <div
           ref={barRef}
-          className={cn(
-            "container-brand relative flex w-full items-center justify-between px-4 sm:px-6 md:px-10 xl:px-8",
-            isWideDesktop && "max-w-none px-4 2xl:px-4",
-          )}
+          className="relative flex w-full max-w-none items-center justify-between px-6"
           style={{ height: `${barHeight}px` }}
         >
           <Link
             ref={logoRef}
             to={navPaths.home}
-            className={cn(
-              "origin-left shrink-0",
-              isWideDesktop && "xl:absolute xl:left-4 xl:top-1/2 xl:-translate-y-1/2",
-            )}
+            className="origin-left shrink-0"
             style={{
               opacity: logoOpacity,
               pointerEvents: logoOpacity > 0.65 ? "auto" : "none",
