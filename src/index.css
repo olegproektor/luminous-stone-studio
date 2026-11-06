@@ -6,35 +6,35 @@
 
 @layer base {
   :root {
-    /* Cool gray panels, near-black type, bronze metal. Not cream. */
-    --background: 220 8% 93%;
-    --foreground: 0 0% 8%;
+    /* Light stone palette: cool–warm gray, low chroma (not cream). */
+    --background: 32 6% 94%;
+    --foreground: 220 9% 14%;
 
-    --card: 220 6% 96%;
-    --card-foreground: 0 0% 8%;
+    --card: 30 5% 91%;
+    --card-foreground: 220 9% 14%;
 
-    --popover: 220 8% 96%;
-    --popover-foreground: 0 0% 8%;
+    --popover: 32 6% 96%;
+    --popover-foreground: 220 9% 14%;
 
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 220 9% 16%;
+    --primary-foreground: 36 8% 96%;
 
-    --secondary: 220 6% 88%;
-    --secondary-foreground: 0 0% 12%;
+    --secondary: 30 4% 88%;
+    --secondary-foreground: 220 7% 22%;
 
-    --muted: 220 6% 88%;
-    --muted-foreground: 220 6% 32%;
+    --muted: 30 4% 88%;
+    --muted-foreground: 220 5% 36%;
 
-    /* Bronze text on light gray. Checked above 4.5:1 on the lightest panel. */
-    --accent: 28 46% 28%;
-    --accent-foreground: 40 30% 96%;
+    /* Brushed metal. Same hue family in dark mode; lightness flips for contrast. */
+    --accent: 28 18% 34%;
+    --accent-foreground: 36 10% 96%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 6% 82%;
-    --input: 220 6% 82%;
-    --ring: 28 46% 28%;
+    --border: 30 5% 82%;
+    --input: 30 5% 82%;
+    --ring: 28 18% 34%;
 
     --radius: 6px;
     --radius-none: 0px;
@@ -42,33 +42,33 @@
     --radius-md: 6px;
     --radius-lg: 8px;
 
-    /* Brand tokens. --cream names stay for existing utilities; values are cool gray, not spa cream. */
-    --stone: 220 4% 46%;
-    --stone-light: 220 6% 78%;
-    --warm-glow: 32 42% 52%;
-    --charcoal: 0 0% 7%;
-    --charcoal-light: 0 0% 14%;
-    --cream: 220 8% 93%;
-    --cream-dark: 220 6% 86%;
+    /* Brand tokens. --cream names stay for existing utilities; values are stone, not spa cream. */
+    --stone: 30 6% 46%;
+    --stone-light: 32 6% 80%;
+    --warm-glow: 32 22% 62%;
+    --charcoal: 220 9% 14%;
+    --charcoal-light: 220 6% 24%;
+    --cream: 32 6% 94%;
+    --cream-dark: 32 5% 86%;
 
     /* Surface system tokens for light mode */
-    --bg-deep: 220 8% 93%;
-    --bg-surface: 220 6% 90%;
-    --bg-surface-2: 220 5% 86%;
-    --bg-float: 220 10% 97%;
-    --text-primary: 0 0% 8%;
-    --text-secondary: 220 6% 22%;
-    --text-muted: 220 5% 36%;
-    --accent-core: 28 46% 28%;
-    --accent-light: 32 48% 58%;
-    --accent-soft: 32 22% 80%;
-    --ghost-border: 220 6% 40%;
-    --ambient-shadow-rgb: 12 12 14;
-    --hero-overlay: 0 0% 7%;
-    --hero-surface: 0 0% 9%;
-    --hero-line: 32 18% 42%;
-    --hero-text: 0 0% 98%;
-    --hero-text-muted: 220 8% 74%;
+    --bg-deep: 32 6% 94%;
+    --bg-surface: 30 5% 91%;
+    --bg-surface-2: 30 4% 87%;
+    --bg-float: 36 6% 97%;
+    --text-primary: 220 9% 14%;
+    --text-secondary: 220 6% 24%;
+    --text-muted: 220 5% 38%;
+    --accent-core: 28 18% 34%;
+    --accent-light: 28 16% 46%;
+    --accent-soft: 28 14% 78%;
+    --ghost-border: 220 5% 42%;
+    --ambient-shadow-rgb: 24 26 30;
+    --hero-overlay: 220 10% 8%;
+    --hero-surface: 220 8% 12%;
+    --hero-line: 30 8% 38%;
+    --hero-text: 36 10% 94%;
+    --hero-text-muted: 32 8% 72%;
 
     --font-sans: 'Manrope', system-ui, sans-serif;
     --font-display: var(--font-sans);
@@ -86,49 +86,49 @@
   }
 
   .dark {
-    --background: 0 0% 6%;
-    --foreground: 0 0% 96%;
-    --card: 0 0% 9%;
-    --card-foreground: 0 0% 96%;
-    --popover: 0 0% 9%;
-    --popover-foreground: 0 0% 96%;
-    --primary: 0 0% 94%;
-    --primary-foreground: 0 0% 8%;
+    --background: 220 8% 8%;
+    --foreground: 36 8% 90%;
+    --card: 220 6% 11%;
+    --card-foreground: 36 8% 90%;
+    --popover: 220 6% 11%;
+    --popover-foreground: 36 8% 90%;
+    --primary: 36 8% 88%;
+    --primary-foreground: 220 10% 10%;
     --secondary: 220 5% 15%;
     --secondary-foreground: 36 8% 90%;
     --muted: 220 4% 16%;
     --muted-foreground: 32 6% 68%;
-    --accent: 32 42% 64%;
-    --accent-foreground: 0 0% 8%;
+    --accent: 30 18% 70%;
+    --accent-foreground: 220 10% 10%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --border: 220 5% 20%;
     --input: 220 5% 20%;
-    --ring: 32 42% 64%;
-    --stone: 220 4% 62%;
-    --stone-light: 220 4% 28%;
-    --warm-glow: 32 36% 58%;
-    --charcoal: 0 0% 5%;
-    --charcoal-light: 0 0% 14%;
-    --cream: 0 0% 92%;
-    --cream-dark: 0 0% 78%;
-    --bg-deep: 0 0% 6%;
-    --bg-surface: 0 0% 9%;
-    --bg-surface-2: 0 0% 12%;
-    --bg-float: 0 0% 14%;
-    --text-primary: 0 0% 96%;
-    --text-secondary: 220 6% 78%;
-    --text-muted: 220 5% 66%;
-    --accent-core: 32 42% 64%;
-    --accent-light: 32 48% 68%;
-    --accent-soft: 28 14% 22%;
-    --ghost-border: 220 6% 58%;
+    --ring: 30 18% 70%;
+    --stone: 32 5% 62%;
+    --stone-light: 32 6% 28%;
+    --warm-glow: 32 18% 64%;
+    --charcoal: 220 10% 8%;
+    --charcoal-light: 220 6% 18%;
+    --cream: 36 8% 88%;
+    --cream-dark: 32 6% 74%;
+    --bg-deep: 220 8% 8%;
+    --bg-surface: 220 6% 11%;
+    --bg-surface-2: 220 5% 14%;
+    --bg-float: 220 5% 18%;
+    --text-primary: 36 8% 90%;
+    --text-secondary: 32 6% 76%;
+    --text-muted: 32 5% 64%;
+    --accent-core: 30 18% 70%;
+    --accent-light: 32 20% 78%;
+    --accent-soft: 28 12% 26%;
+    --ghost-border: 32 6% 58%;
     --ambient-shadow-rgb: 0 0 0;
-    --hero-overlay: 0 0% 5%;
-    --hero-surface: 0 0% 8%;
-    --hero-line: 32 16% 40%;
-    --hero-text: 0 0% 98%;
-    --hero-text-muted: 220 6% 74%;
+    --hero-overlay: 220 10% 7%;
+    --hero-surface: 220 8% 11%;
+    --hero-line: 30 8% 36%;
+    --hero-text: 36 10% 94%;
+    --hero-text-muted: 32 8% 72%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
