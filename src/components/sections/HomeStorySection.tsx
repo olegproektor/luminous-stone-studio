@@ -1,8 +1,7 @@
+import { motion } from "framer-motion";
 import heroBollard from "@/assets/hero-bollard.jpg";
 import stoneSceneDay from "@/assets/hero/stone-scene-day.png";
 import stoneSceneNight from "@/assets/hero/stone-scene-night.png";
-import { useOnceInView } from "@/hooks/useInViewMotion";
-import { cn } from "@/lib/utils";
 
 const storyLead =
   "Каменные светильники для ландшафта и архитектуры: свет собирает маршрут, вход и рельеф, а высота и фактура работают как одна система.";
@@ -29,8 +28,6 @@ const storyFacts = [
 ];
 
 const HomeStorySection = () => {
-  const { ref, shown } = useOnceInView<HTMLDivElement>(0.18);
-
   return (
     <section
       aria-labelledby="home-story-title"
@@ -38,7 +35,11 @@ const HomeStorySection = () => {
     >
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,hsl(var(--bg-float))_0%,hsl(var(--bg-surface))_52%,hsl(var(--bg-surface-2))_100%)]" />
       <div className="container-brand relative">
-        <div ref={ref} className={cn("motion-reveal", shown && "is-shown")}>
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
           <h2
             id="home-story-title"
             className="max-w-[18rem] font-display text-3xl leading-[1.08] text-foreground md:max-w-[28rem] md:text-4xl lg:text-5xl"
@@ -67,7 +68,7 @@ const HomeStorySection = () => {
               </figure>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
