@@ -57,7 +57,12 @@ describe("iteration1 smoke routes", () => {
   it("uses the home page as a project-entry point", async () => {
     await renderApp("/");
 
-    expect(screen.getByRole("heading", { name: /Подбираем решения из камня/i })).toBeTruthy();
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: /Каменные светильники\s+для частных и\s+объектных пространств/i,
+      }),
+    ).toBeTruthy();
     expect(screen.queryByText(/Боллард STŌN/i)).toBeNull();
     expect(screen.getAllByRole("link", { name: "Обсудить проект" }).length).toBeGreaterThan(0);
     expect(screen.getByRole("link", { name: "Смотреть изделия" })).toBeTruthy();
