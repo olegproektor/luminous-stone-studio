@@ -24,3 +24,5 @@
 3. Не создавать GitHub-репозитории и не менять Cloud Agent environment без запроса.
 4. PR в `main` — не мержить без явной просьбы.
 5. Локальный путь пользователя (worker `my thinkbook`): `D:\Ai\luminous-stone-studio` — не делать `git pull` на эту машину из чужой сессии без отдельного поручения.
+6. **Не перетирать чужие ветки** (force-push / rewrite history / перехват PR) и **не конфликтовать зоны** с Cursor / Codex / Antigravity без явного согласования.
+7. Нейминг feature-веток Cursor-агентов: префикс **`cursor/...`** (например `cursor/agents-md-handoff-5820`) — чтобы отличать их ветки от `main` и от веток Codex/Antigravity.
